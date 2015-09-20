@@ -2,7 +2,7 @@
 <%@page import="java.sql.SQLException"%>
 <%@page import="zaietsv.complextask.mvc.instance.Instance"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="zaietsv.complextask.mvc.connect.ConnectorTool"%>
+<%@page import="zaietsv.complextask.mvc.connect.MusicUserConnector"%>
 <%@page import="zaietsv.complextask.mvc.dao.UserDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -19,7 +19,7 @@ id=<%=request.getParameter("id") %>
 <%String action = request.getParameter("action");%>
 <%long id = Long.parseLong(request.getParameter("id")); %>
 
-<% try (ConnectorTool ct = new ConnectorTool("jdbc:mysql://localhost:3306/music_users", "tomcat", "tacmot");) { %>
+<% try (MusicUserConnector ct = new MusicUserConnector("jdbc:mysql://localhost:3306/music_users", "tomcat", "tacmot");) { %>
 <% UserDAO udao = new UserDAO(ct.connect()); %>			
 <% ArrayList<Instance> users = udao.readAll(); %>
 

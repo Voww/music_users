@@ -116,7 +116,7 @@ public class TableInstaller extends AbstractInstaller {
 	/*
 	public static void main(String[] args) {
 		try {
-			ConnectorTool ct = new ConnectorTool("jdbc:mysql://localhost:3306/music_users", "tomcat", "tacmot");
+			MusicUserConnector ct = new MusicUserConnector("jdbc:mysql://localhost:3306/music_users", "tomcat", "tacmot");
 			//ct.connect();
 			TableInstaller uti = new TableInstaller(ct.connect());
 			uti.install();

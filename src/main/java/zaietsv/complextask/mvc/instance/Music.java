@@ -9,6 +9,18 @@ public class Music extends AbstractInstance {
 		
 	}
 
+	public Music(String name, int rating) {
+		super();
+		this.name = name;
+		this.rating = rating;
+	}
+
+	public Music(long id, String name, int rating) {
+		super(id);
+		this.name = name;
+		this.rating = rating;
+	}
+
 	/**
 	 * @return the name
 	 */

@@ -12,10 +12,10 @@ public class UserDAO extends AbstractDAO<User> {
 	
 	/**
 	 * Constructs an empty data access object for `user` table
-	 */
+	 *//*
 	public UserDAO() {
 		super();
-	}
+	}*/
 
 	/**
 	 * Constructs a data access object for `user` table using connection parameter

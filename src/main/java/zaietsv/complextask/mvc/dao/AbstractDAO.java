@@ -1,8 +1,8 @@
 package zaietsv.complextask.mvc.dao;
 
-import java.sql.Connection;
-
 import zaietsv.complextask.mvc.instance.AbstractInstance;
+
+import java.sql.Connection;
 
 public abstract class AbstractDAO<I extends AbstractInstance> implements DataAccessObject<I> {
 
@@ -10,10 +10,10 @@ public abstract class AbstractDAO<I extends AbstractInstance> implements DataAcc
 	
 	/**
 	 * Constructs an empty data access object
-	 */
+	 *//*
 	public AbstractDAO() {
 		
-	}
+	}*/
 
 	/**
 	 * Constructs a data access object using connection parameter

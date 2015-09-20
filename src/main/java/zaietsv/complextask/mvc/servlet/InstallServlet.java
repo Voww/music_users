@@ -1,29 +1,20 @@
 package zaietsv.complextask.mvc.servlet;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.ArrayList;
+import zaietsv.complextask.mvc.connect.Connector;
+import zaietsv.complextask.mvc.connect.DataBaseConnector;
+import zaietsv.complextask.mvc.connect.MusicUserConnector;
+import zaietsv.complextask.mvc.install.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import zaietsv.complextask.mvc.connect.Connector;
-import zaietsv.complextask.mvc.connect.ConnectorTool;
-import zaietsv.complextask.mvc.install.AddressTableInstaller;
-import zaietsv.complextask.mvc.install.Installer;
-import zaietsv.complextask.mvc.install.InstallerTool;
-import zaietsv.complextask.mvc.install.MusicTableInstaller;
-import zaietsv.complextask.mvc.install.SchemaInstaller;
-import zaietsv.complextask.mvc.install.RoleTableInstaller;
-import zaietsv.complextask.mvc.install.UserAddressTableInstaller;
-import zaietsv.complextask.mvc.install.UserMusicTableInstaller;
-import zaietsv.complextask.mvc.install.UserRoleTableInstaller;
-import zaietsv.complextask.mvc.install.UserTableInstaller;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  * Servlet implementation class InstallServlet
@@ -53,11 +44,11 @@ public class InstallServlet extends HttpServlet {
 		final String password = "tacmot";
 		final String schema = "music_users";
 		try {
-			Connector s = new ConnectorTool(url, user, password);
-			Connection c = new ConnectorTool(url + "/" + schema, user, password).connect();
+			Connector s = new DataBaseConnector();
+			Connection c = new MusicUserConnector().getConnection();
 			InstallerTool schemaInstallerTool = new InstallerTool(new ArrayList<Installer>());
 			try {
-				schemaInstallerTool.getInstallers().add(new SchemaInstaller(s.connect(), schema));
+				schemaInstallerTool.getInstallers().add(new SchemaInstaller(s.getConnection(), schema));
 				schemaInstallerTool.getInstallers().add(new UserTableInstaller(c));
 				schemaInstallerTool.getInstallers().add(new MusicTableInstaller(c));
 				schemaInstallerTool.getInstallers().add(new RoleTableInstaller(c));

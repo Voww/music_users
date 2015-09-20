@@ -1,6 +1,6 @@
 package zaietsv.complextask.mvc.dao;
 
-import zaietsv.complextask.mvc.instance.Address;
+import zaietsv.complextask.mvc.instance.Role;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,20 +8,20 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class AddressDAO extends AbstractDAO<Address> {
-	
+public class RoleDAO extends AbstractDAO<Role> {
+
 	/**
-	 * Constructs an empty data access object for `address` table
+	 * Constructs an empty data access object for `role` table
 	 *//*
-	public AddressDAO() {
+	public RoleDAO() {
 		super();
 	}*/
 
 	/**
-	 * Constructs a data access object for `address` table using connection parameter
+	 * Constructs a data access object for `role` table using connection parameter
 	 * @param connection - an instance of Connection class
 	 */
-	public AddressDAO(Connection connection) {
+	public RoleDAO(Connection connection) {
 		super(connection);
 	}
 
@@ -29,22 +29,16 @@ public class AddressDAO extends AbstractDAO<Address> {
 	 * @see zaietsv.complextask.mvc.dao.DataAccessObject#insert(zaietsv.complextask.mvc.instance.Instance)
 	 */
 	@Override
-	public long insert(Address address) {
+	public long insert(Role role) {
 		long id = -1;
-		String sql = "INSERT INTO address (postcode, city, street, house, flat) VALUES (?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO role (name) VALUE (?)";
 		try (PreparedStatement ps = connection.prepareStatement(sql)) {
-			ps.setInt(1, address.getPostcode());
-			ps.setString(2, address.getCity());
-			ps.setString(3, address.getStreet());
-			ps.setInt(4, address.getHouse());
-			ps.setInt(5, address.getFlat());
-			
+			ps.setString(1, role.getName());
 			ps.executeUpdate();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 		return id;
 	}
 
@@ -52,19 +46,15 @@ public class AddressDAO extends AbstractDAO<Address> {
 	 * @see zaietsv.complextask.mvc.dao.DataAccessObject#read(long)
 	 */
 	@Override
-	public Address read(long id) {
-		String sql = "SELECT * FROM address WHERE id = ?";
-		Address address = new Address();
+	public Role read(long id) {
+		String sql = "SELECT * FROM role WHERE id = ?";
+		Role role = new Role();
 		try (PreparedStatement ps = connection.prepareStatement(sql)) {
 			ps.setLong(1, id);
 			try (ResultSet rs = ps.executeQuery()) {
-				if (rs.next()) {				
-					address.setId(rs.getLong("id"));
-					address.setPostcode(rs.getInt("postcode"));
-					address.setCity(rs.getString("city"));
-					address.setStreet(rs.getString("street"));
-					address.setHouse(rs.getInt("house"));
-					address.setFlat(rs.getInt("flat"));
+				if (rs.next()) {
+					role.setId(rs.getLong("id"));
+					role.setName(rs.getString("name"));
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -72,24 +62,19 @@ public class AddressDAO extends AbstractDAO<Address> {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return address;
+		return role;
 	}
 	
-
 	/* (non-Javadoc)
 	 * @see zaietsv.complextask.mvc.dao.DataAccessObject#update(zaietsv.complextask.mvc.instance.Instance)
 	 */
 	@Override
-	public int update(Address address) {
-		String sql = "UPDATE address SET `postcode` = ?, `city` = ?, `street` = ?, `house` = ?, `flat` = ?  WHERE `id` = ?";
+	public int update(Role role) {
+		String sql = "UPDATE role SET `name` = ?  WHERE `id` = ?";
 		int rows = 0;
 		try (PreparedStatement ps = connection.prepareStatement(sql)) {
-			ps.setInt(1, address.getPostcode());
-			ps.setString(2, address.getCity());
-			ps.setString(3, address.getStreet());
-			ps.setInt(4, address.getHouse());
-			ps.setInt(5, address.getFlat());
-			ps.setLong(6, address.getId());
+			ps.setString(1, role.getName());
+			ps.setLong(2, role.getId());
 			try {
 				rows = ps.executeUpdate();
 			} catch (SQLException e) {
@@ -100,13 +85,13 @@ public class AddressDAO extends AbstractDAO<Address> {
 		}
 		return rows;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see zaietsv.complextask.mvc.dao.DataAccessObject#delete(long)
 	 */
 	@Override
 	public boolean delete(long id) {
-		String sql = " DELETE FROM `address` WHERE id = ? ";
+		String sql = " DELETE FROM `role` WHERE id = ? ";
 		boolean res = false;
 		try (PreparedStatement ps = connection.prepareStatement(sql)) {
 			ps.setLong(1, id);
@@ -121,20 +106,16 @@ public class AddressDAO extends AbstractDAO<Address> {
 	 * @see zaietsv.complextask.mvc.dao.DataAccessObject#readAll()
 	 */
 	@Override
-	public ArrayList<Address> readAll() {
-		String sql = "SELECT * FROM address WHERE 1";
-		ArrayList<Address> addresses = new ArrayList<>();
+	public ArrayList<Role> readAll() {
+		String sql = "SELECT * FROM role WHERE 1";
+		ArrayList<Role> roles = new ArrayList<>();
 		try (PreparedStatement ps = connection.prepareStatement(sql)) {
 			try (ResultSet rs = ps.executeQuery()) {
 				while (rs.next()) {
-					Address address = new Address();
-					address.setId(rs.getLong("id"));
-					address.setPostcode(rs.getInt("postcode"));
-					address.setCity(rs.getString("city"));
-					address.setStreet(rs.getString("street"));
-					address.setHouse(rs.getInt("house"));
-					address.setFlat(rs.getInt("flat"));
-					addresses.add(address);
+					Role role = new Role();
+					role.setId(rs.getLong("id"));
+					role.setName(rs.getString("name"));
+					roles.add(role);
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -142,6 +123,6 @@ public class AddressDAO extends AbstractDAO<Address> {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return addresses;
+		return roles;
 	}
 }

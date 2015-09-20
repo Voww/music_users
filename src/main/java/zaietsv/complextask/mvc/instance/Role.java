@@ -8,6 +8,16 @@ public class Role extends AbstractInstance {
 		
 	}
 
+	public Role(String name) {
+		super();
+		this.name = name;
+	}
+
+	public Role(long id, String name) {
+		super(id);
+		this.name = name;
+	}
+
 	/**
 	 * @return the name
 	 */

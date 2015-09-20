@@ -1,11 +1,6 @@
 package zaietsv.complextask.mvc.servlet;
 
-import zaietsv.complextask.mvc.connect.ConnectorTool;
-import zaietsv.complextask.mvc.dao.AddressDAO;
-import zaietsv.complextask.mvc.dao.UserDAO;
-import zaietsv.complextask.mvc.holder.AddressHolder;
-import zaietsv.complextask.mvc.holder.UserHolder;
-import zaietsv.complextask.mvc.instance.User;
+import zaietsv.complextask.mvc.processor.*;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -22,27 +17,12 @@ import java.sql.SQLException;
 @WebServlet("/AdminServlet")
 public class AdminServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private UserDAO udao;
-	private AddressDAO adao;
-	ConnectorTool ct;
-	UserHolder userHolder;
-	AddressHolder addressHolder;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
     public AdminServlet() {
         super();
-        userHolder = new UserHolder();
-        addressHolder = new AddressHolder();
-        try {
-        	ct = new ConnectorTool("jdbc:mysql://localhost:3306/music_users", "tomcat", "tacmot");
-        	udao = new UserDAO(ct.connect());
-        	adao = new AddressDAO(ct.connect());
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-        
     }
 
 	/**
@@ -50,43 +30,8 @@ public class AdminServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("DOGET");
-		String action = request.getParameter("action");
-		action = action == null ? "" : action;
-		RequestDispatcher rd = request.getRequestDispatcher("admin.jsp");
-		switch (action) {
-		/*case "insert":
-			System.out.println("case 'insert':");
-			String login = request.getParameter("login");
-			String password = request.getParameter("password");
-			String email = request.getParameter("email");;
-			User newUser = new User(login, password, email);
-			udao.insert(newUser);
-			break;*/
-		case "edit":
-			System.out.println("case 'edit':");
-			
-			break;
-		/*case "update":
-			System.out.println("case 'update':");
-			break;*/
-		case "delete":
-			System.out.println("case 'delete':");
-			udao.delete(Long.parseLong(request.getParameter("id")));
-			
-			
-			break;
+		this.doPost(request, response);
 
-		default:
-			System.out.println("default:");
-			break;
-		}
-		
-		
-		userHolder.setList(udao.readAll());
-		addressHolder.setList(adao.readAll());
-		request.getSession().setAttribute("userHolder", userHolder);
-		request.getSession().setAttribute("addressHolder", addressHolder);
-		rd.forward(request, response);
 	}
 
 	/**
@@ -94,48 +39,50 @@ public class AdminServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("DOPOST");
-		String action = request.getParameter("action");
-		action = action == null ? "" : action;
+		String table = request.getParameter("table");
+		table = table == null ? "" : table;
 
-		RequestDispatcher rd = request.getRequestDispatcher("admin.jsp");
-		switch (action) {
-		case "insert":
-			System.out.println("case 'insert':");
-			String login = request.getParameter("login");
-			String password = request.getParameter("password");
-			String email = request.getParameter("email");
-			User newUser = new User(login, password, email);
-			udao.insert(newUser);
-			
-			break;
-		case "edit":
-			System.out.println("case 'edit':");
-			break;
-		case "update":
-			System.out.println("case 'update':");
-			Long id = Long.parseLong(request.getParameter("id"));
-			login = request.getParameter("login");
-			password = request.getParameter("password");
-			email = request.getParameter("email");
-			User updateUser = new User(id, login, password, email);
-			System.out.println(updateUser);
-			System.out.println(udao.update(updateUser));
-			break;
-		case "delete":
-			
-			break;
+		Processor processor;
+		RequestDispatcher rd;
 
-		default:
-			System.out.println("default:");
-			break;
+		try {
+			switch (table) {
+				case "user":
+					System.out.println("user table process");
+					processor = new UserProcessor(request, response);
+					processor.process();
+					rd = request.getRequestDispatcher("table/user_table.jsp");
+					rd.forward(request, response);
+					break;
+				case "role":
+					System.out.println("role table process");
+					processor = new RoleProcessor(request,response);
+					processor.process();
+					rd = request.getRequestDispatcher("table/role_table.jsp");
+					rd.forward(request, response);
+					break;
+				case "address":
+					System.out.println("address table process");
+					processor = new AddressProcessor(request,response);
+					processor.process();
+					rd = request.getRequestDispatcher("table/address_table.jsp");
+					rd.forward(request, response);
+					break;
+				case "music":
+					System.out.println("music table process");
+					processor = new MusicProcessor(request,response);
+					processor.process();
+					rd = request.getRequestDispatcher("table/music_table.jsp");
+					rd.forward(request, response);
+					break;
+				default:
+					System.out.println("default table process");
+					rd = request.getRequestDispatcher("admin.jsp");
+					rd.forward(request, response);
+					break;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-		
-		userHolder.setList(udao.readAll());
-		addressHolder.setList(adao.readAll());
-		request.getSession().setAttribute("userHolder", userHolder);
-		request.getSession().setAttribute("addressHolder", addressHolder);
-		
-		rd.forward(request, response);
 	}
-
 }

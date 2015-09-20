@@ -1,10 +1,10 @@
 package zaietsv.complextask.mvc.install;
 
+import zaietsv.complextask.mvc.connect.MusicUserConnector;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-
-import zaietsv.complextask.mvc.connect.ConnectorTool;
 
 public class UserTableInstaller extends TableInstaller {
 	
@@ -48,9 +48,9 @@ public class UserTableInstaller extends TableInstaller {
 	
 	public static void main(String[] args) {
 		try {
-			ConnectorTool ct = new ConnectorTool("jdbc:mysql://localhost:3306/music_users", "tomcat", "tacmot");
+			MusicUserConnector ct = new MusicUserConnector();
 			//ct.connect();
-			UserTableInstaller uti = new UserTableInstaller(ct.connect());
+			UserTableInstaller uti = new UserTableInstaller(ct.getConnection());
 			uti.install();
 			uti.isInstalled();
 			uti.unInstall();

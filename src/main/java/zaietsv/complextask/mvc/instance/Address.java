@@ -13,18 +13,22 @@ public class Address extends AbstractInstance {
 		
 	}
 
-	/**
-	 * @return the id
-	 */
-	public long getId() {
-		return id;
+	public Address(int postcode, String city, String street, int house, int flat) {
+		super();
+		this.postcode = postcode;
+		this.city = city;
+		this.street = street;
+		this.house = house;
+		this.flat = flat;
 	}
 
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(long id) {
-		this.id = id;
+	public Address(long id, int postcode, String city, String street, int house, int flat) {
+		super(id);
+		this.postcode = postcode;
+		this.city = city;
+		this.street = street;
+		this.house = house;
+		this.flat = flat;
 	}
 
 	/**
@@ -96,7 +100,4 @@ public class Address extends AbstractInstance {
 	public void setFlat(int flat) {
 		this.flat = flat;
 	}
-
-	
-
 }

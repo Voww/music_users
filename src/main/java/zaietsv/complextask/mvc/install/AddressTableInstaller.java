@@ -1,11 +1,11 @@
 package zaietsv.complextask.mvc.install;
 
+import zaietsv.complextask.mvc.connect.MusicUserConnector;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import zaietsv.complextask.mvc.connect.ConnectorTool;
 
 public class AddressTableInstaller extends TableInstaller {
 	
@@ -99,9 +99,7 @@ public class AddressTableInstaller extends TableInstaller {
 	
 	public static void main(String[] args) {
 		try {
-			ConnectorTool ct = new ConnectorTool("jdbc:mysql://localhost:3306/music_users", "tomcat", "tacmot");
-			//ct.connect();
-			AddressTableInstaller uti = new AddressTableInstaller(ct.connect());
+			AddressTableInstaller uti = new AddressTableInstaller(new MusicUserConnector().getConnection());
 			uti.install();
 			uti.isInstalled();
 			uti.unInstall();

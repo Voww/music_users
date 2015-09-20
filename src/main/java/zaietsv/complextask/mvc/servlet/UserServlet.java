@@ -1,6 +1,6 @@
 package zaietsv.complextask.mvc.servlet;
 
-import zaietsv.complextask.mvc.connect.ConnectorTool;
+import zaietsv.complextask.mvc.connect.MusicUserConnector;
 import zaietsv.complextask.mvc.dao.UserDAO;
 import zaietsv.complextask.mvc.instance.User;
 
@@ -34,8 +34,8 @@ public class UserServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter writer = response.getWriter();
 		try {
-			ConnectorTool ct = new ConnectorTool("jdbc:mysql://localhost:3306/music_users", "tomcat", "tacmot");
-			UserDAO udao = new UserDAO(ct.connect());
+			MusicUserConnector ct = new MusicUserConnector();
+			UserDAO udao = new UserDAO(ct.getConnection());
 			ArrayList<User> users = udao.readAll();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

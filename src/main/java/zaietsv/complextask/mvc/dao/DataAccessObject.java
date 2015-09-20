@@ -1,8 +1,8 @@
 package zaietsv.complextask.mvc.dao;
 
-import java.util.ArrayList;
-
 import zaietsv.complextask.mvc.instance.Instance;
+
+import java.util.ArrayList;
 
 /**
  * An interface describes access to a database
@@ -15,7 +15,7 @@ public interface DataAccessObject<I extends Instance> {
 	/**
 	 * Inserts a new record into a database
 	 * @param instance - an instance of a class which implements Instance interface
-	 * @return
+	 * @return - an id for new added instance
 	 */
 	long insert(I instance);
 	
