@@ -8,8 +8,7 @@
 </head>
 <body>
 <h1>Music Users index page</h1>
-<a href="AdminServlet"><button>Administrator's page</button></a>
+<a href="AdminInstancesServlet"><button>Administrator's page</button></a>
 <a href="UserServlet"><button>User's page</button></a>
-<a href="install.jsp"><button>Handle A Music Users Database</button></a>
 </body>
 </html>

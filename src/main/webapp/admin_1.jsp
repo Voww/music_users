@@ -1,9 +1,9 @@
-<%@page import="zaietsv.complextask.mvc.instance.User"%>
+<%@page import="zaietsv.complextask.mvc.entity.instance.User"%>
 <%@page import="java.sql.SQLException"%>
-<%@page import="zaietsv.complextask.mvc.instance.Instance"%>
+<%@page import="zaietsv.complextask.mvc.entity.instance.Instance"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="zaietsv.complextask.mvc.connect.MusicUserConnector"%>
-<%@page import="zaietsv.complextask.mvc.dao.UserDAO"%>
+<%@page import="zaietsv.complextask.mvc.dao.data_acces_instance.UserDAI"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -19,8 +19,8 @@ id=<%=request.getParameter("id") %>
 <%String action = request.getParameter("action");%>
 <%long id = Long.parseLong(request.getParameter("id")); %>
 
-<% try (MusicUserConnector ct = new MusicUserConnector("jdbc:mysql://localhost:3306/music_users", "tomcat", "tacmot");) { %>
-<% UserDAO udao = new UserDAO(ct.connect()); %>			
+<% try (MusicUserConnector ct = new MusicUserConnector("jdbc:mysql://localhost:3306/music_users", "tomcat", "tacmot")) { %>
+<% UserDAI udao = new UserDAI(ct.connect()); %>
 <% ArrayList<Instance> users = udao.readAll(); %>
 
 <table border="1">

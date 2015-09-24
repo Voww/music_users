@@ -1,8 +1,8 @@
 package zaietsv.complextask.mvc.servlet;
 
 import zaietsv.complextask.mvc.connect.MusicUserConnector;
-import zaietsv.complextask.mvc.dao.UserDAO;
-import zaietsv.complextask.mvc.instance.User;
+import zaietsv.complextask.mvc.dao.data_acces_instance.UserDAI;
+import zaietsv.complextask.mvc.entity.instance.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -35,7 +35,7 @@ public class UserServlet extends HttpServlet {
 		PrintWriter writer = response.getWriter();
 		try {
 			MusicUserConnector ct = new MusicUserConnector();
-			UserDAO udao = new UserDAO(ct.getConnection());
+			UserDAI udao = new UserDAI(ct.getConnection());
 			ArrayList<User> users = udao.readAll();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
