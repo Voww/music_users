@@ -1,6 +1,6 @@
-package zaietsv.complextask.mvc.dao;
+package zaietsv.complextask.mvc.dao.data_acces_instance;
 
-import zaietsv.complextask.mvc.instance.Role;
+import zaietsv.complextask.mvc.entity.instance.Role;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,25 +8,25 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class RoleDAO extends AbstractDAO<Role> {
+public class RoleDAI extends AbstractDAI<Role> {
 
 	/**
 	 * Constructs an empty data access object for `role` table
 	 *//*
-	public RoleDAO() {
+	public RoleDAI() {
 		super();
 	}*/
 
 	/**
 	 * Constructs a data access object for `role` table using connection parameter
-	 * @param connection - an instance of Connection class
+	 * @param connection - an entity of Connection class
 	 */
-	public RoleDAO(Connection connection) {
+	public RoleDAI(Connection connection) {
 		super(connection);
 	}
 
 	/* (non-Javadoc)
-	 * @see zaietsv.complextask.mvc.dao.DataAccessObject#insert(zaietsv.complextask.mvc.instance.Instance)
+	 * @see zaietsv.complextask.mvc.dao.data_acces_instance.DataAccessInstance#insert(zaietsv.complextask.mvc.entity.data_acces_instance.InstanceDetail)
 	 */
 	@Override
 	public long insert(Role role) {
@@ -43,7 +43,7 @@ public class RoleDAO extends AbstractDAO<Role> {
 	}
 
 	/* (non-Javadoc)
-	 * @see zaietsv.complextask.mvc.dao.DataAccessObject#read(long)
+	 * @see zaietsv.complextask.mvc.dao.data_acces_instance.DataAccessInstance#read(long)
 	 */
 	@Override
 	public Role read(long id) {
@@ -64,9 +64,27 @@ public class RoleDAO extends AbstractDAO<Role> {
 		}
 		return role;
 	}
+
+	@Override
+	public long read(Role instance) {
+		String sql = "SELECT id FROM role WHERE name = ?";
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
+			ps.setString(1, instance.getName());
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					instance.setId(rs.getLong("id"));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return instance.getId();
+	}
 	
 	/* (non-Javadoc)
-	 * @see zaietsv.complextask.mvc.dao.DataAccessObject#update(zaietsv.complextask.mvc.instance.Instance)
+	 * @see zaietsv.complextask.mvc.dao.data_acces_instance.DataAccessInstance#update(zaietsv.complextask.mvc.entity.data_acces_instance.InstanceDetail)
 	 */
 	@Override
 	public int update(Role role) {
@@ -87,7 +105,7 @@ public class RoleDAO extends AbstractDAO<Role> {
 	}
 
 	/* (non-Javadoc)
-	 * @see zaietsv.complextask.mvc.dao.DataAccessObject#delete(long)
+	 * @see zaietsv.complextask.mvc.dao.data_acces_instance.DataAccessInstance#delete(long)
 	 */
 	@Override
 	public boolean delete(long id) {
@@ -103,7 +121,7 @@ public class RoleDAO extends AbstractDAO<Role> {
 	}
 
 	/* (non-Javadoc)
-	 * @see zaietsv.complextask.mvc.dao.DataAccessObject#readAll()
+	 * @see zaietsv.complextask.mvc.dao.data_acces_instance.DataAccessInstance#readAll()
 	 */
 	@Override
 	public ArrayList<Role> readAll() {

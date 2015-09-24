@@ -1,8 +1,7 @@
-package zaietsv.complextask.mvc.instance;
+package zaietsv.complextask.mvc.entity.instance;
 
 public class Address extends AbstractInstance {
 
-	private long id;
 	private int postcode;
 	private String city;
 	private String street;
@@ -99,5 +98,16 @@ public class Address extends AbstractInstance {
 	 */
 	public void setFlat(int flat) {
 		this.flat = flat;
+	}
+
+	@Override
+	public String toString() {
+		return "Address{" +
+				"postcode=" + postcode +
+				", city='" + city + '\'' +
+				", street='" + street + '\'' +
+				", house=" + house +
+				", flat=" + flat +
+				"} " + super.toString();
 	}
 }

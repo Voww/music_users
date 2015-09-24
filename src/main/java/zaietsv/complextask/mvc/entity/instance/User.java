@@ -1,4 +1,4 @@
-package zaietsv.complextask.mvc.instance;
+package zaietsv.complextask.mvc.entity.instance;
 
 import java.sql.Date;
 
@@ -12,29 +12,17 @@ public class User extends AbstractInstance {
 	public User() {
 		
 	}
-	
-	/**
-	 * @param id
-	 * @param login
-	 * @param password
-	 * @param email
-	 * @param reg_date
-	 */
+
 	public User(long id, String login, String password, String email, Date reg_date) {
-		this.id = id;
+		super(id);
 		this.login = login;
 		this.password = password;
 		this.email = email;
 		this.reg_date = reg_date;
 	}
 
-	/**
-	 * @param login
-	 * @param password
-	 * @param email
-	 * @param reg_date
-	 */
 	public User(String login, String password, String email) {
+		super();
 		this.login = login;
 		this.password = password;
 		this.email = email;
@@ -104,12 +92,13 @@ public class User extends AbstractInstance {
 		this.reg_date = reg_date;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
-		return "User [login=" + login + ", password=" + password + ", email="
-				+ email + ", reg_date=" + reg_date + ", id=" + id + "]";
+		return "User{" +
+				"login='" + login + '\'' +
+				", password='" + password + '\'' +
+				", email='" + email + '\'' +
+				", reg_date=" + reg_date +
+				"} " + super.toString();
 	}
 }

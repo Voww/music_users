@@ -1,6 +1,6 @@
-package zaietsv.complextask.mvc.dao;
+package zaietsv.complextask.mvc.dao.data_acces_instance;
 
-import zaietsv.complextask.mvc.instance.Music;
+import zaietsv.complextask.mvc.entity.instance.Music;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,25 +8,25 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class MusicDAO extends AbstractDAO<Music> {
+public class MusicDAI extends AbstractDAI<Music> {
 
 	/**
 	 * Constructs an empty data access object for `music` table
 	 *//*
-	public MusicDAO() {
+	public MusicDAI() {
 		super();
 	}*/
 
 	/**
 	 * Constructs a data access object for `music` table using connection parameter
-	 * @param connection - an instance of Connection class
+	 * @param connection - an entity of Connection class
 	 */
-	public MusicDAO(Connection connection) {
+	public MusicDAI(Connection connection) {
 		super(connection);
 	}
 
 	/* (non-Javadoc)
-	 * @see zaietsv.complextask.mvc.dao.DataAccessObject#insert(zaietsv.complextask.mvc.instance.Instance)
+	 * @see zaietsv.complextask.mvc.dao.data_acces_instance.DataAccessInstance#insert(zaietsv.complextask.mvc.entity.data_acces_instance.InstanceDetail)
 	 */
 	@Override
 	public long insert(Music music) {
@@ -45,7 +45,7 @@ public class MusicDAO extends AbstractDAO<Music> {
 	}
 
 	/* (non-Javadoc)
-	 * @see zaietsv.complextask.mvc.dao.DataAccessObject#read(long)
+	 * @see zaietsv.complextask.mvc.dao.data_acces_instance.DataAccessInstance#read(long)
 	 */
 	@Override
 	public Music read(long id) {
@@ -67,9 +67,28 @@ public class MusicDAO extends AbstractDAO<Music> {
 		}
 		return music;
 	}
+
+	@Override
+	public long read(Music instance) {
+		String sql = "SELECT id FROM music WHERE name = ? AND rating = ?";
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
+			ps.setString(1, instance.getName());
+			ps.setInt(2, instance.getRating());
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					instance.setId(rs.getLong("id"));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return instance.getId();
+	}
 	
 	/* (non-Javadoc)
-	 * @see zaietsv.complextask.mvc.dao.DataAccessObject#update(zaietsv.complextask.mvc.instance.Instance)
+	 * @see zaietsv.complextask.mvc.dao.data_acces_instance.DataAccessInstance#update(zaietsv.complextask.mvc.entity.data_acces_instance.InstanceDetail)
 	 */
 	@Override
 	public int update(Music music) {
@@ -91,7 +110,7 @@ public class MusicDAO extends AbstractDAO<Music> {
 	}
 
 	/* (non-Javadoc)
-	 * @see zaietsv.complextask.mvc.dao.DataAccessObject#delete(long)
+	 * @see zaietsv.complextask.mvc.dao.data_acces_instance.DataAccessInstance#delete(long)
 	 */
 	@Override
 	public boolean delete(long id) {
@@ -107,7 +126,7 @@ public class MusicDAO extends AbstractDAO<Music> {
 	}
 
 	/* (non-Javadoc)
-	 * @see zaietsv.complextask.mvc.dao.DataAccessObject#readAll()
+	 * @see zaietsv.complextask.mvc.dao.data_acces_instance.DataAccessInstance#readAll()
 	 */
 	@Override
 	public ArrayList<Music> readAll() {

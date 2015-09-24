@@ -1,6 +1,6 @@
-package zaietsv.complextask.mvc.dao;
+package zaietsv.complextask.mvc.dao.data_acces_instance;
 
-import zaietsv.complextask.mvc.instance.Address;
+import zaietsv.complextask.mvc.entity.instance.Address;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,25 +8,25 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class AddressDAO extends AbstractDAO<Address> {
+public class AddressDAI extends AbstractDAI<Address> {
 	
 	/**
 	 * Constructs an empty data access object for `address` table
 	 *//*
-	public AddressDAO() {
+	public AddressDAI() {
 		super();
 	}*/
 
 	/**
 	 * Constructs a data access object for `address` table using connection parameter
-	 * @param connection - an instance of Connection class
+	 * @param connection - an entity of Connection class
 	 */
-	public AddressDAO(Connection connection) {
+	public AddressDAI(Connection connection) {
 		super(connection);
 	}
 
 	/* (non-Javadoc)
-	 * @see zaietsv.complextask.mvc.dao.DataAccessObject#insert(zaietsv.complextask.mvc.instance.Instance)
+	 * @see zaietsv.complextask.mvc.dao.data_acces_instance.DataAccessInstance#insert(zaietsv.complextask.mvc.entity.data_acces_instance.InstanceDetail)
 	 */
 	@Override
 	public long insert(Address address) {
@@ -49,7 +49,7 @@ public class AddressDAO extends AbstractDAO<Address> {
 	}
 
 	/* (non-Javadoc)
-	 * @see zaietsv.complextask.mvc.dao.DataAccessObject#read(long)
+	 * @see zaietsv.complextask.mvc.dao.data_acces_instance.DataAccessInstance#read(long)
 	 */
 	@Override
 	public Address read(long id) {
@@ -74,10 +74,38 @@ public class AddressDAO extends AbstractDAO<Address> {
 		}
 		return address;
 	}
-	
+
+	/**
+	 * Reads entity's database id number searching the entity by its essential fields parameters.
+	 * Sets id and other derived fields values into the source entity.
+	 * @param instance - an entity to be read
+	 * @return entity's database id number
+	 */
+	@Override
+	public long read(Address instance) {
+		String sql = "SELECT id FROM address WHERE postcode = ? AND city = ? AND street = ? AND house = ? AND flat = ?";
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
+			ps.setInt(1, instance.getPostcode());
+			ps.setString(2, instance.getCity());
+			ps.setString(3, instance.getStreet());
+			ps.setInt(4, instance.getHouse());
+			ps.setInt(5, instance.getFlat());
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					instance.setId(rs.getLong("id"));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return instance.getId();
+	}
+
 
 	/* (non-Javadoc)
-	 * @see zaietsv.complextask.mvc.dao.DataAccessObject#update(zaietsv.complextask.mvc.instance.Instance)
+	 * @see zaietsv.complextask.mvc.dao.data_acces_instance.DataAccessInstance#update(zaietsv.complextask.mvc.entity.data_acces_instance.InstanceDetail)
 	 */
 	@Override
 	public int update(Address address) {
@@ -102,7 +130,7 @@ public class AddressDAO extends AbstractDAO<Address> {
 	}
 	
 	/* (non-Javadoc)
-	 * @see zaietsv.complextask.mvc.dao.DataAccessObject#delete(long)
+	 * @see zaietsv.complextask.mvc.dao.data_acces_instance.DataAccessInstance#delete(long)
 	 */
 	@Override
 	public boolean delete(long id) {
@@ -118,7 +146,7 @@ public class AddressDAO extends AbstractDAO<Address> {
 	}
 
 	/* (non-Javadoc)
-	 * @see zaietsv.complextask.mvc.dao.DataAccessObject#readAll()
+	 * @see zaietsv.complextask.mvc.dao.data_acces_instance.DataAccessInstance#readAll()
 	 */
 	@Override
 	public ArrayList<Address> readAll() {
