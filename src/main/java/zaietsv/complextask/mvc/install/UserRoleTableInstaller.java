@@ -31,11 +31,10 @@ public class UserRoleTableInstaller extends TableInstaller {
 				"foreign key(user_id) references `user`(id) on delete restrict on update cascade," +
 				"foreign key(role_id) references `role`(id) on delete restrict on update cascade" +
 			");";
-		try (PreparedStatement ps = connection.prepareStatement(sql);) {
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
 			//ps.set(1, table);
 				int rows = ps.executeUpdate();
-				;
-				System.out.println("rows=" + rows + ";");
+			System.out.println("rows=" + rows + ";");
 				if (rows == 1 && ps.getWarnings() == null) {
 					success = true;
 				} else {

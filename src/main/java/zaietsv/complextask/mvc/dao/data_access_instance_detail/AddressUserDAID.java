@@ -2,13 +2,14 @@ package zaietsv.complextask.mvc.dao.data_access_instance_detail;
 
 import zaietsv.complextask.mvc.dao.data_acces_instance.AddressDAI;
 import zaietsv.complextask.mvc.dao.data_acces_instance.UserDAI;
+import zaietsv.complextask.mvc.entity.instance.Address;
+import zaietsv.complextask.mvc.entity.instance.User;
 import zaietsv.complextask.mvc.entity.instance_detail.AddressUser;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 public class AddressUserDAID extends AbstractDAID<AddressUser> {
 
@@ -63,23 +64,29 @@ public class AddressUserDAID extends AbstractDAID<AddressUser> {
 	 */
 	@Override
 	public AddressUser read(long id) {
-		String sql = "SELECT * FROM address a JOIN user_address ua ON a.id = ua.address_id JOIN `user` u ON ua.user_id = u.id HAVING  a.id = ? ";
+		String sql = "SELECT * FROM address a LEFT OUTER JOIN user_address ua ON a.id = ua.address_id LEFT OUTER JOIN `user` u ON ua.user_id = u.id HAVING  a.id = ? ";
 		AddressUser addressUser = new AddressUser();
 		try (PreparedStatement ps = connection.prepareStatement(sql)) {
 			ps.setLong(1, id);
 			try (ResultSet rs = ps.executeQuery()) {
 				if (rs.next()) {
-					addressUser.getInstance().setId(rs.getLong("id"));
-					addressUser.getInstance().setPostcode(rs.getInt("postcode"));
-					addressUser.getInstance().setCity(rs.getString("city"));
-					addressUser.getInstance().setStreet(rs.getString("street"));
-					addressUser.getInstance().setHouse(rs.getInt("house"));
-					addressUser.getInstance().setFlat(rs.getInt("flat"));
-					addressUser.getDetail().setId(rs.getLong("id"));
-					addressUser.getDetail().setLogin(rs.getString("login"));
-					addressUser.getDetail().setPassword(rs.getString("password"));
-					addressUser.getDetail().setEmail(rs.getString("email"));
-					addressUser.getDetail().setReg_date(rs.getDate("reg_date"));
+					Address address = new Address();
+					address.setId(rs.getLong("a.id"));
+					address.setPostcode(rs.getInt("postcode"));
+					address.setCity(rs.getString("city"));
+					address.setStreet(rs.getString("street"));
+					address.setHouse(rs.getInt("house"));
+					address.setFlat(rs.getInt("flat"));
+
+					User user = new User();
+					user.setId(rs.getLong("u.id"));
+					user.setLogin(rs.getString("login"));
+					user.setPassword(rs.getString("password"));
+					user.setEmail(rs.getString("email"));
+					user.setReg_date(rs.getDate("reg_date"));
+
+					addressUser.setInstance(address);
+					addressUser.setDetail(user);
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -87,7 +94,7 @@ public class AddressUserDAID extends AbstractDAID<AddressUser> {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
+		System.out.println("addressUser=" + addressUser);
 		return addressUser;
 	}
 	
@@ -118,7 +125,7 @@ public class AddressUserDAID extends AbstractDAID<AddressUser> {
 		AddressDAI adai = new AddressDAI(connection);
 		adai.update(addressUser.getInstance());
 		UserDAI udai = new UserDAI(connection);
-		udai.insert(addressUser.getDetail());
+		udai.update(addressUser.getDetail());
 
 		return rows;
 	}
@@ -141,7 +148,7 @@ public class AddressUserDAID extends AbstractDAID<AddressUser> {
 
 	/* (non-Javadoc)
 	 * @see zaietsv.complextask.mvc.dao.data_acces_instance.DataAccessInstance#readAll()
-	 */
+	 *//*
 	@Override
 	public ArrayList<AddressUser> readAll() {
 		String sql = "SELECT * FROM address WHERE 1";
@@ -165,5 +172,5 @@ public class AddressUserDAID extends AbstractDAID<AddressUser> {
 			e.printStackTrace();
 		}
 		return addressUserList;
-	}
+	}*/
 }

@@ -87,10 +87,12 @@ public class AddressUserProcessor extends AbstractInstanceDetailProcessor {
                 System.out.println("default:");
                 break;
         }
-
+        instanceDetail = daid.read(Long.parseLong(request.getParameter("address_id")));
+        System.out.println("instanceDetail=" + instanceDetail);
 
         RequestDispatcher rd = request.getRequestDispatcher("admin/address_user_table.jsp");
-        request.getSession().setAttribute("addressUser", new AddressUser());
+        //request.getSession().setAttribute("addressUser", new AddressUser());
+        request.getSession().setAttribute("addressUser", instanceDetail);
         try {
             rd.forward(request, response);
         } catch (ServletException e) {
@@ -98,9 +100,6 @@ public class AddressUserProcessor extends AbstractInstanceDetailProcessor {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //this.instanceDetail.set(data_access_instance_detail.read(Long.parseLong(request.getParameter("address_id"))));
-
-        //return (AddressUser)this.instances;
-        return new AddressUser();
+        return (AddressUser)this.instanceDetail;
     }
 }

@@ -54,21 +54,14 @@ public class AdminInstanceDetailsServlet extends HttpServlet {
 					rd = request.getRequestDispatcher("admin/address_user_table.jsp");
 					rd.forward(request, response);
 					break;
-				case "role":
+				case "role_user":
 					System.out.println("role table process");
 					instancesProcessor = new RolesProcessor(request,response);
 					instancesProcessor.process();
 					rd = request.getRequestDispatcher("admin/roles_table.jsp");
 					rd.forward(request, response);
 					break;
-				case "address":
-					System.out.println("address table process");
-					instancesProcessor = new AddressesProcessor(request,response);
-					instancesProcessor.process();
-					rd = request.getRequestDispatcher("admin/addresses_table.jsp");
-					rd.forward(request, response);
-					break;
-				case "music":
+				case "music_user":
 					System.out.println("music table process");
 					instancesProcessor = new MusicsProcessor(request,response);
 					instancesProcessor.process();

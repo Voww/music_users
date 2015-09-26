@@ -12,4 +12,9 @@ public class AddressUser extends AbstractInstanceDetail<Address, User> {
 	public AddressUser(Address instance, User detail) {
 		super(instance, detail);
 	}
+
+	@Override
+	public String toString() {
+		return "AddressUser{} " + super.toString();
+	}
 }

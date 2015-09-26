@@ -24,11 +24,10 @@ public class SchemaInstaller extends AbstractInstaller {
 		//String sql = "CREATE SCHEMA IF NOT EXISTS ? DEFAULT CHARACTER SET utf8";
 		//String sql = "CREATE SCHEMA IF NOT EXISTS music_users DEFAULT CHARACTER SET = utf8";
 		String sql = "CREATE SCHEMA IF NOT EXISTS `" + schema + "` DEFAULT CHARACTER SET utf8";
-		try (PreparedStatement ps = connection.prepareStatement(sql);) {
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
 			//ps.set(1, schema);
 				int rows = ps.executeUpdate();
-				;
-				System.out.println("rows=" + rows + ";");
+			System.out.println("rows=" + rows + ";");
 				if (rows == 1 && ps.getWarnings() == null) {
 					success = true;
 				} else {
@@ -47,9 +46,9 @@ public class SchemaInstaller extends AbstractInstaller {
 		Boolean isInstalled = false;
 		//String sql = "show schemas like '" + dbName + "'";
 		String sql = "SHOW SCHEMAS LIKE ?";
-		try (PreparedStatement ps = connection.prepareStatement(sql);){
+		try (PreparedStatement ps = connection.prepareStatement(sql)){
 			ps.setString(1, schema);
-			try (ResultSet rs = ps.executeQuery();) {
+			try (ResultSet rs = ps.executeQuery()) {
 				if (rs.next()) {
 					isInstalled = true;
 				}
@@ -67,7 +66,7 @@ public class SchemaInstaller extends AbstractInstaller {
 		System.out.println("public static boolean uninstall() throws SQLException { ");
 		Boolean success = false;
 		String sql = "DROP SCHEMA IF EXISTS " + schema;
-		try (PreparedStatement ps = connection.prepareStatement(sql);) {
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
 				boolean result = ps.execute();
 				System.out.println("result=" + result + ";");
 				if (result && ps.getWarnings() == null) {

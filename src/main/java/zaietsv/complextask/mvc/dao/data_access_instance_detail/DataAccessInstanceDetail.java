@@ -2,8 +2,6 @@ package zaietsv.complextask.mvc.dao.data_access_instance_detail;
 
 import zaietsv.complextask.mvc.entity.instance_detail.InstanceDetail;
 
-import java.util.ArrayList;
-
 /**
  * An interface describes access to a database
  * @author Voww
@@ -46,6 +44,6 @@ public interface DataAccessInstanceDetail<I extends InstanceDetail> {
 	 * Reads all of the existing records from a table or a schema
 	 * @return a list of instances of a class which implements InstanceDetail interface filled with parameters being red
 	 */
-	ArrayList<I> readAll();
+	//ArrayList<I> readAll();
 
 }

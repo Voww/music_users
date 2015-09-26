@@ -27,11 +27,10 @@ public class TableInstaller extends AbstractInstaller {
 		String sql = "create table if not exists `" + table + "` (" +
 				"id serial primary key," +
 				");";
-		try (PreparedStatement ps = connection.prepareStatement(sql);) {
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
 			//ps.set(1, dbName);
 				int rows = ps.executeUpdate();
-				;
-				System.out.println("rows=" + rows + ";");
+			System.out.println("rows=" + rows + ";");
 				if (rows == 1 && ps.getWarnings() == null) {
 					success = true;
 				} else {
@@ -53,9 +52,9 @@ public class TableInstaller extends AbstractInstaller {
 		System.out.println("public boolean isInstalled() throws SQLException { ");
 		Boolean isInstalled = false;
 		String sql = "SHOW TABLES LIKE ?";
-		try (PreparedStatement ps = connection.prepareStatement(sql);){
+		try (PreparedStatement ps = connection.prepareStatement(sql)){
 			ps.setString(1, table);
-			try (ResultSet rs = ps.executeQuery();) {
+			try (ResultSet rs = ps.executeQuery()) {
 				if (rs.next()) {
 					isInstalled = true;
 				}
@@ -78,7 +77,7 @@ public class TableInstaller extends AbstractInstaller {
 		Boolean success = false;
 		String sql = "DROP TABLE IF EXISTS " + table;
 		//String sql = "DROP TABLE IF EXISTS ?";
-		try (PreparedStatement ps = connection.prepareStatement(sql);) {
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
 			//ps.setString(1, table);
 			boolean result = ps.execute();
 				System.out.println("result=" + result + ";");

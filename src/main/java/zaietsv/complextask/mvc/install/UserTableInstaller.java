@@ -28,11 +28,10 @@ public class UserTableInstaller extends TableInstaller {
 				"email varchar (100)," +
 				"reg_date date" +
 			");";
-		try (PreparedStatement ps = connection.prepareStatement(sql);) {
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
 			//ps.set(1, dbName);
 				int rows = ps.executeUpdate();
-				;
-				System.out.println("rows=" + rows + ";");
+			System.out.println("rows=" + rows + ";");
 				if (rows == 1 && ps.getWarnings() == null) {
 					success = true;
 				} else {

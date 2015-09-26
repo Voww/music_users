@@ -4,8 +4,8 @@ import java.sql.SQLException;
 
 public interface Logger {
 	
-	public boolean login() throws SQLException;
+	boolean login() throws SQLException;
 	
-	public boolean logout() throws SQLException;
+	boolean logout() throws SQLException;
 
 }
