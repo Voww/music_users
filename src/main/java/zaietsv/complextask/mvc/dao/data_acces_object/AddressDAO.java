@@ -1,4 +1,4 @@
-package zaietsv.complextask.mvc.dao.data_acces_instance;
+package zaietsv.complextask.mvc.dao.data_acces_object;
 
 import zaietsv.complextask.mvc.entity.instance.Address;
 
@@ -8,12 +8,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class AddressDAI extends AbstractDAI<Address> {
+public class AddressDAO extends AbstractDAO<Address> {
 	
 	/**
 	 * Constructs an empty data access object for `address` table
 	 *//*
-	public AddressDAI() {
+	public AddressDAO() {
 		super();
 	}*/
 
@@ -21,12 +21,12 @@ public class AddressDAI extends AbstractDAI<Address> {
 	 * Constructs a data access object for `address` table using connection parameter
 	 * @param connection - an entity of Connection class
 	 */
-	public AddressDAI(Connection connection) {
+	public AddressDAO(Connection connection) {
 		super(connection);
 	}
 
 	/* (non-Javadoc)
-	 * @see zaietsv.complextask.mvc.dao.data_acces_instance.DataAccessInstance#insert(zaietsv.complextask.mvc.entity.data_acces_instance.InstanceDetail)
+	 * @see zaietsv.complextask.mvc.dao.data_acces_object.DataAccessObject#insert(zaietsv.complextask.mvc.entity.data_acces_object.InstanceDetail)
 	 */
 	@Override
 	public long insert(Address address) {
@@ -49,7 +49,7 @@ public class AddressDAI extends AbstractDAI<Address> {
 	}
 
 	/* (non-Javadoc)
-	 * @see zaietsv.complextask.mvc.dao.data_acces_instance.DataAccessInstance#read(long)
+	 * @see zaietsv.complextask.mvc.dao.data_acces_object.DataAccessObject#read(long)
 	 */
 	@Override
 	public Address read(long id) {
@@ -105,7 +105,7 @@ public class AddressDAI extends AbstractDAI<Address> {
 
 
 	/* (non-Javadoc)
-	 * @see zaietsv.complextask.mvc.dao.data_acces_instance.DataAccessInstance#update(zaietsv.complextask.mvc.entity.data_acces_instance.InstanceDetail)
+	 * @see zaietsv.complextask.mvc.dao.data_acces_object.DataAccessObject#update(zaietsv.complextask.mvc.entity.data_acces_object.InstanceDetail)
 	 */
 	@Override
 	public int update(Address address) {
@@ -130,7 +130,7 @@ public class AddressDAI extends AbstractDAI<Address> {
 	}
 	
 	/* (non-Javadoc)
-	 * @see zaietsv.complextask.mvc.dao.data_acces_instance.DataAccessInstance#delete(long)
+	 * @see zaietsv.complextask.mvc.dao.data_acces_object.DataAccessObject#delete(long)
 	 */
 	@Override
 	public boolean delete(long id) {
@@ -146,7 +146,7 @@ public class AddressDAI extends AbstractDAI<Address> {
 	}
 
 	/* (non-Javadoc)
-	 * @see zaietsv.complextask.mvc.dao.data_acces_instance.DataAccessInstance#readAll()
+	 * @see zaietsv.complextask.mvc.dao.data_acces_object.DataAccessObject#readAll()
 	 */
 	@Override
 	public ArrayList<Address> readAll() {

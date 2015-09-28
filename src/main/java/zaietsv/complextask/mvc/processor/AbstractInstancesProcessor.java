@@ -1,6 +1,6 @@
 package zaietsv.complextask.mvc.processor;
 
-import zaietsv.complextask.mvc.dao.data_acces_instance.DataAccessInstance;
+import zaietsv.complextask.mvc.dao.data_acces_object.DataAccessObject;
 import zaietsv.complextask.mvc.entity.instance.AbstractInstances;
 import zaietsv.complextask.mvc.entity.instance.Instances;
 
@@ -12,21 +12,21 @@ public abstract class AbstractInstancesProcessor<E extends AbstractInstances> im
     protected HttpServletRequest request;
     protected HttpServletResponse response;
     protected String table;
-    protected DataAccessInstance dai;
+    protected DataAccessObject dao;
     protected Instances instances;
 
     public AbstractInstancesProcessor() {
     }
 
-    public AbstractInstancesProcessor(HttpServletRequest servletRequest, HttpServletResponse servletResponse, String table, DataAccessInstance dai, Instances instances) {
+    public AbstractInstancesProcessor(HttpServletRequest servletRequest, HttpServletResponse servletResponse, String table, DataAccessObject dao, Instances instances) {
         this.request = servletRequest;
         this.response = servletResponse;
         this.table = table;
-        this.dai = dai;
+        this.dao = dao;
         this.instances = instances;
     }
 
-    public abstract E process();
+    public abstract String process();
 
     public HttpServletRequest getRequest() {
         return request;

@@ -1,25 +1,25 @@
-package zaietsv.complextask.mvc.dao.data_access_instance_detail;
+package zaietsv.complextask.mvc.dao.data_acces_object;
 
-import zaietsv.complextask.mvc.entity.instance_detail.AbstractInstanceDetails;
+import zaietsv.complextask.mvc.entity.instance.AbstractInstance;
 
 import java.sql.Connection;
 
-public abstract class AbstractDAIDs<I extends AbstractInstanceDetails> implements DataAccessInstanceDetails<I> {
+public abstract class AbstractDAO<I extends AbstractInstance> implements DataAccessObject<I> {
 
 	protected Connection connection;
-
+	
 	/**
 	 * Constructs an empty data access object
 	 *//*
-	public AbstractDAI() {
-
+	public AbstractDAO() {
+		
 	}*/
 
 	/**
 	 * Constructs a data access object using connection parameter
 	 * @param connection - an entity of Connection class
 	 */
-	public AbstractDAIDs(Connection connection) {
+	public AbstractDAO(Connection connection) {
 		this.connection = connection;
 	}
 

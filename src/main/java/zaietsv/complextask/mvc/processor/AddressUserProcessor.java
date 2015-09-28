@@ -1,16 +1,13 @@
 package zaietsv.complextask.mvc.processor;
 
 import zaietsv.complextask.mvc.connect.MusicUserConnector;
-import zaietsv.complextask.mvc.dao.data_access_instance_detail.AddressUserDAID;
+import zaietsv.complextask.mvc.dao.data_access_object_detail.AddressUserDAOD;
 import zaietsv.complextask.mvc.entity.instance.Address;
 import zaietsv.complextask.mvc.entity.instance.User;
 import zaietsv.complextask.mvc.entity.instance_detail.AddressUser;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.sql.SQLException;
 
 /**
@@ -22,11 +19,11 @@ public class AddressUserProcessor extends AbstractInstanceDetailProcessor {
     }
 
     public AddressUserProcessor(HttpServletRequest servletRequest, HttpServletResponse servletResponse) throws SQLException {
-        super(servletRequest, servletResponse, "address_user", new AddressUserDAID(new MusicUserConnector().getConnection()), new AddressUser());
+        super(servletRequest, servletResponse, "address_user", new AddressUserDAOD(new MusicUserConnector().getConnection(servletRequest)), new AddressUser());
     }
 
     @Override
-    public AddressUser process() {
+    public String process() {
         String action = request.getParameter("action");
         action = action == null ? "" : action;
         System.out.println(this.getClass().getName() + " > action = " + action);
@@ -48,7 +45,7 @@ public class AddressUserProcessor extends AbstractInstanceDetailProcessor {
                 User newUser = new User(login, password, email);
                 System.out.println("newUser=" + newUser);
 
-                daid.insert(new AddressUser(newAddress, newUser));
+                daod.insert(new AddressUser(newAddress, newUser));
 
                 break;
             case "edit":
@@ -70,12 +67,12 @@ public class AddressUserProcessor extends AbstractInstanceDetailProcessor {
                 email = request.getParameter("email");
                 User updateUser = new User(user_id, login, password, email);
 
-                System.out.println(daid.update(new AddressUser(updateAddress, updateUser)));
+                System.out.println(daod.update(new AddressUser(updateAddress, updateUser)));
                 break;
             case "delete":
                 System.out.println("case delete:");
                 address_id = Long.parseLong(request.getParameter("address_id"));
-                System.out.println(daid.delete(address_id));
+                System.out.println(daod.delete(address_id));
                 break;
             /*case "details":
                 System.out.println("case details:");
@@ -87,19 +84,9 @@ public class AddressUserProcessor extends AbstractInstanceDetailProcessor {
                 System.out.println("default:");
                 break;
         }
-        instanceDetail = daid.read(Long.parseLong(request.getParameter("address_id")));
+        instanceDetail = daod.read(Long.parseLong(request.getParameter("id")));
         System.out.println("instanceDetail=" + instanceDetail);
-
-        RequestDispatcher rd = request.getRequestDispatcher("admin/address_user_table.jsp");
-        //request.getSession().setAttribute("addressUser", new AddressUser());
         request.getSession().setAttribute("addressUser", instanceDetail);
-        try {
-            rd.forward(request, response);
-        } catch (ServletException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return (AddressUser)this.instanceDetail;
+        return "admin/address_user_table.jsp";
     }
 }

@@ -1,4 +1,4 @@
-package zaietsv.complextask.mvc.dao.data_acces_instance;
+package zaietsv.complextask.mvc.dao.data_acces_object;
 
 import zaietsv.complextask.mvc.entity.instance.User;
 
@@ -8,12 +8,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class UserDAI extends AbstractDAI<User> {
+public class UserDAO extends AbstractDAO<User> {
 	
 	/**
 	 * Constructs an empty data access object for `user` table
 	 *//*
-	public UserDAI() {
+	public UserDAO() {
 		super();
 	}*/
 
@@ -21,12 +21,12 @@ public class UserDAI extends AbstractDAI<User> {
 	 * Constructs a data access object for `user` table using connection parameter
 	 * @param connection - an entity of Connection class
 	 */
-	public UserDAI(Connection connection) {
+	public UserDAO(Connection connection) {
 		super(connection);
 	}
 
 	/* (non-Javadoc)
-	 * @see zaietsv.complextask.mvc.dao.data_acces_instance.DataAccessInstance#insert(zaietsv.complextask.mvc.entity.data_acces_instance.InstanceDetail)
+	 * @see zaietsv.complextask.mvc.dao.data_acces_object.DataAccessObject#insert(zaietsv.complextask.mvc.entity.data_acces_object.InstanceDetail)
 	 */
 	@Override
 	public long insert(User user) {
@@ -47,7 +47,7 @@ public class UserDAI extends AbstractDAI<User> {
 	}
 
 	/* (non-Javadoc)
-	 * @see zaietsv.complextask.mvc.dao.data_acces_instance.DataAccessInstance#read(long)
+	 * @see zaietsv.complextask.mvc.dao.data_acces_object.DataAccessObject#read(long)
 	 */
 	@Override
 	public User read(long id) {
@@ -108,7 +108,7 @@ public class UserDAI extends AbstractDAI<User> {
 
 
 	/* (non-Javadoc)
-	 * @see zaietsv.complextask.mvc.dao.data_acces_instance.DataAccessInstance#update(zaietsv.complextask.mvc.entity.data_acces_instance.InstanceDetail)
+	 * @see zaietsv.complextask.mvc.dao.data_acces_object.DataAccessObject#update(zaietsv.complextask.mvc.entity.data_acces_object.InstanceDetail)
 	 */
 	@Override
 	public int update(User user) {
@@ -131,7 +131,7 @@ public class UserDAI extends AbstractDAI<User> {
 	}
 
 	/* (non-Javadoc)
-	 * @see zaietsv.complextask.mvc.dao.data_acces_instance.DataAccessInstance#delete(long)
+	 * @see zaietsv.complextask.mvc.dao.data_acces_object.DataAccessObject#delete(long)
 	 */
 	@Override
 	public boolean delete(long id) {
@@ -147,7 +147,7 @@ public class UserDAI extends AbstractDAI<User> {
 	}
 
 	/* (non-Javadoc)
-	 * @see zaietsv.complextask.mvc.dao.data_acces_instance.DataAccessInstance#readAll()
+	 * @see zaietsv.complextask.mvc.dao.data_acces_object.DataAccessObject#readAll()
 	 */
 	@Override
 	public ArrayList<User> readAll() {

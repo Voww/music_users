@@ -1,22 +1,19 @@
-package zaietsv.complextask.mvc.dao.data_access_instance_detail;
+package zaietsv.complextask.mvc.dao.data_access_object_detail;
 
-import zaietsv.complextask.mvc.dao.data_acces_instance.AddressDAI;
-import zaietsv.complextask.mvc.dao.data_acces_instance.UserDAI;
+import zaietsv.complextask.mvc.dao.data_acces_object.AddressDAO;
+import zaietsv.complextask.mvc.dao.data_acces_object.UserDAO;
 import zaietsv.complextask.mvc.entity.instance.Address;
 import zaietsv.complextask.mvc.entity.instance.User;
 import zaietsv.complextask.mvc.entity.instance_detail.AddressUser;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
-public class AddressUserDAID extends AbstractDAID<AddressUser> {
+public class AddressUserDAOD extends AbstractDAOD<AddressUser> {
 
 	/**
 	 * Constructs an empty data access object for `address` table
 	 *//*
-	public AddressDAI() {
+	public AddressDAO() {
 		super();
 	}*/
 
@@ -24,22 +21,22 @@ public class AddressUserDAID extends AbstractDAID<AddressUser> {
 	 * Constructs a data access object for `address` table using connection parameter
 	 * @param connection - an entity of Connection class
 	 */
-	public AddressUserDAID(Connection connection) {
+	public AddressUserDAOD(Connection connection) {
 		super(connection);
 	}
 
 	/* (non-Javadoc)
-	 * @see zaietsv.complextask.mvc.dao.data_acces_instance.DataAccessInstance#insert(zaietsv.complextask.mvc.entity.data_acces_instance.InstanceDetail)
+	 * @see zaietsv.complextask.mvc.dao.data_acces_object.DataAccessObject#insert(zaietsv.complextask.mvc.entity.data_acces_object.InstanceDetail)
 	 */
 	@Override
 	public int insert(AddressUser addressUser) {
 		System.out.println(addressUser);
 
-		AddressDAI adai = new AddressDAI(connection);
+		AddressDAO adai = new AddressDAO(connection);
 		adai.insert(addressUser.getInstance());
 		adai.read(addressUser.getInstance());
 
-		UserDAI udai = new UserDAI(connection);
+		UserDAO udai = new UserDAO(connection);
 		udai.insert(addressUser.getDetail());
 		udai.read(addressUser.getDetail());
 
@@ -60,7 +57,7 @@ public class AddressUserDAID extends AbstractDAID<AddressUser> {
 	}
 
 	/* (non-Javadoc)
-	 * @see zaietsv.complextask.mvc.dao.data_acces_instance.DataAccessInstance#read(long)
+	 * @see zaietsv.complextask.mvc.dao.data_acces_object.DataAccessObject#read(long)
 	 */
 	@Override
 	public AddressUser read(long id) {
@@ -70,23 +67,39 @@ public class AddressUserDAID extends AbstractDAID<AddressUser> {
 			ps.setLong(1, id);
 			try (ResultSet rs = ps.executeQuery()) {
 				if (rs.next()) {
-					Address address = new Address();
-					address.setId(rs.getLong("a.id"));
-					address.setPostcode(rs.getInt("postcode"));
-					address.setCity(rs.getString("city"));
-					address.setStreet(rs.getString("street"));
-					address.setHouse(rs.getInt("house"));
-					address.setFlat(rs.getInt("flat"));
+					Long aID = rs.getLong("a.id");
+					if (aID != 0) {
+						Address address = new Address();
+						address.setId(rs.getLong("a.id"));
+						address.setPostcode(rs.getInt("postcode"));
+						address.setCity(rs.getString("city"));
+						address.setStreet(rs.getString("street"));
+						address.setHouse(rs.getInt("house"));
+						address.setFlat(rs.getInt("flat"));
+						addressUser.setInstance(address);
+					}
 
-					User user = new User();
-					user.setId(rs.getLong("u.id"));
-					user.setLogin(rs.getString("login"));
-					user.setPassword(rs.getString("password"));
-					user.setEmail(rs.getString("email"));
-					user.setReg_date(rs.getDate("reg_date"));
+					System.out.println("rs.getLong(\"u.id\")=" + rs.getLong("u.id"));
+					System.out.println("rs.getString(\"login\")=" + rs.getString("login"));
+					System.out.println("rs.getString(\"password\")=" + rs.getString("password"));
+					System.out.println("rs.getString(\"email\")=" + rs.getString("email"));
+					System.out.println("rs.getDate(\"reg_date\")=" + rs.getDate("reg_date"));
 
-					addressUser.setInstance(address);
-					addressUser.setDetail(user);
+					Long uID = rs.getLong("u.id");
+/*					String login = rs.getString("login");
+					String password = rs.getString("password");
+					String email = rs.getString("email");
+					Date reg_date = rs.getDate("reg_date");
+*/
+					if ( uID != 0) {
+						User user = new User();
+						user.setId(rs.getLong("u.id"));
+						user.setLogin(rs.getString("login"));
+						user.setPassword(rs.getString("password"));
+						user.setEmail(rs.getString("email"));
+						user.setReg_date(rs.getDate("reg_date"));
+						addressUser.setDetail(user);
+					}
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -100,7 +113,7 @@ public class AddressUserDAID extends AbstractDAID<AddressUser> {
 	
 
 	/* (non-Javadoc)
-	 * @see zaietsv.complextask.mvc.dao.data_acces_instance.DataAccessInstance#update(zaietsv.complextask.mvc.entity.data_acces_instance.InstanceDetail)
+	 * @see zaietsv.complextask.mvc.dao.data_acces_object.DataAccessObject#update(zaietsv.complextask.mvc.entity.data_acces_object.InstanceDetail)
 	 */
 	@Override
 	public int update(AddressUser addressUser) {
@@ -122,16 +135,16 @@ public class AddressUserDAID extends AbstractDAID<AddressUser> {
 			e.printStackTrace();
 		}*/
 
-		AddressDAI adai = new AddressDAI(connection);
+		AddressDAO adai = new AddressDAO(connection);
 		adai.update(addressUser.getInstance());
-		UserDAI udai = new UserDAI(connection);
+		UserDAO udai = new UserDAO(connection);
 		udai.update(addressUser.getDetail());
 
 		return rows;
 	}
 	
 	/* (non-Javadoc)
-	 * @see zaietsv.complextask.mvc.dao.data_acces_instance.DataAccessInstance#delete(long)
+	 * @see zaietsv.complextask.mvc.dao.data_acces_object.DataAccessObject#delete(long)
 	 */
 	@Override
 	public boolean delete(long id) {
@@ -147,7 +160,7 @@ public class AddressUserDAID extends AbstractDAID<AddressUser> {
 	}
 
 	/* (non-Javadoc)
-	 * @see zaietsv.complextask.mvc.dao.data_acces_instance.DataAccessInstance#readAll()
+	 * @see zaietsv.complextask.mvc.dao.data_acces_object.DataAccessObject#readAll()
 	 *//*
 	@Override
 	public ArrayList<AddressUser> readAll() {

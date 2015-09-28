@@ -1,7 +1,7 @@
 package zaietsv.complextask.mvc.processor;
 
 import zaietsv.complextask.mvc.connect.MusicUserConnector;
-import zaietsv.complextask.mvc.dao.data_acces_instance.AddressDAI;
+import zaietsv.complextask.mvc.dao.data_acces_object.AddressDAO;
 import zaietsv.complextask.mvc.entity.instance.Address;
 import zaietsv.complextask.mvc.entity.instance.Addresses;
 
@@ -18,11 +18,11 @@ public class AddressesProcessor extends AbstractInstancesProcessor {
     }
 
     public AddressesProcessor(HttpServletRequest servletRequest, HttpServletResponse servletResponse) throws SQLException {
-        super(servletRequest, servletResponse, "address", new AddressDAI(new MusicUserConnector().getConnection()), new Addresses());
+        super(servletRequest, servletResponse, "address", new AddressDAO(new MusicUserConnector().getConnection(servletRequest)), new Addresses());
     }
 
     @Override
-    public Addresses process() {
+    public String process() {
         String action = request.getParameter("action");
         action = action == null ? "" : action;
         System.out.println(this.getClass().getName() + " > action = " + action);
@@ -36,7 +36,7 @@ public class AddressesProcessor extends AbstractInstancesProcessor {
                 int house = Integer.parseInt(request.getParameter("house"));
                 int flat = Integer.parseInt(request.getParameter("flat"));
                 Address newAddress = new Address(postcode, city, street, house, flat);
-                dai.insert(newAddress);
+                dao.insert(newAddress);
 
                 break;
             case "edit":
@@ -44,7 +44,7 @@ public class AddressesProcessor extends AbstractInstancesProcessor {
                 break;
             case "update":
                 System.out.println("case 'update':");
-                Long id = Long.parseLong(request.getParameter("address_id"));
+                Long id = Long.parseLong(request.getParameter("id"));
                 postcode = Integer.parseInt(request.getParameter("postcode"));
                 city = request.getParameter("city");
                 street = request.getParameter("street");
@@ -52,12 +52,12 @@ public class AddressesProcessor extends AbstractInstancesProcessor {
                 flat = Integer.parseInt(request.getParameter("flat"));
                 Address updateAddress = new Address(id, postcode, city, street, house, flat);
                 System.out.println("id=" + id);
-                System.out.println(dai.update(updateAddress));
+                System.out.println(dao.update(updateAddress));
                 break;
             case "delete":
                 System.out.println("case delete:");
-                id = Long.parseLong(request.getParameter("address_id"));
-                System.out.println(dai.delete(id));
+                id = Long.parseLong(request.getParameter("id"));
+                System.out.println(dao.delete(id));
                 break;
             case "details":
                 System.out.println("case details:");
@@ -75,8 +75,8 @@ public class AddressesProcessor extends AbstractInstancesProcessor {
                 break;
         }
 
-        this.instances.setInstances(dai.readAll());
+        this.instances.setInstances(dao.readAll());
         request.getSession().setAttribute("addresses", this.instances);
-        return (Addresses)this.instances;
+        return "admin/addresses_table.jsp";
     }
 }
