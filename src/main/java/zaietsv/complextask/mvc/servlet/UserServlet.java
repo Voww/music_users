@@ -35,7 +35,7 @@ public class UserServlet extends HttpServlet {
 		PrintWriter writer = response.getWriter();
 		try {
 			MusicUserConnector ct = new MusicUserConnector();
-			UserDAI udao = new UserDAI(ct.getConnection());
+			UserDAI udao = new UserDAI(ct.getConnection(request));
 			ArrayList<User> users = udao.readAll();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

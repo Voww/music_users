@@ -2,10 +2,12 @@ package zaietsv.complextask.mvc.connect;
 
 import com.mysql.jdbc.Driver;
 
+import javax.servlet.http.HttpServletRequest;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
+import java.util.ResourceBundle;
 
 public abstract class AbstractConnector implements Connector {
 
@@ -17,15 +19,10 @@ public abstract class AbstractConnector implements Connector {
 	private String password;
 
 	static {
-		System.out.println("static initialization {");
 		try {
-			System.out.println("try {");
 			DriverManager.registerDriver(new Driver());
-			System.out.println("try { : 1");
 			isDriverRegistered = true;
-			System.out.println("try { : isDriverRegistered=" + isDriverRegistered);
 		} catch (SQLException e) {
-			System.out.println("catch (SQLException e) {");
 			e.printStackTrace();
 		}
 	}
@@ -35,43 +32,44 @@ public abstract class AbstractConnector implements Connector {
 	}
 
 	public AbstractConnector(String url, String user, String password) {
-		System.out.println("public AbstractConnector(String url, String user, String password) {");
 		this.url = url;
 		this.user = user;
 		this.password = password;
 	}
 
+	public AbstractConnector(String propertyFileName) {
+		ResourceBundle resourceBundle = ResourceBundle.getBundle(propertyFileName);
+		this.url = resourceBundle.getString("url");
+		this.user = resourceBundle.getString("user");
+		this.password = resourceBundle.getString("password");
+	}
 	/**
 	 * @return the connection
 	 */
 	@Override
-	public Connection getConnection() throws SQLException {
-		System.out.println("public Connection getConnection() throws SQLException {");
+	public Connection getConnection(HttpServletRequest request) throws SQLException {
 		/*if (isDriverRegistered) {
-			System.out.println("if (isDriverRegistered) {");
 			throw new SQLException("A database driver is not registered! getConnection() failed.");
 		}*/
+
+		connection = (Connection)request.getSession().getAttribute("connection");
 		if (connection == null) {
-			System.out.println("if (connection == null) {");
 			try {
-				System.out.println("try {");
 				Properties properties = new Properties();
 				properties.put("user", user);
 				properties.put("password", password);
 				this.connection = DriverManager.getConnection(url, properties);
+				request.getSession().setAttribute("connection", connection);
 			} catch (SQLException e) {
-				System.out.println("} catch (SQLException e) {");
 				e.printStackTrace();
 				throw new SQLException("Unable to connect to a database '" + url + "' under user name '" + user + "'! getConnection() failed.", e);
 			}
 		}
-		System.out.println("return connection = " + connection);
 		return connection;
 	}
 
 	@Override
 	public boolean ping() {
-		System.out.println("public boolean ping() { ");
 		Boolean ping = false;
 		try {
 			if (connection != null) {
@@ -80,20 +78,17 @@ public abstract class AbstractConnector implements Connector {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("return " + ping + " }");
 		return ping;
 	}
 	
 	@Override
 	public void close() throws SQLException {
-		System.out.println("public void close() throws SQLException { ");
 		try {
 			connection.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new SQLException("Unable to disconnect from a database '" + url + "'! close() failed.", e);
 		}
-	System.out.println("return void }");
 	}
 
 	/**
