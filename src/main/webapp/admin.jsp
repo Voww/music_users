@@ -9,11 +9,11 @@
 </head>
 <body>
 <h1>Administrator's page</h1>
-<a href="AdminInstancesServlet?table=user"><button>User table</button></a>
-<a href="AdminInstancesServlet?table=role"><button>Role table</button></a>
-<a href="AdminInstancesServlet?table=address"><button>Address table</button></a>
-<a href="AdminInstancesServlet?table=music"><button>Music table</button></a>
-<a href="install.jsp"><button>Handle A Music Users Database</button></a>
+<a href="AdminWorks?table=user"><button>User table</button></a>
+<a href="AdminWorks?table=role"><button>Role table</button></a>
+<a href="AdminWorks?table=address"><button>Address table</button></a>
+<a href="AdminWorks?table=music"><button>Music table</button></a>
+<a href="install/install.jsp"><button>Handle A Music Users Database</button></a>
 
 </body>
 </html>

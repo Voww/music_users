@@ -10,7 +10,7 @@
 </head>
 <body>
 <h1>Role table</h1>
-<a href="AdminInstancesServlet"><button>Backward</button></a><hr>
+<a href="AdminWorks"><button>Backward</button></a><hr>
 last action = <%=request.getParameter("action") %>
 <% Roles roles = (Roles)request.getSession().getAttribute("roles"); %>
 
@@ -29,7 +29,7 @@ last action = <%=request.getParameter("action") %>
 
 
   <%if (action.matches("edit") && role.getId() == id) { %>
-<form action="AdminInstancesServlet" method="post" name="action">
+<form action="AdminWorks" method="post" name="action">
 		<td><%=role.getId() %>
             <input type="hidden" title="table" name="table" value="role">
             <input type="hidden"  title="id" name="id" value="<%=role.getId() %>"></td>
@@ -42,29 +42,22 @@ last action = <%=request.getParameter("action") %>
     <td><%=role.getId() %></td>
 	<td><%=role.getName() %></td>
 	<td>
-		<form action="AdminInstancesServlet" method="get" name="action_<%=role.getId() %>">
-            <input type="hidden" title="table" name="table" value="role">
-            <input type="hidden" title="id" name="id" value="<%=role.getId() %>">
-			<input type="submit" title="details of an item" name="action" value="details">
-			<input type="submit" title="edit an existing item" name="action" value="edit">
-			<input type="submit" title="delete an item" name="action" value="delete">
-		</form>
+		<a href="AdminWorks?table=role&action=details&id=<%=role.getId()%>" title="details on the item"><button>details</button></a>
+		<a href="AdminWorks?table=role&action=edit&id=<%=role.getId()%>" title="edit the item"><button>edit</button></a>
+		<a href="AdminWorks?table=role&action=delete&id=<%=role.getId()%>" title="delete the item"><button>delete</button></a>
 	</td>
 
 <%} %>
   </tr>
 <%} %>
 	<tr>
-	<form action="AdminInstancesServlet" method="post" name="action">
+	<form action="AdminWorks" method="post" name="action">
 		<td><input type="hidden" title="table" name="table" value="role"></td>
-		<td><label>
-			Name:
-			<input type="text" name="name" value="name">
-		</label></td>
+		<td><label>Name:<input type="text" name="name" value="name"></label></td>
 		<td><input type="submit" title="insert a new item" name="action" value="insert"></td>
 	</form>
 	</tr>
 </table>
-<hr><a href="AdminInstancesServlet"><button>Backward</button></a>
+<hr><a href="AdminWorks"><button>Backward</button></a>
 </body>
 </html>

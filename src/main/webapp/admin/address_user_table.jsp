@@ -9,7 +9,7 @@
 </head>
 <body>
 <h1>Address To User table</h1>
-<a href="AdminInstancesServlet?table=address"><button>Backward</button></a><hr>
+<a href="AdminWorks?table=address"><button>Backward</button></a><hr>
 last action = <%=request.getParameter("action") %>
 <h2>Address</h2>
 <% AddressUser addressUser = (AddressUser)request.getSession().getAttribute("addressUser"); %>
@@ -17,13 +17,10 @@ last action = <%=request.getParameter("action") %>
 <table frame="border" border="1">
 	<tr bgcolor="magenta"><th>Id</th><th>Postcode</th><th>City</th><th>Street</th><th>House</th><th>Flat</th><th>Action</th></tr>
 	<%String action = request.getParameter("action"); action = action == null ? "" : action;%>
-	<%Long address_id = null; %>
-	<%try { %><%address_id = Long.parseLong(request.getParameter("address_id"));%> <%} catch (NumberFormatException e) { %><%} %>
-
 
 	<%if (addressUser.getInstance() == null) { %>
 	<tr>
-		<form action="AdminInstanceDetailsServlet" method="post" name="action">
+		<form action="AdminWorks" method="post" name="action">
 			<td><input type="hidden" title="table" name="table" value="address_user"></td>
 			<td><label>Postcode:<input type="text" name="postcode" value="000000"></label></td>
 			<td><label>City:<input type="text" name="city" value="city"></label></td>
@@ -36,11 +33,11 @@ last action = <%=request.getParameter("action") %>
 	<!% } else if (action.matches("edit") && address_id != null &&  addressUser.getInstance().getId() == address_id) { %!>
 	<% } else if (action.matches("edit")) { %>
 	<%if (addressUser.getInstance().getId() % 2 == 0) {%><tr bgcolor="yellow"><%} else {%><tr bgcolor="cyan"><%} %>
-	<form action="AdminInstanceDetailsServlet" method="post" name="action">
+	<form action="AdminWorks" method="post" name="action">
 		<td><%=addressUser.getInstance().getId() %>
 			<input type="hidden" title="table" name="table" value="address_user">
-			<input type="hidden"  title="id" name="address_id" value="<%=addressUser.getInstance().getId() %>">
-			<input type="hidden"  title="id" name="user_id" value="<%=addressUser.getDetail().getId() %>"></td>
+			<input type="hidden"  title="id" name="id" value="<%=addressUser.getInstance().getId() %>">
+			<input type="hidden"  title="id" name="address_id" value="<%=addressUser.getInstance().getId() %>"></td>
 		<td><input type="text" name="postcode" value="<%=addressUser.getInstance().getPostcode() %>" title="edit postcode"></td>
 		<td><input type="text" name="city" value="<%=addressUser.getInstance().getCity() %>" title="edit city"></td>
 		<td><input type="text" name="street" value="<%=addressUser.getInstance().getStreet() %>" title="edit address"></td>
@@ -48,7 +45,7 @@ last action = <%=request.getParameter("action") %>
 		<td><input type="text" name="flat" value="<%=addressUser.getInstance().getFlat() %>" title="edit flat"></td>
 		<td><input type="submit" title="update changes" name="action" value="update">
 			<input type="submit" title="revert changes" name="action" value="cancel"></td>
-	<!/form>
+	</form>
 
 	<%} else { %>
 	<%if (addressUser.getInstance().getId() % 2 == 0) {%><tr bgcolor="yellow"><%} else {%><tr bgcolor="cyan"><%} %>
@@ -59,14 +56,9 @@ last action = <%=request.getParameter("action") %>
 	<td><%=addressUser.getInstance().getHouse() %></td>
 	<td><%=addressUser.getInstance().getFlat() %></td>
 	<td>
-		<form action="AdminInstanceDetailsServlet" method="get" name="action_<%=addressUser.getInstance().getId() %>">
-			<input type="hidden" title="table" name="table" value="address_user">
-			<input type="hidden" title="id" name="address_id" value="<%=addressUser.getInstance().getId() %>">
-			<input type="hidden"  title="id" name="user_id" value="<%=addressUser.getDetail().getId() %>">
-			<!input type="submit" title="details of an item" name="action" value="details">
-			<input type="submit" title="edit an existing item" name="action" value="edit">
-			<input type="submit" title="delete an item" name="action" value="delete">
-		</form>
+		<!a href="AdminWorks?table=address_user&action=details&address_id=<!%=addressUser.getInstance().getId() %>" title="details on the item"><!button>details<!/button><!/a!>
+		<a href="AdminWorks?table=address_user&action=edit&&id=<%=addressUser.getInstance().getId()%>address_id=<%=addressUser.getInstance().getId() %>" title="edit the item"><button>edit</button></a>
+		<a href="AdminWorks?table=address_user&action=delete&address_id=<%=addressUser.getInstance().getId() %>" title="delete the item"><button>delete</button></a>
 	</td>
 
 	<%} %>
@@ -84,11 +76,9 @@ last action = <%=request.getParameter("action") %>
 		<th>Action</th>
 	</tr>
 
-	<%Long user_id = null; %>
-	<%try { %><%user_id = Long.parseLong(request.getParameter("user_id"));%> <%} catch (NumberFormatException e) { %><%} %>
 	<%if (addressUser.getDetail() == null) { %>
 	<tr>
-		<form action="AdminInstanceDetailsServlet" method="post" name="action">
+		<form action="AdminWorks" method="post" name="action">
 			<td><input type="hidden" title="table" name="table" value="address_user"></td>
 			<td><label>Login:<input type="text" name="login" value="user_login"></label></td>
 			<td><label>Password:<input type="text" name="password" value="user_password"></label></td>
@@ -100,8 +90,11 @@ last action = <%=request.getParameter("action") %>
 	<!% } else if (action.matches("edit") && user_id != null && addressUser.getDetail().getId() == user_id) { %!>
 	<% } else if (action.matches("edit")) { %>
 	<%if (addressUser.getDetail().getId() % 2 == 0) {%><tr bgcolor="yellow"><%} else {%><tr bgcolor="cyan"><%} %>
-	<!form action="AdminInstanceDetailsServlet" method="post" name="action"!>
-		<td><%=addressUser.getDetail().getId() %></td>
+	<form action="AdminWorks" method="post" name="action">
+		<td><%=addressUser.getDetail().getId() %>
+		<input type="hidden" title="table" name="table" value="address_user">
+		<input type="hidden"  title="id" name="id" value="<%=addressUser.getInstance().getId() %>">
+		<input type="hidden"  title="id" name="address_id" value="<%=addressUser.getDetail().getId() %>"></td>
 		<td><input type="text" name="login" value="<%=addressUser.getDetail().getLogin() %>" title="edit login"></td>
 		<td><input type="text" name="password" value="<%=addressUser.getDetail().getPassword() %>" title="edit password"></td>
 		<td><input type="text" name="email" value="<%=addressUser.getDetail().getEmail() %>" title="edit email"></td>
@@ -118,18 +111,13 @@ last action = <%=request.getParameter("action") %>
 	<td><%=addressUser.getDetail().getEmail() %></td>
 	<td><%=addressUser.getDetail().getReg_date() %></td>
 	<td>
-		<form action="AdminInstanceDetailsServlet" method="get" name="action_<%=addressUser.getDetail().getId() %>">
-			<input type="hidden" title="table" name="table" value="address_user">
-			<input type="hidden" title="id" name="address_id" value="<%=addressUser.getInstance().getId() %>">
-			<input type="hidden" title="id" name="user_id" value="<%=addressUser.getDetail().getId() %>">
-			<!input type="submit" title="details of an item" name="action" value="details">
-			<input type="submit" title="edit an existing item" name="action" value="edit">
-			<input type="submit" title="delete an item" name="action" value="delete">
-		</form>
+		<!a href="AdminWorks?table=address_user&action=details&user_id=<!%=addressUser.getDetail().getId() %>" title="details on the item"><!button>details<!/button><!/a!>
+		<a href="AdminWorks?table=address_user&action=edit&id=<%=addressUser.getInstance().getId()%>&user_id=<%=addressUser.getDetail().getId() %>" title="edit the item"><button>edit</button></a>
+		<a href="AdminWorks?table=address_user&action=delete&user_id=<%=addressUser.getDetail().getId() %>" title="delete the item"><button>delete</button></a>
 	</td>
 	<%} %>
 </tr>
 </table>
-<hr><a href="AdminInstancesServlet?table=address"><button>Backward</button></a>
+<hr><a href="AdminWorks?table=address"><button>Backward</button></a>
 </body>
 </html>

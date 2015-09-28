@@ -8,7 +8,7 @@
 </head>
 <body>
 <h1>Music Users index page</h1>
-<a href="AdminInstancesServlet"><button>Administrator's page</button></a>
+<a href="AdminWorks"><button>Administrator's page</button></a>
 <a href="UserServlet"><button>User's page</button></a>
 </body>
 </html>

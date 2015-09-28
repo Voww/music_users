@@ -10,7 +10,7 @@
 </head>
 <body>
 <h1>User table</h1>
-<a href="AdminInstancesServlet"><button>Backward</button></a><hr>
+<a href="AdminWorks"><button>Backward</button></a><hr>
 last action = <%=request.getParameter("action") %>
 <% Users users = (Users)request.getSession().getAttribute("users"); %>
 
@@ -32,7 +32,7 @@ last action = <%=request.getParameter("action") %>
 
 
   <%if (action.matches("edit") && user.getId() == id) { %>
-<form action="AdminInstancesServlet" method="post" name="action">
+<form action="AdminWorks" method="post" name="action">
 		<td><%=user.getId() %>
             <input type="hidden" title="table" name="table" value="user">
             <input type="hidden"  title="id" name="id" value="<%=user.getId() %>"></td>
@@ -51,38 +51,24 @@ last action = <%=request.getParameter("action") %>
 	<td><%=user.getEmail() %></td>
 	<td><%=user.getReg_date() %></td>
 	<td>
-		<form action="AdminInstancesServlet" method="get" name="action_<%=user.getId() %>">
-            <input type="hidden" title="table" name="table" value="user">
-            <input type="hidden" title="id" name="id" value="<%=user.getId() %>">
-			<input type="submit" title="details of an item" name="action" value="details">
-			<input type="submit" title="edit an existing item" name="action" value="edit">
-			<input type="submit" title="delete an item" name="action" value="delete">
-		</form>
+		<a href="AdminWorks?table=user&action=details&id=<%=user.getId()%>" title="details on the item"><button>details</button></a>
+		<a href="AdminWorks?table=user&action=edit&id=<%=user.getId()%>" title="edit the item"><button>edit</button></a>
+		<a href="AdminWorks?table=user&action=delete&id=<%=user.getId()%>" title="delete the item"><button>delete</button></a>
 	</td>
-
 <%} %>
   </tr>
 <%} %>
 	<tr>
-	<form action="AdminInstancesServlet" method="post" name="action">
+	<form action="AdminWorks" method="post" name="action">
 		<td><input type="hidden" title="table" name="table" value="user"></td>
-		<td><label>
-			Login:
-			<input type="text" name="login" value="user_login">
-		</label></td>
-		<td><label>
-			Password:
-			<input type="text" name="password" value="user_password">
-		</label></td>
-		<td><label>
-			Email:
-			<input type="text" name="email" value="user_email">
-		</label></td>
+		<td><label>Login:<input type="text" name="login" value="user_login"></label></td>
+		<td><label>Password:<input type="text" name="password" value="user_password"></label></td>
+		<td><label>Email:<input type="text" name="email" value="user_email"></label></td>
 		<td></td>
 		<td><input type="submit" title="insert a new item" name="action" value="insert"></td>
 	</form>
 	</tr>
 </table>
-<hr><a href="AdminInstancesServlet"><button>Backward</button></a>
+<hr><a href="AdminWorks"><button>Backward</button></a>
 </body>
 </html>
