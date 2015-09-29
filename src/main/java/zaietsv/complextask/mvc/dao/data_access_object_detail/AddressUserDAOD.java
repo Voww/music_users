@@ -32,13 +32,13 @@ public class AddressUserDAOD extends AbstractDAOD<AddressUser> {
 	public int insert(AddressUser addressUser) {
 		System.out.println(addressUser);
 
-		AddressDAO adai = new AddressDAO(connection);
-		adai.insert(addressUser.getInstance());
-		adai.read(addressUser.getInstance());
+		AddressDAO adao = new AddressDAO(connection);
+		adao.insert(addressUser.getInstance());
+		adao.read(addressUser.getInstance());
 
-		UserDAO udai = new UserDAO(connection);
-		udai.insert(addressUser.getDetail());
-		udai.read(addressUser.getDetail());
+		UserDAO udao = new UserDAO(connection);
+		udao.insert(addressUser.getDetail());
+		udao.read(addressUser.getDetail());
 
 		System.out.println(addressUser);
 
@@ -56,9 +56,26 @@ public class AddressUserDAOD extends AbstractDAOD<AddressUser> {
 		return rows;
 	}
 
-	/* (non-Javadoc)
-	 * @see zaietsv.complextask.mvc.dao.data_acces_object.DataAccessObject#read(long)
-	 */
+	@Override
+	public int insert(long address_id, User user) {
+		int rows = 0;
+		if (address_id != 0 && user != null) {
+			UserDAO udao = new UserDAO(connection);
+			udao.insert(user);
+			udao.read(user);
+
+			String sql = "INSERT INTO user_address (address_id, user_id)  VALUES (?, ?)";
+			try (PreparedStatement ps = connection.prepareStatement(sql)) {
+				ps.setLong(1, address_id);
+				ps.setLong(2, user.getId());
+				rows = ps.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return rows;
+	}
+
 	@Override
 	public AddressUser read(long id) {
 		String sql = "SELECT * FROM address a LEFT OUTER JOIN user_address ua ON a.id = ua.address_id LEFT OUTER JOIN `user` u ON ua.user_id = u.id HAVING  a.id = ? ";
@@ -110,6 +127,42 @@ public class AddressUserDAOD extends AbstractDAOD<AddressUser> {
 		System.out.println("addressUser=" + addressUser);
 		return addressUser;
 	}
+
+	@Override
+	public long read(AddressUser addressUser) {
+		String sql = "SELECT a.id, u.id, reg_date FROM address a LEFT OUTER JOIN user_address ua ON a.id = ua.address_id LEFT OUTER JOIN `user` u " +
+				"ON ua.user_id = u.id HAVING postcode = ? AND city = ? AND street = ? AND house = ? AND flat = ? " +
+				"AND login = ? AND  u.password = ? AND email =?";
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
+			ps.setInt(1, addressUser.getInstance().getPostcode());
+			ps.setString(2, addressUser.getInstance().getCity());
+			ps.setString(3, addressUser.getInstance().getStreet());
+			ps.setInt(4, addressUser.getInstance().getHouse());
+			ps.setInt(5, addressUser.getInstance().getFlat());
+			ps.setString(6, addressUser.getDetail().getLogin());
+			ps.setString(7, addressUser.getDetail().getPassword());
+			ps.setString(8, addressUser.getDetail().getEmail());
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					long aID = rs.getLong("a.id");
+					if (aID != 0) {
+						addressUser.getInstance().setId(rs.getLong("a.id"));
+					}
+					long uID = rs.getLong("u.id");
+					if ( uID != 0) {
+						addressUser.getDetail().setId(rs.getLong("u.id"));
+						addressUser.getDetail().setReg_date(rs.getDate("reg_date"));
+					}
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		System.out.println("addressUser=" + addressUser);
+		return addressUser.getInstance().getId();
+	}
 	
 
 	/* (non-Javadoc)
@@ -119,42 +172,60 @@ public class AddressUserDAOD extends AbstractDAOD<AddressUser> {
 	public int update(AddressUser addressUser) {
 		//String sql = "UPDATE user_address SET user_id = ?, `city` = ?, `street` = ?, `house` = ?, `flat` = ?  WHERE `id` = ?";
 		int rows = 0;
-		/*try (PreparedStatement ps = connection.prepareStatement(sql)) {
-			ps.setInt(1, addressUser.getInstance().getPostcode());
-			ps.setString(2, addressUser.getInstance().getCity());
-			ps.setString(3, addressUser.getInstance().getStreet());
-			ps.setInt(4, addressUser.getInstance().getHouse());
-			ps.setInt(5, addressUser.getInstance().getFlat());
-			ps.setLong(6, addressUser.getInstance().getId());
-			try {
-				rows = ps.executeUpdate();
+		if (addressUser.getInstance() != null) {
+			AddressDAO adao = new AddressDAO(connection);
+			rows += adao.update(addressUser.getInstance());
+		}
+		if (addressUser.getDetail() != null) {
+			UserDAO udao = new UserDAO(connection);
+			rows += udao.update(addressUser.getDetail());
+		}
+		return rows;
+	}
+
+	@Override
+	public boolean unlink(long address_id) {
+		boolean res = false;
+		if (address_id != 0) {
+			String sql = "DELETE FROM `user_address` WHERE address_id = ?";
+			try (PreparedStatement ps = connection.prepareStatement(sql)) {
+				ps.setLong(1, address_id);
+				res = ps.execute();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}*/
-
-		AddressDAO adai = new AddressDAO(connection);
-		adai.update(addressUser.getInstance());
-		UserDAO udai = new UserDAO(connection);
-		udai.update(addressUser.getDetail());
-
-		return rows;
+		}
+		return res;
 	}
-	
-	/* (non-Javadoc)
-	 * @see zaietsv.complextask.mvc.dao.data_acces_object.DataAccessObject#delete(long)
-	 */
+
 	@Override
-	public boolean delete(long id) {
-		String sql = " DELETE FROM `address`, `user_address`, `user` WHERE address.id = user_address.address_id AND user.id = user_address.user_id AND  address.id = ? ";
+	public boolean unlink(long address_id, long user_id) {
 		boolean res = false;
-		try (PreparedStatement ps = connection.prepareStatement(sql)) {
-			ps.setLong(1, id);
-			res = ps.execute();
-		} catch (SQLException e) {
-			e.printStackTrace();
+		if (address_id != 0) {
+			String sql = "DELETE FROM `user_address` WHERE address_id = ? AND user_id = ?";
+			try (PreparedStatement ps = connection.prepareStatement(sql)) {
+				ps.setLong(1, address_id);
+				ps.setLong(2, user_id);
+				res = ps.execute();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return res;
+	}
+
+	@Override
+	public boolean delete(long address_id, long user_id) {
+		boolean res = false;
+
+		if (address_id != 0 && user_id == 0) {
+			unlink(address_id);
+			AddressDAO adao = new AddressDAO(connection);
+			res = adao.delete(address_id);
+		} else if (address_id != 0 && user_id != 0) {
+			unlink(address_id);
+			UserDAO udao = new UserDAO(connection);
+			res = udao.delete(user_id);
 		}
 		return res;
 	}

@@ -29,11 +29,26 @@ public interface DataAccessObjectDetails<I extends InstanceDetails> {
 	int update(I instanceDetails);
 
 	/**
+	 * Unlinks all of the ties between an instance and it's detail
+	 * @param instance_id - an instance's database id number
+	 * @return true on success false otherwise
+	 */
+	boolean unlink(long instance_id);
+
+	/**
+	 * Unlinks the selected pair of ties between an instance and selected detail
+	 * @param instance_id - an instance's database id number
+	 * @param instance_id - a detail's database id number
+	 * @return true on success false otherwise
+	 */
+	boolean unlink(long instance_id, long detail_id);
+
+	/**
 	 *
 	 * @param id - an Instance's database id number
 	 * @return true on success false otherwise
-	 */
-	boolean delete(long id);
+	*/
+	//boolean delete(long id);
 	
 	/**
 	 * Reads an existing record from a database

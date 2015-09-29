@@ -1,5 +1,6 @@
 package zaietsv.complextask.mvc.dao.data_access_object_detail;
 
+import zaietsv.complextask.mvc.entity.instance.User;
 import zaietsv.complextask.mvc.entity.instance_detail.InstanceDetail;
 
 /**
@@ -16,6 +17,8 @@ public interface DataAccessObjectDetail<I extends InstanceDetail> {
 	 * @return - affected rows count
 	 */
 	int insert(I instanceDetail);
+
+	int insert(long address_id, User user);
 	
 	//boolean insert(ArrayList<InstanceDetail> instances);
 	
@@ -27,11 +30,15 @@ public interface DataAccessObjectDetail<I extends InstanceDetail> {
 	int update(I instanceDetail);
 
 	/**
-	 *
-	 * @param id - an Instance's database id number
+	 * Unlinks all of the ties between an instance and it's detail
+	 * @param instance_id - an instance's database id number
 	 * @return true on success false otherwise
 	 */
-	boolean delete(long id);
+	boolean unlink(long instance_id);
+
+	boolean unlink(long instance_id, long detail_id);
+
+	boolean delete(long instance_id, long detail_id);
 	
 	/**
 	 * Reads an existing record from a database
@@ -39,7 +46,9 @@ public interface DataAccessObjectDetail<I extends InstanceDetail> {
 	 * @return an entity of a class which implements InstanceDetail interface filled with parameters being red
 	 */
 	I read(long id);
-	
+
+	long read(I instanceDetail);
+
 	/**
 	 * Reads all of the existing records from a table or a schema
 	 * @return a list of instances of a class which implements InstanceDetail interface filled with parameters being red
