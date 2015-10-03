@@ -22,6 +22,9 @@ public class ProcessorFactory extends AbstractProcessorFactory {
                 case "role":
                     processor = new RolesProcessor(request,response);
                     break;
+                case "role_users":
+                    processor = new RoleUsersProcessor(request,response);
+                    break;
                 case "address":
                     processor = new AddressesProcessor(request,response);
                     break;

@@ -54,8 +54,13 @@ public class RolesProcessor extends AbstractInstancesProcessor {
                 break;
             case "details":
                 System.out.println("case details:");
-                //id = Long.parseLong(request.getParameter("id"));
-                //System.out.println(dao.delete(id));
+                InstanceDetailsProcessor idp = null;
+                try {
+                    idp = new RoleUsersProcessor(request, response);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                idp.process();
                 break;
             default:
                 System.out.println("default:");

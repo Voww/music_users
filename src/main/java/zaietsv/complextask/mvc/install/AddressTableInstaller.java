@@ -98,7 +98,7 @@ public class AddressTableInstaller extends TableInstaller {
 	
 	public static void main(String[] args) {
 		try {
-			AddressTableInstaller uti = new AddressTableInstaller(new MusicUserConnector().getConnection());
+			AddressTableInstaller uti = new AddressTableInstaller(new MusicUserConnector().getConnection(request));
 			uti.install();
 			uti.isInstalled();
 			uti.unInstall();

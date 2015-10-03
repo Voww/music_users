@@ -222,39 +222,11 @@ public class AddressUserDAOD extends AbstractDAOD<AddressUser> {
 			unlink(address_id);
 			AddressDAO adao = new AddressDAO(connection);
 			res = adao.delete(address_id);
-		} else if (address_id != 0 && user_id != 0) {
+		} else if (address_id != 0) {
 			unlink(address_id);
 			UserDAO udao = new UserDAO(connection);
 			res = udao.delete(user_id);
 		}
 		return res;
 	}
-
-	/* (non-Javadoc)
-	 * @see zaietsv.complextask.mvc.dao.data_acces_object.DataAccessObject#readAll()
-	 *//*
-	@Override
-	public ArrayList<AddressUser> readAll() {
-		String sql = "SELECT * FROM address WHERE 1";
-		ArrayList<AddressUser> addressUserList = new ArrayList<>();
-		try (PreparedStatement ps = connection.prepareStatement(sql)) {
-			try (ResultSet rs = ps.executeQuery()) {
-				if (rs.next()) {
-					AddressUser addressUser = new AddressUser();
-					addressUser.getInstance().setId(rs.getLong("id"));
-					addressUser.getInstance().setPostcode(rs.getInt("postcode"));
-					addressUser.getInstance().setCity(rs.getString("city"));
-					addressUser.getInstance().setStreet(rs.getString("street"));
-					addressUser.getInstance().setHouse(rs.getInt("house"));
-					addressUser.getInstance().setFlat(rs.getInt("flat"));
-					addressUserList.add(addressUser);
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return addressUserList;
-	}*/
 }

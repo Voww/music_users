@@ -1,8 +1,8 @@
 package zaietsv.complextask.mvc.dao.data_access_object_detail;
 
+import zaietsv.complextask.mvc.entity.instance.Users;
 import zaietsv.complextask.mvc.entity.instance_detail.InstanceDetails;
-
-import java.util.ArrayList;
+import zaietsv.complextask.mvc.entity.instance_detail.RoleUsers;
 
 /**
  * An interface describes access to a database
@@ -17,9 +17,9 @@ public interface DataAccessObjectDetails<I extends InstanceDetails> {
 	 * @param instanceDetails - an entity of a class which implements InstanceDetail interface
 	 * @return - an id for new added entity
 	 */
-	long insert(I instanceDetails);
-	
-	//boolean insert(ArrayList<InstanceDetail> instances);
+	int insert(I instanceDetails);
+
+	int insert(long address_id, Users users);
 	
 	/**
 	 * Updates an existing record in a database
@@ -38,10 +38,12 @@ public interface DataAccessObjectDetails<I extends InstanceDetails> {
 	/**
 	 * Unlinks the selected pair of ties between an instance and selected detail
 	 * @param instance_id - an instance's database id number
-	 * @param instance_id - a detail's database id number
+	 * @param detail_id - a detail's database id number
 	 * @return true on success false otherwise
 	 */
 	boolean unlink(long instance_id, long detail_id);
+
+	boolean delete(long instance_id, long detail_id);
 
 	/**
 	 *
@@ -56,11 +58,7 @@ public interface DataAccessObjectDetails<I extends InstanceDetails> {
 	 * @return an entity of a class which implements InstanceDetail interface filled with parameters being red
 	 */
 	I read(long id);
-	
-	/**
-	 * Reads all of the existing records from a table or a schema
-	 * @return a list of instances of a class which implements InstanceDetail interface filled with parameters being red
-	 */
-	ArrayList<I> readAll();
+
+	long read(RoleUsers roleUsers);
 
 }

@@ -5,7 +5,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate">
 <title>Role table</title>
 </head>
 <body>
@@ -42,7 +43,7 @@ last action = <%=request.getParameter("action") %>
     <td><%=role.getId() %></td>
 	<td><%=role.getName() %></td>
 	<td>
-		<a href="AdminWorks?table=role&action=details&id=<%=role.getId()%>" title="details on the item"><button>details</button></a>
+		<a href="AdminWorks?table=role_users&action=details&id=<%=role.getId()%>" title="details on the item"><button>details</button></a>
 		<a href="AdminWorks?table=role&action=edit&id=<%=role.getId()%>" title="edit the item"><button>edit</button></a>
 		<a href="AdminWorks?table=role&action=delete&id=<%=role.getId()%>" title="delete the item"><button>delete</button></a>
 	</td>
