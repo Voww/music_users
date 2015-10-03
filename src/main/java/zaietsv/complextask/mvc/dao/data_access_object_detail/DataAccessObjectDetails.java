@@ -2,7 +2,6 @@ package zaietsv.complextask.mvc.dao.data_access_object_detail;
 
 import zaietsv.complextask.mvc.entity.instance.Users;
 import zaietsv.complextask.mvc.entity.instance_detail.InstanceDetails;
-import zaietsv.complextask.mvc.entity.instance_detail.RoleUsers;
 
 /**
  * An interface describes access to a database
@@ -59,6 +58,6 @@ public interface DataAccessObjectDetails<I extends InstanceDetails> {
 	 */
 	I read(long id);
 
-	long read(RoleUsers roleUsers);
+	long read(I instanceDetails);
 
 }

@@ -58,12 +58,8 @@ last action = <%=request.getParameter("action") %>
 	<td><%=addressUser.getInstance().getHouse() %></td>
 	<td><%=addressUser.getInstance().getFlat() %></td>
 	<td>
-		<a href="AdminWorks?table=address_user&action=edit&id=<%=addressUser.getInstance().getId()%>&address_id=<%=addressUser.getInstance().getId()%>" title="edit the item"><button>edit</button></a>
 		<a href="AdminWorks?table=address_user&action=unlink&id=<%=addressUser.getInstance().getId()%>" title="unlink the address from the user (without deleting)"><button>unlink</button></a>
-		<a href="AdminWorks?table=address_user&action=delete&id=<%=addressUser.getInstance().getId()%>" title="delete the address"><button>delete</button></a>
-
 	</td>
-
 	<%} %>
 </tr>
 </table>

@@ -46,9 +46,9 @@ last action = <%=request.getParameter("action") %>
 	<td><%=music.getName() %></td>
 	<td><%=music.getRating() %></td>
 	<td>
-		<a href="AdminWorks?table=music&action=details&id=<%=music.getId()%>" title="details on the item"><button>details</button></a>
-		<a href="AdminWorks?table=music&action=edit&id=<%=music.getId()%>" title="edit the item"><button>edit</button></a>
-		<a href="AdminWorks?table=music&action=delete&id=<%=music.getId()%>" title="delete the item"><button>delete</button></a>
+		<a href="AdminWorks?table=music_users&action=details&id=<%=music.getId()%>" title="details on the item"><button>details</button></a>
+		<a href="AdminWorks?table=music_users&action=edit&id=<%=music.getId()%>" title="edit the item"><button>edit</button></a>
+		<a href="AdminWorks?table=music_users&action=delete&id=<%=music.getId()%>" title="delete the item"><button>delete</button></a>
 	</td>
 
 <%} %>

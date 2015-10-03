@@ -34,6 +34,9 @@ public class ProcessorFactory extends AbstractProcessorFactory {
                 case "music":
                     processor = new MusicsProcessor(request,response);
                     break;
+                case "music_users":
+                    processor = new MusicUsersProcessor(request,response);
+                    break;
                 default:
                     processor = new DefaultProcessor(request,response);
                     break;
