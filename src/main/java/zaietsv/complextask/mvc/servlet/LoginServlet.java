@@ -1,7 +1,5 @@
 package zaietsv.complextask.mvc.servlet;
 
-import java.io.IOException;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebInitParam;
@@ -9,15 +7,16 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * Servlet implementation class Login
  */
 @WebServlet(
-		description = "Performs login procedures", 
+		description = "Performs authorization procedures",
 		urlPatterns = { "/Login" }, 
 		initParams = { 
-				@WebInitParam(name = "logina", value = "2", description = "dfdsf")
+				@WebInitParam(name = "login", value = "2", description = "dfdsf")
 		})
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -54,7 +53,7 @@ public class LoginServlet extends HttpServlet {
 		RequestDispatcher rd;
 		if (login.isEmpty() || password.isEmpty()) {
 			System.out.println("IF");
-			rd = request.getRequestDispatcher("login.jsp");
+			rd = request.getRequestDispatcher("authorization.jsp");
 		} else {
 			System.out.println("ELSE");
 			rd = request.getRequestDispatcher(rules + ".jsp");

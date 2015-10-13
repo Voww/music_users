@@ -36,9 +36,9 @@ public class MusicUsersDAODs extends AbstractDAODs<MusicUsers> {
 	public int insert(MusicUsers musicUsers) {
 		System.out.println(musicUsers);
 
-		MusicDAO rdao = new MusicDAO(connection);
-		rdao.insert(musicUsers.getInstance());
-		rdao.read(musicUsers.getInstance());
+		MusicDAO mdao = new MusicDAO(connection);
+		mdao.insert(musicUsers.getInstance());
+		mdao.read(musicUsers.getInstance());
 
 		UserDAO udao = new UserDAO(connection);
 
@@ -166,8 +166,8 @@ public class MusicUsersDAODs extends AbstractDAODs<MusicUsers> {
 		//String sql = "UPDATE user_music SET user_id = ?, `city` = ?, `street` = ?, `house` = ?, `flat` = ?  WHERE `id` = ?";
 		int rows = 0;
 		if (musicUsers.getInstance() != null) {
-			MusicDAO rdao = new MusicDAO(connection);
-			rows += rdao.update(musicUsers.getInstance());
+			MusicDAO mdao = new MusicDAO(connection);
+			rows += mdao.update(musicUsers.getInstance());
 		}
 		if (musicUsers.getDetails() != null) {
 			UserDAO udao = new UserDAO(connection);
@@ -219,8 +219,8 @@ public class MusicUsersDAODs extends AbstractDAODs<MusicUsers> {
 			res = udao.delete(user_id);
 		} else if (music_id != 0) {
 			unlink(music_id);
-			MusicDAO rdao = new MusicDAO(connection);
-			res = rdao.delete(music_id);
+			MusicDAO mdao = new MusicDAO(connection);
+			res = mdao.delete(music_id);
 		}
 		return res;
 	}

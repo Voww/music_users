@@ -1,26 +1,26 @@
-package zaietsv.complextask.mvc.processor;
+package zaietsv.complextask.mvc.processor.instance_detail_processor;
 
 import zaietsv.complextask.mvc.connect.MusicUserConnector;
-import zaietsv.complextask.mvc.dao.data_access_object_detail.RoleUsersDAODs;
-import zaietsv.complextask.mvc.entity.instance.Role;
+import zaietsv.complextask.mvc.dao.data_access_object_detail.MusicUsersDAODs;
+import zaietsv.complextask.mvc.entity.instance.Music;
 import zaietsv.complextask.mvc.entity.instance.User;
 import zaietsv.complextask.mvc.entity.instance.Users;
-import zaietsv.complextask.mvc.entity.instance_detail.RoleUsers;
+import zaietsv.complextask.mvc.entity.instance_detail.MusicUsers;
+import zaietsv.complextask.mvc.exception.ConnectionException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.sql.SQLException;
 
 /**
  * Created by Voww on 18.09.2015.
  */
-public class RoleUsersProcessor extends AbstractInstanceDetailsProcessor {
+public class MusicUsersProcessor extends AbstractInstanceDetailsProcessor {
 
-    public RoleUsersProcessor() {
+    public MusicUsersProcessor() {
     }
 
-    public RoleUsersProcessor(HttpServletRequest servletRequest, HttpServletResponse servletResponse) throws SQLException {
-        super(servletRequest, servletResponse, "role_users", new RoleUsersDAODs(new MusicUserConnector().getConnection(servletRequest)), new RoleUsers());
+    public MusicUsersProcessor(HttpServletRequest servletRequest, HttpServletResponse servletResponse) throws ConnectionException {
+        super(servletRequest, servletResponse, "music_users", new MusicUsersDAODs(new MusicUserConnector().getConnection(servletRequest)), new MusicUsers());
     }
 
     @Override
@@ -39,11 +39,12 @@ public class RoleUsersProcessor extends AbstractInstanceDetailsProcessor {
                 newUsers.getInstances().add(new User(login, password, email));
                 if (str_id == null) {
                     String name = request.getParameter("name");
-                    Role newRole = new Role(name);
-                    RoleUsers roleUsers = new RoleUsers(newRole, newUsers);
-                    daods.insert(roleUsers);
-                    daods.read(roleUsers);
-                    request.getSession().setAttribute("roleUsers", roleUsers);
+                    int rating = Integer.parseInt(request.getParameter("rating"));
+                    Music newMusic = new Music(name, rating);
+                    MusicUsers musicUsers = new MusicUsers(newMusic, newUsers);
+                    daods.insert(musicUsers);
+                    daods.read(musicUsers);
+                    request.getSession().setAttribute("musicUsers", musicUsers);
                 } else {
                     Long id = Long.parseLong(str_id);
                     daods.insert(id, newUsers);
@@ -54,12 +55,13 @@ public class RoleUsersProcessor extends AbstractInstanceDetailsProcessor {
                 break;
             case "update":
                 System.out.println("case 'update':");
-                Role updateRole = null;
-                String str_role_id = request.getParameter("role_id");
-                if (str_role_id != null) {
-                    Long role_id = Long.parseLong(str_role_id);
+                Music updateMusic = null;
+                String str_music_id = request.getParameter("music_id");
+                if (str_music_id != null) {
+                    Long music_id = Long.parseLong(str_music_id);
                     String name = request.getParameter("name");
-                    updateRole = new Role(role_id, name);
+                    int rating = Integer.parseInt(request.getParameter("rating"));
+                    updateMusic = new Music(music_id, name, rating);
                 }
                 Users updateUsers = new Users();
                 String str_user_id = request.getParameter("user_id");
@@ -71,7 +73,7 @@ public class RoleUsersProcessor extends AbstractInstanceDetailsProcessor {
 
                     updateUsers.getInstances().add(new User(user_id, login, password, email));
                 }
-                System.out.println(daods.update(new RoleUsers(updateRole, updateUsers)));
+                System.out.println(daods.update(new MusicUsers(updateMusic, updateUsers)));
                 break;
             case "unlink":
                 System.out.println("case unlink:");
@@ -106,11 +108,11 @@ public class RoleUsersProcessor extends AbstractInstanceDetailsProcessor {
             instanceDetails = daods.read(Long.parseLong(str_id));
             System.out.println("instanceDetails=" + instanceDetails);
             if (instanceDetails == null) {
-                request.getSession().removeAttribute("roleUsers");
+                request.getSession().removeAttribute("musicUsers");
             } else {
-                request.getSession().setAttribute("roleUsers", instanceDetails);
+                request.getSession().setAttribute("musicUsers", instanceDetails);
             }
         }
-        return "admin/role_users_table.jsp";
+        return "admin/music_users_table.jsp";
     }
 }

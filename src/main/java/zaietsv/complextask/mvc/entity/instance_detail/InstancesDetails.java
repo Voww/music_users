@@ -1,5 +1,6 @@
 package zaietsv.complextask.mvc.entity.instance_detail;
 
+import zaietsv.complextask.mvc.entity.Entity;
 import zaietsv.complextask.mvc.entity.instance.Instances;
 
 /**
@@ -7,7 +8,7 @@ import zaietsv.complextask.mvc.entity.instance.Instances;
  * @param <I> - an entity being in question
  * @param <D> - an entity related to the first one
  */
-public interface InstancesDetails<I extends Instances, D extends Instances> {
+public interface InstancesDetails<I extends Instances, D extends Instances> extends Entity {
 
 	I getInstances();
 

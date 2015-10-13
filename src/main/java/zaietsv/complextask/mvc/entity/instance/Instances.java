@@ -1,5 +1,7 @@
 package zaietsv.complextask.mvc.entity.instance;
 
+import zaietsv.complextask.mvc.entity.Entity;
+
 import java.util.ArrayList;
 
 /**
@@ -7,7 +9,7 @@ import java.util.ArrayList;
  * @author Voww
  *
  */
-public interface Instances<I extends Instance> {
+public interface Instances<I extends Instance> extends Entity {
 
 	/**
 	 * Returns a list of instances which are inherits Instance interface

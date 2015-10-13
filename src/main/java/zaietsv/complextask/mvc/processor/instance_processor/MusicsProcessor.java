@@ -1,20 +1,20 @@
-package zaietsv.complextask.mvc.processor;
+package zaietsv.complextask.mvc.processor.instance_processor;
 
 import zaietsv.complextask.mvc.connect.MusicUserConnector;
 import zaietsv.complextask.mvc.dao.data_acces_object.MusicDAO;
 import zaietsv.complextask.mvc.entity.instance.Music;
 import zaietsv.complextask.mvc.entity.instance.Musics;
+import zaietsv.complextask.mvc.exception.ConnectionException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.sql.SQLException;
 
 public class MusicsProcessor extends AbstractInstancesProcessor {
 
     public MusicsProcessor() {
     }
 
-    public MusicsProcessor(HttpServletRequest servletRequest, HttpServletResponse servletResponse) throws SQLException {
+    public MusicsProcessor(HttpServletRequest servletRequest, HttpServletResponse servletResponse) throws ConnectionException {
         super(servletRequest, servletResponse, "music", new MusicDAO(new MusicUserConnector().getConnection(servletRequest)), new Musics());
     }
 

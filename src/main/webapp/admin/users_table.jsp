@@ -16,15 +16,9 @@ last action = <%=request.getParameter("action") %>
 <% Users users = (Users)request.getSession().getAttribute("users"); %>
 
 <table frame="border" border="1">
-  <tr bgcolor="magenta">
-    <th>Id</th>
-    <th>Login</th>
-    <th>Password</th>
-    <th>Email</th>
-    <th>Registration date</th>
-    <th>Action</th>
-  </tr>
-<%String action = request.getParameter("action"); action = action == null ? "" : action;%>
+  <tr bgcolor="magenta"><th>Id</th><th>Login</th><th>Password</th><th>Email</th><th>Registration date</th><th>Action</th></tr>
+
+	<%String action = request.getParameter("action"); action = action == null ? "" : action;%>
 <%Long id = 5L; %>
 <%try { %><%id = Long.parseLong(request.getParameter("id"));%> <%} catch (NumberFormatException e) { %><%} %>
   
@@ -52,7 +46,7 @@ last action = <%=request.getParameter("action") %>
 	<td><%=user.getEmail() %></td>
 	<td><%=user.getReg_date() %></td>
 	<td>
-		<a href="AdminWorks?table=user&action=details&id=<%=user.getId()%>" title="details on the item"><button>details</button></a>
+		<a href="AdminWorks?table=user_address_role_musics&action=details&id=<%=user.getId()%>" title="details on the item"><button>details</button></a>
 		<a href="AdminWorks?table=user&action=edit&id=<%=user.getId()%>" title="edit the item"><button>edit</button></a>
 		<a href="AdminWorks?table=user&action=delete&id=<%=user.getId()%>" title="delete the item"><button>delete</button></a>
 	</td>

@@ -25,12 +25,9 @@ public class AddressDAO extends AbstractDAO<Address> {
 		super(connection);
 	}
 
-	/* (non-Javadoc)
-	 * @see zaietsv.complextask.mvc.dao.data_acces_object.DataAccessObject#insert(zaietsv.complextask.mvc.entity.data_acces_object.InstanceDetail)
-	 */
 	@Override
-	public long insert(Address address) {
-		long id = -1;
+	public int insert(Address address) {
+		int rows;
 		String sql = "INSERT INTO address (postcode, city, street, house, flat) VALUES (?, ?, ?, ?, ?)";
 		try (PreparedStatement ps = connection.prepareStatement(sql)) {
 			ps.setInt(1, address.getPostcode());
@@ -38,14 +35,12 @@ public class AddressDAO extends AbstractDAO<Address> {
 			ps.setString(3, address.getStreet());
 			ps.setInt(4, address.getHouse());
 			ps.setInt(5, address.getFlat());
-			
-			ps.executeUpdate();
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
+
+			rows = ps.executeUpdate();
+		} catch (SQLException ignored) {
+			rows = -1;
 		}
-		
-		return id;
+		return rows;
 	}
 
 	/* (non-Javadoc)
@@ -110,7 +105,7 @@ public class AddressDAO extends AbstractDAO<Address> {
 	@Override
 	public int update(Address address) {
 		String sql = "UPDATE address SET `postcode` = ?, `city` = ?, `street` = ?, `house` = ?, `flat` = ?  WHERE `id` = ?";
-		int rows = 0;
+		int rows;
 		try (PreparedStatement ps = connection.prepareStatement(sql)) {
 			ps.setInt(1, address.getPostcode());
 			ps.setString(2, address.getCity());
@@ -118,13 +113,9 @@ public class AddressDAO extends AbstractDAO<Address> {
 			ps.setInt(4, address.getHouse());
 			ps.setInt(5, address.getFlat());
 			ps.setLong(6, address.getId());
-			try {
-				rows = ps.executeUpdate();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+			rows = ps.executeUpdate();
+		} catch (SQLException ignored) {
+			rows = -1;
 		}
 		return rows;
 	}
@@ -143,6 +134,58 @@ public class AddressDAO extends AbstractDAO<Address> {
 			e.printStackTrace();
 		}
 		return res;
+	}
+
+	/**
+	 * Checks if exists a record having specified database identification number
+	 *
+	 * @param id - an instance's ID number
+	 * @return true if exists false otherwise
+	 */
+	@Override
+	public boolean exists(long id) {
+		boolean exists = false;
+		String sql = "SELECT COUNT(*) `count` FROM `address` WHERE id = ?";
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
+			ps.setLong(1, id);
+			try (ResultSet rs = ps.executeQuery()) {
+				rs.next();
+				exists = rs.getInt("count") > 0;
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return exists;
+	}
+
+	/**
+	 * Checks if exists a database record having specified field (excluding immutable fields)
+	 *
+	 * @param instance - an instance to be verified
+	 * @return true if exists false otherwise
+	 */
+	@Override
+	public boolean exists(Address instance) {
+		boolean exists = false;
+		String sql = "SELECT COUNT(*) `count` FROM `address` WHERE postcode = ? AND city = ? AND street = ? AND house = ? AND flat = ?";
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
+			ps.setInt(1, instance.getPostcode());
+			ps.setString(2, instance.getCity());
+			ps.setString(3, instance.getStreet());
+			ps.setInt(4, instance.getHouse());
+			ps.setInt(5, instance.getFlat());
+			try (ResultSet rs = ps.executeQuery()) {
+				rs.next();
+				exists = rs.getInt("count") > 0;
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return exists;
 	}
 
 	/* (non-Javadoc)

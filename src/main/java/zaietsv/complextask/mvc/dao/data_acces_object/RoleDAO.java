@@ -25,21 +25,18 @@ public class RoleDAO extends AbstractDAO<Role> {
 		super(connection);
 	}
 
-	/* (non-Javadoc)
-	 * @see zaietsv.complextask.mvc.dao.data_acces_object.DataAccessObject#insert(zaietsv.complextask.mvc.entity.data_acces_object.InstanceDetail)
-	 */
 	@Override
-	public long insert(Role role) {
-		long id = -1;
+	public int insert(Role role) {
+		int rows;
 		String sql = "INSERT INTO role (name) VALUE (?)";
 		try (PreparedStatement ps = connection.prepareStatement(sql)) {
 			ps.setString(1, role.getName());
-			ps.executeUpdate();
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
+
+			rows = ps.executeUpdate();
+		} catch (SQLException ignored) {
+			rows = -1;
 		}
-		return id;
+		return rows;
 	}
 
 	/* (non-Javadoc)
@@ -89,17 +86,14 @@ public class RoleDAO extends AbstractDAO<Role> {
 	@Override
 	public int update(Role role) {
 		String sql = "UPDATE role SET `name` = ?  WHERE `id` = ?";
-		int rows = 0;
+		int rows;
 		try (PreparedStatement ps = connection.prepareStatement(sql)) {
 			ps.setString(1, role.getName());
 			ps.setLong(2, role.getId());
-			try {
-				rows = ps.executeUpdate();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+
+			rows = ps.executeUpdate();
+		} catch (SQLException ignored) {
+			rows = -1;
 		}
 		return rows;
 	}
@@ -118,6 +112,55 @@ public class RoleDAO extends AbstractDAO<Role> {
 			e.printStackTrace();
 		}
 		return res;
+	}
+
+	/**
+	 * Checks if exists a record having specified database identification number
+	 *
+	 * @param id - an instance's ID number
+	 * @return true if exists false otherwise
+	 */
+	@Override
+	public boolean exists(long id) {
+		boolean exists = false;
+		String sql = "SELECT COUNT(*) `count` FROM `role` WHERE id = ?";
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
+			ps.setLong(1, id);
+			try (ResultSet rs = ps.executeQuery()) {
+				rs.next();
+				exists = rs.getInt("count") > 0;
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return exists;
+	}
+
+	/**
+	 * Checks if exists a database record having specified fields
+	 * (excluding immutable fields)
+	 *
+	 * @param instance - an instance to be verified
+	 * @return true if exists false otherwise
+	 */
+	@Override
+	public boolean exists(Role instance) {
+		boolean exists = false;
+		String sql = "SELECT COUNT(*) `count` FROM `role` WHERE name = ?";
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
+			ps.setString(1, instance.getName());
+			try (ResultSet rs = ps.executeQuery()) {
+				rs.next();
+				exists = rs.getInt("count") > 0;
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return exists;
 	}
 
 	/* (non-Javadoc)

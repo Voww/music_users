@@ -1,29 +1,30 @@
 package zaietsv.complextask.mvc.processor;
 
-import zaietsv.complextask.mvc.dao.data_acces_object.DataAccessObject;
-import zaietsv.complextask.mvc.entity.instance.AbstractInstances;
-import zaietsv.complextask.mvc.entity.instance.Instances;
+import zaietsv.complextask.mvc.dao.UserAddressRoleMusicsDAO;
+import zaietsv.complextask.mvc.entity.Entity;
+import zaietsv.complextask.mvc.entity.UserAddressRoleMusics;
+import zaietsv.complextask.mvc.processor.instance_processor.InstancesProcessor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public abstract class AbstractInstancesProcessor<E extends AbstractInstances> implements InstancesProcessor {
+public abstract class AbstractProcessor<E extends Entity> implements InstancesProcessor {
 
     protected HttpServletRequest request;
     protected HttpServletResponse response;
     protected String table;
-    protected DataAccessObject dao;
-    protected Instances instances;
+    protected UserAddressRoleMusicsDAO dao;
+    protected UserAddressRoleMusics uarm;
 
-    public AbstractInstancesProcessor() {
+    public AbstractProcessor() {
     }
 
-    public AbstractInstancesProcessor(HttpServletRequest servletRequest, HttpServletResponse servletResponse, String table, DataAccessObject dao, Instances instances) {
+    public AbstractProcessor(HttpServletRequest servletRequest, HttpServletResponse servletResponse, String table, UserAddressRoleMusicsDAO dao, UserAddressRoleMusics uarm) {
         this.request = servletRequest;
         this.response = servletResponse;
         this.table = table;
         this.dao = dao;
-        this.instances = instances;
+        this.uarm = uarm;
     }
 
     public abstract String process();

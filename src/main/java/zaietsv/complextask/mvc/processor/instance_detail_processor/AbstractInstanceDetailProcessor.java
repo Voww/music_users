@@ -1,29 +1,29 @@
-package zaietsv.complextask.mvc.processor;
+package zaietsv.complextask.mvc.processor.instance_detail_processor;
 
-import zaietsv.complextask.mvc.dao.data_access_object_detail.DataAccessObjectDetails;
-import zaietsv.complextask.mvc.entity.instance_detail.AbstractInstanceDetails;
-import zaietsv.complextask.mvc.entity.instance_detail.InstanceDetails;
+import zaietsv.complextask.mvc.dao.data_access_object_detail.DataAccessObjectDetail;
+import zaietsv.complextask.mvc.entity.instance_detail.AbstractInstanceDetail;
+import zaietsv.complextask.mvc.entity.instance_detail.InstanceDetail;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public abstract class AbstractInstanceDetailsProcessor<E extends AbstractInstanceDetails> implements InstanceDetailsProcessor {
+public abstract class AbstractInstanceDetailProcessor<E extends AbstractInstanceDetail> implements InstanceDetailProcessor {
 
     protected HttpServletRequest request;
     protected HttpServletResponse response;
     protected String table;
-    protected DataAccessObjectDetails daods;
-    protected InstanceDetails instanceDetails;
+    protected DataAccessObjectDetail daod;
+    protected InstanceDetail instanceDetail;
 
-    public AbstractInstanceDetailsProcessor() {
+    public AbstractInstanceDetailProcessor() {
     }
 
-    public AbstractInstanceDetailsProcessor(HttpServletRequest servletRequest, HttpServletResponse servletResponse, String table, DataAccessObjectDetails daods, InstanceDetails instanceDetails) {
+    public AbstractInstanceDetailProcessor(HttpServletRequest servletRequest, HttpServletResponse servletResponse, String table, DataAccessObjectDetail daod, InstanceDetail instanceDetail) {
         this.request = servletRequest;
         this.response = servletResponse;
         this.table = table;
-        this.daods = daods;
-        this.instanceDetails = instanceDetails;
+        this.daod = daod;
+        this.instanceDetail = instanceDetail;
     }
 
     public abstract String process();

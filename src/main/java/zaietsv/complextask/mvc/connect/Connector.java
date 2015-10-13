@@ -1,5 +1,7 @@
 package zaietsv.complextask.mvc.connect;
 
+import zaietsv.complextask.mvc.exception.ConnectionException;
+
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -11,7 +13,7 @@ public interface Connector extends AutoCloseable {
 	 * @return a database connection
 	 * @throws SQLException - if a database access error occurs
 	 */
-	Connection getConnection(HttpServletRequest request) throws SQLException;
+	Connection getConnection(HttpServletRequest request) throws ConnectionException;
 
 	/**
 	 * Validates a database connection

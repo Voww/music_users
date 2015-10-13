@@ -1,6 +1,7 @@
 package zaietsv.complextask.mvc.connect;
 
 import com.mysql.jdbc.Driver;
+import zaietsv.complextask.mvc.exception.ConnectionException;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Connection;
@@ -47,9 +48,9 @@ public abstract class AbstractConnector implements Connector {
 	 * @return the connection
 	 */
 	@Override
-	public Connection getConnection(HttpServletRequest request) throws SQLException {
-		/*if (isDriverRegistered) {
-			throw new SQLException("A database driver is not registered! getConnection() failed.");
+	public Connection getConnection(HttpServletRequest request) throws ConnectionException {
+		/*if (isDriverRegistered()) {
+			throw new ConnectionException("A database driver is not registered! getConnection() failed.");
 		}*/
 
 		connection = (Connection)request.getSession().getAttribute("connection");
@@ -62,7 +63,7 @@ public abstract class AbstractConnector implements Connector {
 				request.getSession().setAttribute("connection", connection);
 			} catch (SQLException e) {
 				e.printStackTrace();
-				throw new SQLException("Unable to connect to a database '" + url + "' under user name '" + user + "'! getConnection() failed.", e);
+				throw new ConnectionException("Unable to connect to a database '" + url + "' under user name '" + user + "'! getConnection() failed.", e);
 			}
 		}
 		return connection;
@@ -82,12 +83,12 @@ public abstract class AbstractConnector implements Connector {
 	}
 	
 	@Override
-	public void close() throws SQLException {
+	public void close() throws ConnectionException {
 		try {
 			connection.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new SQLException("Unable to disconnect from a database '" + url + "'! close() failed.", e);
+			throw new ConnectionException("Unable to disconnect from a database '" + url + "'! close() failed.", e);
 		}
 	}
 

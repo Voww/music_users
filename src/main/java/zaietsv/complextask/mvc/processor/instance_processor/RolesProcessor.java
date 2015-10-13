@@ -1,13 +1,15 @@
-package zaietsv.complextask.mvc.processor;
+package zaietsv.complextask.mvc.processor.instance_processor;
 
 import zaietsv.complextask.mvc.connect.MusicUserConnector;
 import zaietsv.complextask.mvc.dao.data_acces_object.RoleDAO;
 import zaietsv.complextask.mvc.entity.instance.Role;
 import zaietsv.complextask.mvc.entity.instance.Roles;
+import zaietsv.complextask.mvc.exception.ConnectionException;
+import zaietsv.complextask.mvc.processor.instance_detail_processor.InstanceDetailsProcessor;
+import zaietsv.complextask.mvc.processor.instance_detail_processor.RoleUsersProcessor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.sql.SQLException;
 
 /**
  * Created by Voww on 18.09.2015.
@@ -17,7 +19,7 @@ public class RolesProcessor extends AbstractInstancesProcessor {
     public RoleProcessor() {
     }*/
 
-    public RolesProcessor(HttpServletRequest request, HttpServletResponse response) throws SQLException {
+    public RolesProcessor(HttpServletRequest request, HttpServletResponse response) throws ConnectionException {
         super(request, response, "role", new RoleDAO(new MusicUserConnector().getConnection(request)), new Roles());
         
     }
@@ -57,7 +59,7 @@ public class RolesProcessor extends AbstractInstancesProcessor {
                 InstanceDetailsProcessor idp = null;
                 try {
                     idp = new RoleUsersProcessor(request, response);
-                } catch (SQLException e) {
+                } catch (ConnectionException e) {
                     e.printStackTrace();
                 }
                 idp.process();

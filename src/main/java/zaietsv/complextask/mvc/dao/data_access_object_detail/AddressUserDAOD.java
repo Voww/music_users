@@ -96,12 +96,6 @@ public class AddressUserDAOD extends AbstractDAOD<AddressUser> {
 						addressUser.setInstance(address);
 					}
 
-					System.out.println("rs.getLong(\"u.id\")=" + rs.getLong("u.id"));
-					System.out.println("rs.getString(\"login\")=" + rs.getString("login"));
-					System.out.println("rs.getString(\"password\")=" + rs.getString("password"));
-					System.out.println("rs.getString(\"email\")=" + rs.getString("email"));
-					System.out.println("rs.getDate(\"reg_date\")=" + rs.getDate("reg_date"));
-
 					Long uID = rs.getLong("u.id");
 /*					String login = rs.getString("login");
 					String password = rs.getString("password");

@@ -1,5 +1,6 @@
 package zaietsv.complextask.mvc.dao.data_access_object_detail;
 
+import zaietsv.complextask.mvc.dao.EntityDAO;
 import zaietsv.complextask.mvc.entity.instance_detail.InstancesDetails;
 
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ import java.util.ArrayList;
  *
  * @param <I> a class which implements InstanceDetail interface
  */
-public interface DataAccessObjectsDetails<I extends InstancesDetails> {
+public interface DataAccessObjectsDetails<I extends InstancesDetails> extends EntityDAO<I> {
 	
 	/**
 	 * Inserts a new record into a database

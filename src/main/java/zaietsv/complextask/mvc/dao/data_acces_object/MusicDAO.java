@@ -25,28 +25,21 @@ public class MusicDAO extends AbstractDAO<Music> {
 		super(connection);
 	}
 
-	/* (non-Javadoc)
-	 * @see zaietsv.complextask.mvc.dao.data_acces_object.DataAccessObject#insert(zaietsv.complextask.mvc.entity.data_acces_object.InstanceDetail)
-	 */
 	@Override
-	public long insert(Music music) {
-		long id = -1;
+	public int insert(Music music) {
+		int rows;
 		String sql = "INSERT INTO music (name, rating) VALUES (?, ?)";
 		try (PreparedStatement ps = connection.prepareStatement(sql)) {
 			ps.setString(1, music.getName());
 			ps.setInt(2, music.getRating());
-			
-			ps.executeUpdate();
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
+
+			rows = ps.executeUpdate();
+		} catch (SQLException ignored) {
+			rows = -1;
 		}
-		return id;
+		return rows;
 	}
 
-	/* (non-Javadoc)
-	 * @see zaietsv.complextask.mvc.dao.data_acces_object.DataAccessObject#read(long)
-	 */
 	@Override
 	public Music read(long id) {
 		String sql = "SELECT * FROM music WHERE id = ?";
@@ -86,32 +79,23 @@ public class MusicDAO extends AbstractDAO<Music> {
 		}
 		return instance.getId();
 	}
-	
-	/* (non-Javadoc)
-	 * @see zaietsv.complextask.mvc.dao.data_acces_object.DataAccessObject#update(zaietsv.complextask.mvc.entity.data_acces_object.InstanceDetail)
-	 */
+
 	@Override
 	public int update(Music music) {
 		String sql = "UPDATE music SET `name` = ?, `rating` = ?  WHERE `id` = ?";
-		int rows = 0;
+		int rows;
 		try (PreparedStatement ps = connection.prepareStatement(sql)) {
 			ps.setString(1, music.getName());
 			ps.setInt(2, music.getRating());
 			ps.setLong(3, music.getId());
-			try {
-				rows = ps.executeUpdate();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+
+			rows = ps.executeUpdate();
+		} catch (SQLException ignored) {
+			rows = -1;
 		}
 		return rows;
 	}
 
-	/* (non-Javadoc)
-	 * @see zaietsv.complextask.mvc.dao.data_acces_object.DataAccessObject#delete(long)
-	 */
 	@Override
 	public boolean delete(long id) {
 		String sql = " DELETE FROM `music` WHERE id = ? ";
@@ -123,6 +107,56 @@ public class MusicDAO extends AbstractDAO<Music> {
 			e.printStackTrace();
 		}
 		return res;
+	}
+
+	/**
+	 * Checks if exists a record having specified database identification number
+	 *
+	 * @param id - an instance's ID number
+	 * @return true if exists false otherwise
+	 */
+	@Override
+	public boolean exists(long id) {
+		boolean exists = false;
+		String sql = "SELECT COUNT(*) `count` FROM `music` WHERE id = ?";
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
+			ps.setLong(1, id);
+			try (ResultSet rs = ps.executeQuery()) {
+				rs.next();
+				exists = rs.getInt("count") > 0;
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return exists;
+	}
+
+	/**
+	 * Checks if exists a database record having specified fields
+	 * (excluding immutable fields)
+	 *
+	 * @param instance - an instance to be verified
+	 * @return true if exists false otherwise
+	 */
+	@Override
+	public boolean exists(Music instance) {
+		boolean exists = false;
+		String sql = "SELECT COUNT(*) `count` FROM `music` WHERE name = ? AND rating = ?";
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
+			ps.setString(1, instance.getName());
+			ps.setInt(2, instance.getRating());
+			try (ResultSet rs = ps.executeQuery()) {
+				rs.next();
+				exists = rs.getInt("count") > 0;
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return exists;
 	}
 
 	/* (non-Javadoc)

@@ -37,14 +37,14 @@ public class User extends AbstractInstance {
 	}
 
 	/**
-	 * @return the login
+	 * @return the authorization
 	 */
 	public String getLogin() {
 		return login;
 	}
 
 	/**
-	 * @param login the login to set
+	 * @param login the authorization to set
 	 */
 	public void setLogin(String login) {
 		this.login = login;

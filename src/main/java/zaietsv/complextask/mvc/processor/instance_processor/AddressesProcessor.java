@@ -1,13 +1,15 @@
-package zaietsv.complextask.mvc.processor;
+package zaietsv.complextask.mvc.processor.instance_processor;
 
 import zaietsv.complextask.mvc.connect.MusicUserConnector;
 import zaietsv.complextask.mvc.dao.data_acces_object.AddressDAO;
 import zaietsv.complextask.mvc.entity.instance.Address;
 import zaietsv.complextask.mvc.entity.instance.Addresses;
+import zaietsv.complextask.mvc.exception.ConnectionException;
+import zaietsv.complextask.mvc.processor.instance_detail_processor.AddressUserProcessor;
+import zaietsv.complextask.mvc.processor.instance_detail_processor.InstanceDetailProcessor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.sql.SQLException;
 
 /**
  * Created by Voww on 18.09.2015.
@@ -17,7 +19,7 @@ public class AddressesProcessor extends AbstractInstancesProcessor {
     public AddressesProcessor() {
     }
 
-    public AddressesProcessor(HttpServletRequest servletRequest, HttpServletResponse servletResponse) throws SQLException {
+    public AddressesProcessor(HttpServletRequest servletRequest, HttpServletResponse servletResponse) throws ConnectionException {
         super(servletRequest, servletResponse, "address", new AddressDAO(new MusicUserConnector().getConnection(servletRequest)), new Addresses());
     }
 
@@ -29,7 +31,6 @@ public class AddressesProcessor extends AbstractInstancesProcessor {
 
         switch (action) {
             case "insert":
-                //System.out.println("case 'insert':");
                 int postcode = Integer.parseInt(request.getParameter("postcode"));
                 String city = request.getParameter("city");
                 String street = request.getParameter("street");
@@ -40,10 +41,9 @@ public class AddressesProcessor extends AbstractInstancesProcessor {
 
                 break;
             case "edit":
-                System.out.println("case 'edit':");
+                ;
                 break;
             case "update":
-                System.out.println("case 'update':");
                 Long id = Long.parseLong(request.getParameter("id"));
                 postcode = Integer.parseInt(request.getParameter("postcode"));
                 city = request.getParameter("city");
@@ -55,23 +55,21 @@ public class AddressesProcessor extends AbstractInstancesProcessor {
                 System.out.println(dao.update(updateAddress));
                 break;
             case "delete":
-                System.out.println("case delete:");
                 id = Long.parseLong(request.getParameter("id"));
                 System.out.println(dao.delete(id));
                 break;
             case "details":
-                System.out.println("case details:");
                 InstanceDetailProcessor idp = null;
                 try {
                     idp = new AddressUserProcessor(request, response);
-                } catch (SQLException e) {
+                } catch (ConnectionException e) {
                     e.printStackTrace();
                 }
                 idp.process();
                 break;
 
             default:
-                System.out.println("default:");
+                ;
                 break;
         }
 

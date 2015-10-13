@@ -25,30 +25,23 @@ public class UserDAO extends AbstractDAO<User> {
 		super(connection);
 	}
 
-	/* (non-Javadoc)
-	 * @see zaietsv.complextask.mvc.dao.data_acces_object.DataAccessObject#insert(zaietsv.complextask.mvc.entity.data_acces_object.InstanceDetail)
-	 */
 	@Override
-	public long insert(User user) {
-		long id = -1;
+	public int insert(User user) {
+		int rows = 0;
 		String sql = "INSERT INTO user (login, password, email, reg_date) VALUES (?, ?, ?, ?)";
 		try (PreparedStatement ps = connection.prepareStatement(sql)) {
 			ps.setString(1, user.getLogin());
 			ps.setString(2, user.getPassword());
 			ps.setString(3, user.getEmail());
 			ps.setDate(4, user.getReg_date());
-			
-			ps.executeUpdate();
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
+
+			rows = ps.executeUpdate();
+		} catch (SQLException ignored) {
+			rows = -1;
 		}
-		return id;
+		return rows;
 	}
 
-	/* (non-Javadoc)
-	 * @see zaietsv.complextask.mvc.dao.data_acces_object.DataAccessObject#read(long)
-	 */
 	@Override
 	public User read(long id) {
 		String sql = "SELECT * FROM user WHERE id = ?";
@@ -83,19 +76,18 @@ public class UserDAO extends AbstractDAO<User> {
 	 */
 	@Override
 	public long read(User instance) {
-		String sql = "SELECT `id` FROM `user` WHERE `login` = ? AND `password` = ? AND `email` = ? AND `reg_date` = ?";
-		//String sql = "SELECT `id` FROM `user` WHERE `login` = ? AND `password` = ? AND `email` = ?";
+		String sql = "SELECT id, reg_date FROM `user` WHERE `login` = ? AND `password` = ? AND `email` = ?";
 		try (PreparedStatement ps = connection.prepareStatement(sql)) {
 			ps.setString(1, instance.getLogin());
 			ps.setString(2, instance.getPassword());
 			ps.setString(3, instance.getEmail());
-			ps.setDate(4, instance.getReg_date());
 
 			System.out.println("ps=" + ps);
 
 			try (ResultSet rs = ps.executeQuery()) {
 				if (rs.next()) {
 					instance.setId(rs.getLong("id"));
+					instance.setReg_date(rs.getDate("reg_date"));
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -113,26 +105,19 @@ public class UserDAO extends AbstractDAO<User> {
 	@Override
 	public int update(User user) {
 		String sql = "UPDATE user SET `login` = ?, `password` = ?, `email` = ?  WHERE `id` = ?";
-		int rows = 0;
+		int rows = -1;
 		try (PreparedStatement ps = connection.prepareStatement(sql)) {
 			ps.setString(1, user.getLogin());
 			ps.setString(2, user.getPassword());
 			ps.setString(3, user.getEmail());
 			ps.setLong(4, user.getId());
-			try {
-				rows = ps.executeUpdate();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+
+			rows = ps.executeUpdate();
+		} catch (SQLException ignored) {
 		}
 		return rows;
 	}
 
-	/* (non-Javadoc)
-	 * @see zaietsv.complextask.mvc.dao.data_acces_object.DataAccessObject#delete(long)
-	 */
 	@Override
 	public boolean delete(long id) {
 		String sql = " DELETE FROM `user` WHERE id = ? ";
@@ -144,6 +129,57 @@ public class UserDAO extends AbstractDAO<User> {
 			e.printStackTrace();
 		}
 		return res;
+	}
+
+	/**
+	 * Checks if exists a record having specified database identification number
+	 *
+	 * @param id - an instance's ID number
+	 * @return true if exists false otherwise
+	 */
+	@Override
+	public boolean exists(long id) {
+		boolean exists = false;
+		String sql = "SELECT COUNT(*) `count` FROM `user` WHERE id = ?";
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
+			ps.setLong(1, id);
+			try (ResultSet rs = ps.executeQuery()) {
+				rs.next();
+				exists = rs.getInt("count") > 0;
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return exists;
+	}
+
+	/**
+	 * Checks if exists a database record having specified fields
+	 * (excluding immutable fields)
+	 *
+	 * @param instance - an instance to be verified
+	 * @return true if exists false otherwise
+	 */
+	@Override
+	public boolean exists(User instance) {
+		boolean exists = false;
+		String sql = "SELECT COUNT(*) `count` FROM `user` WHERE `login` = ? AND `password` = ? AND `email` = ?";
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
+			ps.setString(1, instance.getLogin());
+			ps.setString(2, instance.getPassword());
+			ps.setString(3, instance.getEmail());
+			try (ResultSet rs = ps.executeQuery()) {
+				rs.next();
+				exists = rs.getInt("count") > 0;
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return exists;
 	}
 
 	/* (non-Javadoc)

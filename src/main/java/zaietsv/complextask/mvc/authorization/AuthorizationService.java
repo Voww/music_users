@@ -1,8 +1,8 @@
-package zaietsv.complextask.mvc.login;
+package zaietsv.complextask.mvc.authorization;
 
 import java.sql.SQLException;
 
-public interface LoginService {
+public interface AuthorizationService {
 	
 	boolean login() throws SQLException;
 	

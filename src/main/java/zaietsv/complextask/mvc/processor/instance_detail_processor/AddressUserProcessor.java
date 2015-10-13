@@ -1,14 +1,14 @@
-package zaietsv.complextask.mvc.processor;
+package zaietsv.complextask.mvc.processor.instance_detail_processor;
 
 import zaietsv.complextask.mvc.connect.MusicUserConnector;
 import zaietsv.complextask.mvc.dao.data_access_object_detail.AddressUserDAOD;
 import zaietsv.complextask.mvc.entity.instance.Address;
 import zaietsv.complextask.mvc.entity.instance.User;
 import zaietsv.complextask.mvc.entity.instance_detail.AddressUser;
+import zaietsv.complextask.mvc.exception.ConnectionException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.sql.SQLException;
 
 /**
  * Created by Voww on 18.09.2015.
@@ -18,7 +18,7 @@ public class AddressUserProcessor extends AbstractInstanceDetailProcessor {
     public AddressUserProcessor() {
     }
 
-    public AddressUserProcessor(HttpServletRequest servletRequest, HttpServletResponse servletResponse) throws SQLException {
+    public AddressUserProcessor(HttpServletRequest servletRequest, HttpServletResponse servletResponse) throws ConnectionException {
         super(servletRequest, servletResponse, "address_user", new AddressUserDAOD(new MusicUserConnector().getConnection(servletRequest)), new AddressUser());
     }
 

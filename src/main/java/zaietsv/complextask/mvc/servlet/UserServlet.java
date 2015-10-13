@@ -3,20 +3,21 @@ package zaietsv.complextask.mvc.servlet;
 import zaietsv.complextask.mvc.connect.MusicUserConnector;
 import zaietsv.complextask.mvc.dao.data_acces_object.UserDAO;
 import zaietsv.complextask.mvc.entity.instance.User;
+import zaietsv.complextask.mvc.exception.ConnectionException;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
  * Servlet implementation class UserServlet
  */
-//@WebServlet(asyncSupported = true, urlPatterns = { "/UserServlet" })
+@WebServlet("/UserServlet")
 public class UserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -37,8 +38,7 @@ public class UserServlet extends HttpServlet {
 			MusicUserConnector ct = new MusicUserConnector();
 			UserDAO udao = new UserDAO(ct.getConnection(request));
 			ArrayList<User> users = udao.readAll();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+		} catch (ConnectionException e) {
 			e.printStackTrace();
 		}
 		String action = request.getParameter("action");
