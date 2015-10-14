@@ -58,7 +58,9 @@ last action = <%=request.getParameter("action") %>
 	<td><%=addressUser.getInstance().getHouse() %></td>
 	<td><%=addressUser.getInstance().getFlat() %></td>
 	<td>
+		<a href="AdminWorks?table=address_user&action=edit&id=<%=addressUser.getInstance().getId()%>&address_id=<%=addressUser.getInstance().getId()%>" title="edit the item"><button>edit</button></a>
 		<a href="AdminWorks?table=address_user&action=unlink&id=<%=addressUser.getInstance().getId()%>" title="unlink the address from the user (without deleting)"><button>unlink</button></a>
+		<a href="AdminWorks?table=address_user&action=delete&id=<%=addressUser.getInstance().getId()%>" title="delete the address"><button>delete</button></a>
 	</td>
 	<%} %>
 </tr>
@@ -113,6 +115,7 @@ last action = <%=request.getParameter("action") %>
 	<td><%=addressUser.getDetail().getEmail() %></td>
 	<td><%=addressUser.getDetail().getReg_date() %></td>
 	<td>
+		<a href="AdminWorks?table=user_address_role_musics&action=details&id=<%=addressUser.getDetail().getId()%>" title="details on the item"><button>details</button></a>
 		<a href="AdminWorks?table=address_user&action=edit&id=<%=addressUser.getInstance().getId()%>&user_id=<%=addressUser.getDetail().getId()%>" title="edit the item"><button>edit</button></a>
 		<a href="AdminWorks?table=address_user&action=unlink&id=<%=addressUser.getInstance().getId()%>" title="unlink the user from the address (without deleting)"><button>unlink</button></a>
 		<a href="AdminWorks?table=address_user&action=delete&id=<%=addressUser.getInstance().getId()%>&user_id=<%=addressUser.getDetail().getId()%>" title="delete the user"><button>delete</button></a>

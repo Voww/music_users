@@ -47,7 +47,9 @@ last action = <%=request.getParameter("action") %>
 	<td><%=roleUsers.getInstance().getId() %></td>
 	<td><%=roleUsers.getInstance().getName() %></td>
 	<td>
-		<a href="AdminWorks?table=role_users&action=unlink&id=<%=roleUsers.getInstance().getId()%>" title="unlink the role from all users (without deleting)"><button>unlink</button></a>
+		<a href="AdminWorks?table=role_users&action=edit&id=<%=roleUsers.getInstance().getId()%>&role_id=<%=roleUsers.getInstance().getId()%>" title="edit the item"><button>edit</button></a>
+		<a href="AdminWorks?table=role_users&action=unlink&id=<%=roleUsers.getInstance().getId()%>" title="unlink the role from the user (without deleting)"><button>unlink</button></a>
+		<a href="AdminWorks?table=role_users&action=delete&id=<%=roleUsers.getInstance().getId()%>" title="delete the role"><button>delete</button></a>
 
 	</td>
 
@@ -92,6 +94,7 @@ last action = <%=request.getParameter("action") %>
 		<td><%=user.getEmail() %></td>
 		<td><%=user.getReg_date() %></td>
 		<td>
+			<a href="AdminWorks?table=user_address_role_musics&action=details&id=<%=user.getId()%>" title="details on the item"><button>details</button></a>
 			<a href="AdminWorks?table=role_users&action=edit&id=<%=roleUsers.getInstance().getId()%>&user_id=<%=user.getId()%>" title="edit the item"><button>edit</button></a>
 			<a href="AdminWorks?table=role_users&action=unlink&id=<%=roleUsers.getInstance().getId()%>&user_id=<%=user.getId()%>" title="unlink the user from the role (without deleting)"><button>unlink</button></a>
 			<a href="AdminWorks?table=role_users&action=delete&id=<%=roleUsers.getInstance().getId()%>&user_id=<%=user.getId()%>" title="delete the user"><button>delete</button></a>

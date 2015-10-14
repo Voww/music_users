@@ -89,7 +89,7 @@ last action = <%=action %>
 		<td><label>Street:<input type="text" name="street" value="street"></label></td>
 		<td><label>House:<input type="text" name="house" value="0"></label></td>
 		<td><label>Flat:<input type="text" name="flat" value="000"></label></td>
-		<td><input type="submit" title="insert a new item" name="action" value="insert"></td>
+		<td><input type="submit" title="insert a new item" name="action" value="insert_address"></td>
 		</form>
 	</tr>
 	<% } else if (action.matches("edit") && address_id != null) { %>
@@ -129,26 +129,20 @@ last action = <%=action %>
 <table frame="border" border="1">
 	<tr bgcolor="magenta"><th>Id</th><th>Name</th><th>Action</th></tr>
 	<%if (role == null) { %>
-	<tr>
-		<td><form action="AdminWorks" method="post" name="action">
-			<input type="hidden" title="table" name="table" value="user_address_role_musics"></td>
-		<td><label>Role:<input type="text" name="name" value="user"></label></td>
-		<td><input type="submit" title="insert a new item" name="action" value="insert"></td>
-		</form>
-	</tr>
+
 	<% } else { %>
 	<%if (role.getId() % 2 == 0) {%><tr bgcolor="yellow"><%} else {%><tr bgcolor="cyan"><%} %>
-	<td><%=role.getId() %></td>
-	<td><%=role.getName() %></td>
-	<td>
-		<a href="AdminWorks?table=role_users&action=details&id=<%=role.getId()%>" title="details on the item"><button>details</button></a>
-	</td>
+		<td><%=role.getId() %></td>
+		<td><%=role.getName() %></td>
+		<td>
+			<a href="AdminWorks?table=role_users&action=details&id=<%=role.getId()%>" title="details on the item"><button>details</button></a>
+		</td>
+	</tr>
+	<%} %>
 	<tr>
 		<td colspan="2"></td>
 		<td><a href="AdminWorks?table=user_address_role_musics&action=change_role&id=<%=id %>" title="change a role of the user"><button>change</button></a></td>
 	</tr>
-	<%} %>
-</tr>
 </table>
 <% if (action.matches("change_role")) { %>
 <h3>Change Role</h3>
@@ -165,10 +159,15 @@ last action = <%=action %>
 		<td><%=selector.getId() %></td>
 		<td><%=selector.getName() %></td>
 		<td>
-			<input type="radio" name="role_id" value="<%=selector.getId() %>" <%if (selector.getId() == uarm.getRole().getId()) {%>checked<%} %>>
+			<input type="radio" name="role_id" value="<%=selector.getId() %>" <%if (uarm.getRole() != null && selector.getId() == uarm.getRole().getId()) {%>checked<%} %>>
 		</td>
 	</tr>
 	<%} %>
+	<tr>
+		<td></td>
+		<td><label>Role:<input type="text" name="name" value="user"></label></td>
+		<td><input type="submit" title="insert a new item" name="action" value="insert_role"></td>
+	</tr>
 	<tr>
 		<td colspan="2"></td>
 		<td>
@@ -211,15 +210,8 @@ last action = <%=action %>
 	<%} %>
 	<%} %>
 	<%} %>
-</tr>
-	<!-- tr>
-		<form action="AdminWorks" method="post" name="action">
-			<td><input type="hidden" title="table" name="table" value="user_address_role_musics"></td>
-			<td><label>Name:<input type="text" name="name" value="name"></label></td>
-			<td><label>Rating:<input type="text" name="rating" value="0"></label></td>
-			<td><input type="submit" title="insert a new item" name="action" value="insert"></td>
-		</form>
-	</tr -->
+	</tr>
+
 	<tr>
 		<td colspan="3"></td>
 		<td><a href="AdminWorks?table=user_address_role_musics&action=change_music&id=<%=id %>" title="change musics of the user"><button>change</button></a></td>
@@ -248,6 +240,12 @@ last action = <%=action %>
 		</td>
 	</tr>
 		<%} %>
+		<tr>
+			<td></td>
+			<td><label>Name:<input type="text" name="name" value="name"></label></td>
+			<td><label>Rating:<input type="text" name="rating" value="0"></label></td>
+			<td><input type="submit" title="insert a new item" name="action" value="insert_music"></td>
+		</tr>
 		<tr>
 			<td colspan="3"></td>
 			<td>

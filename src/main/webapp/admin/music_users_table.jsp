@@ -39,7 +39,7 @@ last action = <%=request.getParameter("action") %>
 			<input type="hidden"  title="id" name="id" value="<%=musicUsers.getInstance().getId() %>">
 			<input type="hidden"  title="id" name="music_id" value="<%=musicUsers.getInstance().getId() %>"></td>
 		<td><input type="text" name="name" value="<%=musicUsers.getInstance().getName() %>" title="edit name"></td>
-		<td><input type="text" name="name" value="<%=musicUsers.getInstance().getRating() %>" title="edit rating"></td>
+		<td><input type="text" name="rating" value="<%=musicUsers.getInstance().getRating() %>" title="edit rating"></td>
 		<td><input type="submit" title="update changes" name="action" value="update">
 			<input type="submit" title="revert changes" name="action" value="cancel"></td>
 	</form>
@@ -50,7 +50,9 @@ last action = <%=request.getParameter("action") %>
 	<td><%=musicUsers.getInstance().getName() %></td>
 	<td><%=musicUsers.getInstance().getRating() %></td>
 	<td>
-		<a href="AdminWorks?table=music_users&action=unlink&id=<%=musicUsers.getInstance().getId()%>" title="unlink the music from all users (without deleting)"><button>unlink</button></a>
+		<a href="AdminWorks?table=music_users&action=edit&id=<%=musicUsers.getInstance().getId()%>&music_id=<%=musicUsers.getInstance().getId()%>" title="edit the item"><button>edit</button></a>
+		<a href="AdminWorks?table=music_users&action=unlink&id=<%=musicUsers.getInstance().getId()%>" title="unlink the music from the user (without deleting)"><button>unlink</button></a>
+		<a href="AdminWorks?table=music_users&action=delete&id=<%=musicUsers.getInstance().getId()%>" title="delete the music"><button>delete</button></a>
 
 	</td>
 
@@ -95,6 +97,7 @@ last action = <%=request.getParameter("action") %>
 		<td><%=user.getEmail() %></td>
 		<td><%=user.getReg_date() %></td>
 		<td>
+			<a href="AdminWorks?table=user_address_role_musics&action=details&id=<%=user.getId()%>" title="details on the item"><button>details</button></a>
 			<a href="AdminWorks?table=music_users&action=edit&id=<%=musicUsers.getInstance().getId()%>&user_id=<%=user.getId()%>" title="edit the item"><button>edit</button></a>
 			<a href="AdminWorks?table=music_users&action=unlink&id=<%=musicUsers.getInstance().getId()%>&user_id=<%=user.getId()%>" title="unlink the user from the music (without deleting)"><button>unlink</button></a>
 			<a href="AdminWorks?table=music_users&action=delete&id=<%=musicUsers.getInstance().getId()%>&user_id=<%=user.getId()%>" title="delete the user"><button>delete</button></a>

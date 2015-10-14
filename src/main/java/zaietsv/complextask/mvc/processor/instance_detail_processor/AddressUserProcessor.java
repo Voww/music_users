@@ -30,7 +30,6 @@ public class AddressUserProcessor extends AbstractInstanceDetailProcessor {
 
         switch (action) {
             case "insert":
-                System.out.println("case 'insert':");
                 String str_id = request.getParameter("id");
 
                 String login = request.getParameter("login");
@@ -56,10 +55,8 @@ public class AddressUserProcessor extends AbstractInstanceDetailProcessor {
                 }
                 break;
             case "edit":
-                System.out.println("case 'edit':");
                 break;
             case "update":
-                System.out.println("case 'update':");
                 Address updateAddress = null;
                 String str_address_id = request.getParameter("address_id");
                 if (str_address_id != null) {

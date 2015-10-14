@@ -103,7 +103,7 @@ public class UserAddressRoleMusicsProcessor extends AbstractProcessor {
                     }
                 break;
 
-            case "insert":
+            case "insert_address":
                 str_id = request.getParameter("id");
                 if (str_id != null) {
                     id = Long.parseLong(str_id);
@@ -120,6 +120,32 @@ public class UserAddressRoleMusicsProcessor extends AbstractProcessor {
                     }
                 }
 
+                break;
+            case "insert_role":
+                str_id = request.getParameter("id");
+                if (str_id != null) {
+                    id = Long.parseLong(str_id);
+                    RoleDAO rdao = new RoleDAO(connection);
+                    Role newRole = new Role(request.getParameter("name"));
+                    rdao.insert(newRole);
+                    rdao.read(newRole);
+                    UserRoleLinkDAO urld = new UserRoleLinkDAO(connection);
+                    urld.insertLink(id, newRole.getId());
+                }
+                break;
+            case "insert_music":
+                str_id = request.getParameter("id");
+                if (str_id != null) {
+                    id = Long.parseLong(str_id);
+                    mdao = new MusicDAO(connection);
+                    Music newMusic = new Music();
+                    newMusic.setName(request.getParameter("name"));
+                    newMusic.setRating(Integer.parseInt(request.getParameter("rating")));
+                    mdao.insert(newMusic);
+                    mdao.read(newMusic);
+                    umld = new UserMusicLinkDAO(connection);
+                    umld.insertLink(id, newMusic.getId());
+                }
                 break;
             case "edit":
                 ;
@@ -180,17 +206,16 @@ public class UserAddressRoleMusicsProcessor extends AbstractProcessor {
         String str_id = request.getParameter("id");
         if (str_id != null) {
             uarm = dao.read(Long.parseLong(str_id));
-            //System.out.println("instanceDetails=" + entity);
             if (uarm == null) {
                 request.getSession().removeAttribute("userAddressRoleMusics");
             } else {
-                Role role = uarm.getRole();
+                /*Role role = uarm.getRole();
                 if (role == null) {
                     role = new Role("user");
                     RoleDAO rdao = new RoleDAO(connection);
                     rdao.read(role);
                     uarm.setRole(role);
-                }
+                }*/
                 request.getSession().setAttribute("userAddressRoleMusics", uarm);
             }
         }
