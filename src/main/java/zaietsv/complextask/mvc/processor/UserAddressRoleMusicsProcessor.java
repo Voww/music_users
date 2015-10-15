@@ -109,9 +109,6 @@ public class UserAddressRoleMusicsProcessor extends AbstractProcessor {
                 User newUser = new User(login, password, email);
                 UserDAO udao = new UserDAO(connection);
                 udao.insert(newUser);
-                udao.read(newUser);
-                uarm.setUser(newUser);
-                request.getSession().setAttribute("userAddressRoleMusics", uarm);
                 break;
             case "insert_address":
                 str_id = request.getParameter("id");
