@@ -100,7 +100,6 @@ last action = <%=request.getParameter("action") %>
 			<a href="AdminWorks?table=user_address_role_musics&action=details&id=<%=user.getId()%>" title="details on the item"><button>details</button></a>
 			<a href="AdminWorks?table=music_users&action=edit&id=<%=musicUsers.getInstance().getId()%>&user_id=<%=user.getId()%>" title="edit the item"><button>edit</button></a>
 			<a href="AdminWorks?table=music_users&action=unlink&id=<%=musicUsers.getInstance().getId()%>&user_id=<%=user.getId()%>" title="unlink the user from the music (without deleting)"><button>unlink</button></a>
-			<a href="AdminWorks?table=music_users&action=delete&id=<%=musicUsers.getInstance().getId()%>&user_id=<%=user.getId()%>" title="delete the user"><button>delete</button></a>
 		</td>
 		<%} %>
 	<%} %>

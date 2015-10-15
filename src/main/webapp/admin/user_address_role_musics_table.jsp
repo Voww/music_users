@@ -67,7 +67,10 @@ last action = <%=action %>
 		<td><%=user.getEmail() %></td>
 		<td><%=user.getReg_date() %></td>
 		<td>
+
+			<a href="AdminWorks?table=user_address_role_musics&action=edit&id=<%=user.getId()%>" title="edit the item"><button>edit</button></a>
 			<a href="AdminWorks?table=user_address_role_musics&action=unlink&id=<%=user.getId()%>" title="unlink the user from all of the parameters (without deleting)"><button>unlink</button></a>
+			<a href="AdminWorks?table=user_address_role_musics&action=delete&id=<%=user.getId()%>" title="delete the user and it's parameters"><button>delete</button></a>
 
 		</td>
 		<%} %>
@@ -117,9 +120,10 @@ last action = <%=action %>
 	<td><%=address.getHouse() %></td>
 	<td><%=address.getFlat() %></td>
 	<td>
+		<a href="AdminWorks?table=address_user&id=<%=address.getId()%>" title="details on the item"><button>details</button></a>
 		<a href="AdminWorks?table=user_address_role_musics&action=edit&id=<%=user.getId()%>&address_id=<%=address.getId()%>" title="edit the item"><button>edit</button></a>
-		<a href="AdminWorks?table=user_address_role_musics&action=unlink&id=<%=user.getId()%>&address_id=<%=address.getId()%>" title="unlink the address from the user (without deleting)"><button>unlink</button></a>
-		<a href="AdminWorks?table=user_address_role_musics&action=delete&id=<%=user.getId()%>&address_id=<%=address.getId()%>" title="delete the address"><button>delete</button></a>
+		<a href="AdminWorks?table=user_address_role_musics&action=unlink_address&id=<%=user.getId()%>&address_id=<%=address.getId()%>" title="unlink the address from the user (without deleting)"><button>unlink</button></a>
+		<a href="AdminWorks?table=user_address_role_musics&action=delete_address&id=<%=user.getId()%>&address_id=<%=address.getId()%>" title="delete the address"><button>delete</button></a>
 	</td>
 	<%} %>
 </tr>
@@ -136,12 +140,15 @@ last action = <%=action %>
 		<td><%=role.getName() %></td>
 		<td>
 			<a href="AdminWorks?table=role_users&action=details&id=<%=role.getId()%>" title="details on the item"><button>details</button></a>
+			<a href="AdminWorks?table=user_address_role_musics&action=unlink_role&id=<%=user.getId()%>&role_id=<%=role.getId()%>" title="unlink the role from the user (without deleting)"><button>unlink</button></a>
 		</td>
 	</tr>
 	<%} %>
 	<tr>
 		<td colspan="2"></td>
-		<td><a href="AdminWorks?table=user_address_role_musics&action=change_role&id=<%=id %>" title="change a role of the user"><button>change</button></a></td>
+		<td>
+			<a href="AdminWorks?table=user_address_role_musics&action=change_role&id=<%=id %>" title="change a role of the user"><button>change</button></a>
+		</td>
 	</tr>
 </table>
 <% if (action.matches("change_role")) { %>
@@ -199,13 +206,14 @@ last action = <%=action %>
 			<input type="submit" title="revert changes" name="action" value="cancel"></td>
 	</form>
 
-		<%} else { %>
+<%} else { %>
 	<%if (music.getId() % 2 == 0) {%><tr bgcolor="yellow"><%} else {%><tr bgcolor="cyan"><%} %>
 	<td><%=music.getId() %></td>
 	<td><%=music.getName() %></td>
 	<td><%=music.getRating() %></td>
 	<td>
 		<a href="AdminWorks?table=music_users&action=details&id=<%=music.getId()%>" title="details on the item"><button>details</button></a>
+		<a href="AdminWorks?table=user_address_role_musics&action=unlink_music&id=<%=user.getId()%>&music_id=<%=music.getId()%>" title="unlink the music from the user (without deleting)"><button>unlink</button></a>
 	</td>
 	<%} %>
 	<%} %>

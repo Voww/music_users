@@ -83,4 +83,16 @@ public class UserAddressLinkDAO extends AbstractLinkDAO {
         }
         return rows;
     }
+
+    public int deleteLink(Long user_id) {
+        int rows;
+        String sql = "DELETE FROM user_address WHERE user_id = ?";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setLong(1, user_id);
+            rows = ps.executeUpdate();
+        } catch (SQLException e) {
+            rows = -1;
+        }
+        return rows;
+    }
 }

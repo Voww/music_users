@@ -102,7 +102,17 @@ public class UserAddressRoleMusicsProcessor extends AbstractProcessor {
                         }
                     }
                 break;
-
+            case "insert":
+                String login = request.getParameter("login");
+                String password = request.getParameter("password");
+                String email = request.getParameter("email");
+                User newUser = new User(login, password, email);
+                UserDAO udao = new UserDAO(connection);
+                udao.insert(newUser);
+                udao.read(newUser);
+                uarm.setUser(newUser);
+                request.getSession().setAttribute("userAddressRoleMusics", uarm);
+                break;
             case "insert_address":
                 str_id = request.getParameter("id");
                 if (str_id != null) {
@@ -166,42 +176,100 @@ public class UserAddressRoleMusicsProcessor extends AbstractProcessor {
                 String str_user_id = request.getParameter("user_id");
                 if (str_user_id != null) {
                     Long user_id = Long.parseLong(str_user_id);
-                    String login = request.getParameter("login");
-                    String password = request.getParameter("password");
-                    String email = request.getParameter("email");
+                    login = request.getParameter("login");
+                    password = request.getParameter("password");
+                    email = request.getParameter("email");
                     User updateUser = new User(user_id, login, password, email);
-                    UserDAO udao = new UserDAO(connection);
+                    udao = new UserDAO(connection);
                     udao.update(updateUser);
                 }
-            /*case "unlink":
-                System.out.println("case unlink:");
+                break;
+            case "unlink":
                 str_id = request.getParameter("id");
-                str_user_id = request.getParameter("user_id");
-                if (str_id != null && str_user_id != null) {
-                    daods.unlink(Long.parseLong(str_id), Long.parseLong(str_user_id));
-                } else if (str_id != null) {
-                    System.out.println(daods.unlink(Long.parseLong(str_id)));
+                if (str_id != null) {
+                    id = Long.parseLong(str_id);
+                    UserAddressLinkDAO uald = new UserAddressLinkDAO(connection);
+                    uald.deleteLink(id);
+                    UserRoleLinkDAO urld = new UserRoleLinkDAO(connection);
+                    urld.deleteLink(id);
+                    umld = new UserMusicLinkDAO(connection);
+                    umld.deleteLink(id);
+                }
+                break;
+            case "unlink_address":
+                str_id = request.getParameter("id");
+                if (str_id != null) {
+                    id = Long.parseLong(str_id);
+                    str_address_id = request.getParameter("address_id");
+                    if (str_address_id != null) {
+                        Long address_id = Long.parseLong(str_address_id);
+                        UserAddressLinkDAO uald = new UserAddressLinkDAO(connection);
+                        uald.deleteLink(id, address_id);
+                    }
+                }
+                break;
+            case "unlink_role":
+                str_id = request.getParameter("id");
+                if (str_id != null) {
+                    id = Long.parseLong(str_id);
+                    String str_role_id = request.getParameter("role_id");
+                    if (str_role_id != null) {
+                        Long role_id = Long.parseLong(str_role_id);
+                        UserRoleLinkDAO urld = new UserRoleLinkDAO(connection);
+                        urld.deleteLink(id, role_id);
+                    }
+                }
+                break;
+            case "unlink_music":
+                str_id = request.getParameter("id");
+                if (str_id != null) {
+                    id = Long.parseLong(str_id);
+                    String str_music_id = request.getParameter("music_id");
+                    if (str_music_id != null) {
+                        Long music_id = Long.parseLong(str_music_id);
+                        umld = new UserMusicLinkDAO(connection);
+                        umld.deleteLink(id, music_id);
+                    }
                 }
                 break;
             case "delete":
-                System.out.println("case delete:");
                 str_id = request.getParameter("id");
-                Long id = 0L;
                 if (str_id != null) {
                     id = Long.parseLong(str_id);
+                    UserAddressLinkDAO uald = new UserAddressLinkDAO(connection);
+                    ArrayList<Long> address_list = uald.readLink(id);
+                    if (address_list.size() > 0) {
+                        Long address_id = address_list.get(0);
+                        AddressDAO adao = new AddressDAO(connection);
+                        uald.deleteLink(id);
+                        adao.delete(address_id);
+                    }
+                    UserRoleLinkDAO urld = new UserRoleLinkDAO(connection);
+                    urld.deleteLink(id);
+                    umld = new UserMusicLinkDAO(connection);
+                    umld.deleteLink(id);
+                    udao = new UserDAO(connection);
+                    udao.delete(id);
                 }
-                str_user_id = request.getParameter("user_id");
-                Long user_id = 0L;
-                if (str_user_id != null) {
-                    user_id = Long.parseLong(str_user_id);
+                break;
+            case "delete_address":
+                str_id = request.getParameter("id");
+                if (str_id != null) {
+                    id = Long.parseLong(str_id);
+                    str_address_id = request.getParameter("address_id");
+                    if (str_address_id != null) {
+                        Long address_id = Long.parseLong(str_address_id);
+                        UserAddressLinkDAO uald = new UserAddressLinkDAO(connection);
+                        uald.deleteLink(id, address_id);
+                        AddressDAO adao = new AddressDAO(connection);
+                        adao.delete(address_id);
+                    }
                 }
-                daods.delete(id, user_id);
-                break;*/
+                break;
             default:
-                System.out.println("default:");
+                ;
                 break;
         }
-
 
         String str_id = request.getParameter("id");
         if (str_id != null) {
@@ -209,13 +277,6 @@ public class UserAddressRoleMusicsProcessor extends AbstractProcessor {
             if (uarm == null) {
                 request.getSession().removeAttribute("userAddressRoleMusics");
             } else {
-                /*Role role = uarm.getRole();
-                if (role == null) {
-                    role = new Role("user");
-                    RoleDAO rdao = new RoleDAO(connection);
-                    rdao.read(role);
-                    uarm.setRole(role);
-                }*/
                 request.getSession().setAttribute("userAddressRoleMusics", uarm);
             }
         }

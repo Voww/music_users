@@ -76,7 +76,18 @@ public class UserRoleLinkDAO extends AbstractLinkDAO {
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setLong(1, user_id);
             ps.setLong(2, role_id);
+            rows = ps.executeUpdate();
+        } catch (SQLException e) {
+            rows = -1;
+        }
+        return rows;
+    }
 
+    public int deleteLink(Long user_id) {
+        int rows;
+        String sql = "DELETE FROM user_role WHERE user_id = ?";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setLong(1, user_id);
             rows = ps.executeUpdate();
         } catch (SQLException e) {
             rows = -1;
