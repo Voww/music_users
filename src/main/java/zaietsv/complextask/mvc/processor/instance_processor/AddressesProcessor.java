@@ -27,7 +27,6 @@ public class AddressesProcessor extends AbstractInstancesProcessor {
     public String process() {
         String action = request.getParameter("action");
         action = action == null ? "" : action;
-        System.out.println(this.getClass().getName() + " > action = " + action);
 
         switch (action) {
             case "insert":

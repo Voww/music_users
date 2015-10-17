@@ -98,10 +98,29 @@ public class UserDAO extends AbstractDAO<User> {
 		return instance.getId();
 	}
 
+	public long readByLoginAndPassword(User instance) {
+		String sql = "SELECT id, email, reg_date FROM `user` WHERE `login` = ? AND `password` = ?";
+		Long user_id = 0L;
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
+			ps.setString(1, instance.getLogin());
+			ps.setString(2, instance.getPassword());
 
-	/* (non-Javadoc)
-	 * @see zaietsv.complextask.mvc.dao.data_acces_object.DataAccessObject#update(zaietsv.complextask.mvc.entity.data_acces_object.InstanceDetail)
-	 */
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					user_id = rs.getLong("id");
+					instance.setId(rs.getLong("id"));
+					instance.setEmail(rs.getString("email"));
+					instance.setReg_date(rs.getDate("reg_date"));
+				}
+			} catch (SQLException e) {
+				user_id = -1L;
+			}
+		} catch (SQLException e) {
+			user_id = -1L;
+		}
+		return user_id;
+	}
+
 	@Override
 	public int update(User user) {
 		String sql = "UPDATE user SET `login` = ?, `password` = ?, `email` = ?  WHERE `id` = ?";

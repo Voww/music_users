@@ -1,7 +1,8 @@
 package zaietsv.complextask.mvc.factory;
 
 import zaietsv.complextask.mvc.exception.ConnectionException;
-import zaietsv.complextask.mvc.processor.*;
+import zaietsv.complextask.mvc.processor.Processor;
+import zaietsv.complextask.mvc.processor.UserAddressRoleMusicsProcessor;
 import zaietsv.complextask.mvc.processor.instance_detail_processor.AddressUserProcessor;
 import zaietsv.complextask.mvc.processor.instance_detail_processor.MusicUsersProcessor;
 import zaietsv.complextask.mvc.processor.instance_detail_processor.RoleUsersProcessor;
@@ -9,7 +10,6 @@ import zaietsv.complextask.mvc.processor.instance_processor.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.sql.SQLException;
 
 public class ProcessorFactory extends AbstractProcessorFactory {
 
@@ -49,8 +49,6 @@ public class ProcessorFactory extends AbstractProcessorFactory {
                     processor = new DefaultProcessor(request,response);
                     break;
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         } catch (ConnectionException e) {
             e.printStackTrace();
         }

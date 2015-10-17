@@ -1,4 +1,4 @@
-package zaietsv.complextask.mvc.servlet.admin;
+package zaietsv.complextask.mvc.servlet;
 
 import zaietsv.complextask.mvc.factory.ProcessorFactory;
 import zaietsv.complextask.mvc.processor.Processor;
@@ -12,16 +12,16 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Servlet implementation class AdminInstancesServlet
+ * Servlet implementation class AdminServlet
  */
 @WebServlet("/AdminWorks")
-public class AdminInstancesServlet extends HttpServlet {
+public class AdminServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminInstancesServlet() {
+    public AdminServlet() {
         super();
     }
 

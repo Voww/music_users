@@ -16,7 +16,6 @@ import zaietsv.complextask.mvc.exception.ConnectionException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -28,7 +27,7 @@ public class UserAddressRoleMusicsProcessor extends AbstractProcessor {
     public UserAddressRoleMusicsProcessor() {
     }
 
-    public UserAddressRoleMusicsProcessor(HttpServletRequest servletRequest, HttpServletResponse servletResponse) throws SQLException, ConnectionException {
+    public UserAddressRoleMusicsProcessor(HttpServletRequest servletRequest, HttpServletResponse servletResponse) throws ConnectionException {
         super(servletRequest, servletResponse, "music_users", new UserAddressRoleMusicsDAO(new MusicUserConnector().getConnection(servletRequest)), new UserAddressRoleMusics());
     }
 
