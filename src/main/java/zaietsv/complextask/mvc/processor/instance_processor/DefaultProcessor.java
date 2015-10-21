@@ -20,6 +20,6 @@ public class DefaultProcessor extends AbstractInstancesProcessor {
 
     @Override
     public String process() {
-        return "admin.jsp";
+        return "index.jsp";
     }
 }

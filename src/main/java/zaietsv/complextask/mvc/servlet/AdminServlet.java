@@ -1,5 +1,6 @@
 package zaietsv.complextask.mvc.servlet;
 
+import zaietsv.complextask.mvc.authorization.UserAuthorizationService;
 import zaietsv.complextask.mvc.factory.ProcessorFactory;
 import zaietsv.complextask.mvc.processor.Processor;
 
@@ -29,13 +30,16 @@ public class AdminServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("DOGET");
+		UserAuthorizationService uas = new UserAuthorizationService(request);
+		String viewName;
+		if (uas.checkAuthorized()) {
+			ProcessorFactory factory = new ProcessorFactory();
+			Processor processor = factory.getProcessor(request, response);
 
-		ProcessorFactory factory = new ProcessorFactory();
-		Processor processor = factory.getProcessor(request, response);
-
-		String viewName = processor.process();
-		System.out.println("viewName=" + viewName);
+			viewName = "admin/" + processor.process();
+		} else {
+			viewName = "GuestWorks";
+		}
 		RequestDispatcher rd = request.getRequestDispatcher(viewName);
 		rd.forward(request, response);
 	}
@@ -44,13 +48,15 @@ public class AdminServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("DOPOST");
-
-		ProcessorFactory factory = new ProcessorFactory();
-		Processor processor = factory.getProcessor(request, response);
-
-		String viewName = processor.process();
-		System.out.println("viewName=" + viewName);
+		UserAuthorizationService uas = new UserAuthorizationService(request);
+		String viewName;
+		if (uas.checkAuthorized()) {
+			ProcessorFactory factory = new ProcessorFactory();
+			Processor processor = factory.getProcessor(request, response);
+			viewName = "admin/" + processor.process();
+		} else {
+			viewName = "GuestWorks";
+		}
 		RequestDispatcher rd = request.getRequestDispatcher(viewName);
 		rd.forward(request, response);
 	}

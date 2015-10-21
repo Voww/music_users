@@ -11,12 +11,12 @@ import javax.servlet.http.HttpSession;
 /**
  * Created by Voww on 17.10.2015.
  */
-public class UserLoginService extends AbstractLogin {
+public class UserAuthorizationService extends AbstractAuthorizationService {
 
-    public UserLoginService() {
+    public UserAuthorizationService() {
     }
 
-    public UserLoginService(HttpServletRequest request) {
+    public UserAuthorizationService(HttpServletRequest request) {
         super(request);
     }
 
@@ -48,6 +48,28 @@ public class UserLoginService extends AbstractLogin {
     }
 
     public UserAddressRoleMusics getLoggedUser() {
-        return (UserAddressRoleMusics) request.getSession().getAttribute("loggedUser");
+        UserAddressRoleMusics uarm = (UserAddressRoleMusics) request.getSession().getAttribute("loggedUser");
+        return uarm;
+    }
+
+    @Override
+    public boolean register(User user) {
+        return false;
+    }
+
+    @Override
+    public boolean unRegister(Long userId) {
+        return false;
+    }
+
+
+    @Override
+    public boolean checkAuthorized() {
+        boolean isAuthorized = true;
+        UserAddressRoleMusics uarm = (UserAddressRoleMusics) request.getSession().getAttribute("loggedUser");
+        if (uarm == null) {
+            isAuthorized = false;
+        }
+        return isAuthorized;
     }
 }

@@ -10,7 +10,7 @@
 <title>Role table</title>
 </head>
 <body>
-<h1>Role table</h1>
+<h1 style="background-color: blueviolet">Role table</h1>
 <a href="AdminWorks"><button>Backward</button></a><hr>
 last action = <%=request.getParameter("action") %>
 <% Roles roles = (Roles)request.getSession().getAttribute("roles"); %>

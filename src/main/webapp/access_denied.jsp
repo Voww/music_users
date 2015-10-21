@@ -7,6 +7,8 @@
 <title>User's page</title>
 </head>
 <body>
-User's page
+<h1 style="background-color: yellow">Access denied page</h1>
+Your account was blocked by administrator.<br>
+You can visit <a href="GuestWorks">guest page</a>
 </body>
 </html>

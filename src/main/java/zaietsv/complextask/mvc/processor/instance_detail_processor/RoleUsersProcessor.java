@@ -111,6 +111,6 @@ public class RoleUsersProcessor extends AbstractInstanceDetailsProcessor {
                 request.getSession().setAttribute("roleUsers", instanceDetails);
             }
         }
-        return "admin/role_users_table.jsp";
+        return "role_users_table.jsp";
     }
 }

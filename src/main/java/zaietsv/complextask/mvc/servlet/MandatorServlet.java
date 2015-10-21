@@ -1,10 +1,8 @@
 package zaietsv.complextask.mvc.servlet;
 
 import zaietsv.complextask.mvc.authorization.UserAuthorizationService;
-import zaietsv.complextask.mvc.exception.ConnectionException;
 import zaietsv.complextask.mvc.factory.ProcessorFactory;
 import zaietsv.complextask.mvc.processor.Processor;
-import zaietsv.complextask.mvc.processor.UserAddressRoleMusicsProcessor;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,18 +13,17 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Servlet implementation class UserServlet
+ * Servlet implementation class AdminServlet
  */
-@WebServlet("/UserWorks")
-public class UserServlet extends HttpServlet {
+@WebServlet("/MandatorWorks")
+public class MandatorServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UserServlet() {
+    public MandatorServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -39,9 +36,9 @@ public class UserServlet extends HttpServlet {
 			ProcessorFactory factory = new ProcessorFactory();
 			Processor processor = factory.getProcessor(request, response);
 
-			viewName = "user/" + processor.process();
+			viewName = "mandator/" + processor.process();
 		} else {
-			viewName = "guest.jsp";
+			viewName = "GuestWorks";
 		}
 		RequestDispatcher rd = request.getRequestDispatcher(viewName);
 		rd.forward(request, response);
@@ -54,19 +51,13 @@ public class UserServlet extends HttpServlet {
 		UserAuthorizationService uas = new UserAuthorizationService(request);
 		String viewName;
 		if (uas.checkAuthorized()) {
-			Processor processor = null;
-			try {
-				processor = new UserAddressRoleMusicsProcessor(request, response);
-			} catch (ConnectionException e) {
-				e.printStackTrace();
-			}
-
-			viewName = "user/" + processor.process();
+			ProcessorFactory factory = new ProcessorFactory();
+			Processor processor = factory.getProcessor(request, response);
+			viewName = "mandator/" + processor.process();
 		} else {
 			viewName = "GuestWorks";
 		}
 		RequestDispatcher rd = request.getRequestDispatcher(viewName);
 		rd.forward(request, response);
 	}
-
 }

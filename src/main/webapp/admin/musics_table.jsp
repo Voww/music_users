@@ -10,7 +10,7 @@
 <title>Music table</title>
 </head>
 <body>
-<h1>Music table</h1>
+<h1 style="background-color: blue">Music table</h1>
 <a href="AdminWorks"><button>Backward</button></a><hr>
 last action = <%=request.getParameter("action") %>
 <% Musics musics = (Musics)request.getSession().getAttribute("musics"); %>

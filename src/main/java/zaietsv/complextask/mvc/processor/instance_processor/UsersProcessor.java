@@ -65,6 +65,6 @@ public class UsersProcessor extends AbstractInstancesProcessor {
 
         this.instances.setInstances(dao.readAll());
         request.getSession().setAttribute("users", this.instances);
-        return "admin/users_table.jsp";
+        return "users_table.jsp";
     }
 }

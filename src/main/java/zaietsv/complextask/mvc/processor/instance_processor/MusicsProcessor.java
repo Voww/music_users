@@ -62,6 +62,6 @@ public class MusicsProcessor extends AbstractInstancesProcessor {
 
         this.instances.setInstances(dao.readAll());
         request.getSession().setAttribute("musics", this.instances);
-        return "admin/musics_table.jsp";
+        return "musics_table.jsp";
     }
 }

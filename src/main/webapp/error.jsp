@@ -7,6 +7,8 @@
 <title>User's page</title>
 </head>
 <body>
-<h1 style="background-color: red">Some error page</h1>
+<h1 style="background-color: red">Error page</h1>
+Something goes wrong.<br>
+You can visit <a href="GuestWorks">guest page</a>
 </body>
 </html>

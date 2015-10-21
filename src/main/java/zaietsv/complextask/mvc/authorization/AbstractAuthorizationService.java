@@ -9,15 +9,15 @@ import java.sql.Connection;
 /**
  * Created by Voww on 17.10.2015.
  */
-public abstract class AbstractLogin implements LoginService {
+public abstract class AbstractAuthorizationService implements LoginService, RegisterService, SecurityService {
 
     protected Connection connection;
     protected HttpServletRequest request;
 
-    public AbstractLogin() {
+    public AbstractAuthorizationService() {
     }
 
-    public AbstractLogin(HttpServletRequest request) {
+    public AbstractAuthorizationService(HttpServletRequest request) {
         try {
             this.request = request;
             connection = new MusicUserConnector().getConnection(request);

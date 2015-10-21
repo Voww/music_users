@@ -279,6 +279,6 @@ public class UserAddressRoleMusicsProcessor extends AbstractProcessor {
     } catch (ConnectionException e) {
         e.printStackTrace();
     }
-        return "admin/user_address_role_musics_table.jsp";
+        return "user_address_role_musics_table.jsp";
     }
 }

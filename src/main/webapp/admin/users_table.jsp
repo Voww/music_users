@@ -10,7 +10,7 @@
 <title>User table</title>
 </head>
 <body>
-<h1>User table</h1>
+<h1 style="background-color: gold">User table</h1>
 <a href="AdminWorks"><button>Backward</button></a><hr>
 last action = <%=request.getParameter("action") %>
 <% Users users = (Users)request.getSession().getAttribute("users"); %>

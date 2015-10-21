@@ -1,8 +1,9 @@
 package zaietsv.complextask.mvc.processor;
 
-import zaietsv.complextask.mvc.authorization.UserLoginService;
+import zaietsv.complextask.mvc.authorization.UserAuthorizationService;
 import zaietsv.complextask.mvc.dao.UserAddressRoleMusicsDAO;
 import zaietsv.complextask.mvc.entity.UserAddressRoleMusics;
+import zaietsv.complextask.mvc.entity.instance.Role;
 import zaietsv.complextask.mvc.entity.instance.User;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +23,7 @@ public class AuthorizationProcessor extends AbstractProcessor<UserAddressRoleMus
 
     @Override
     public String process() {
-        String returnLink = "index.jsp";
+        String returnLink = "login.jsp";
         String action = request.getParameter("action");
         action = action == null ? "" : action;
 
@@ -35,9 +36,11 @@ public class AuthorizationProcessor extends AbstractProcessor<UserAddressRoleMus
                 if (login != null && password != null) {
                     loggingUser.setLogin(login);
                     loggingUser.setPassword(password);
-                    UserLoginService uls = new UserLoginService();
+                    UserAuthorizationService uls = new UserAuthorizationService();
                     if (uls.login(loggingUser)) {
-                        switch (uls.getLoggedUser().getRole().getName()) {
+                        Role role = uls.getLoggedUser().getRole();
+                        String name = role.getName();
+                        switch (name) {
                             case "admin":
                                 returnLink = "admin.jsp";
                                 break;
@@ -61,7 +64,7 @@ public class AuthorizationProcessor extends AbstractProcessor<UserAddressRoleMus
             default:
                 break;
         }
-        UserLoginService uls = new UserLoginService();
+        UserAuthorizationService uls = new UserAuthorizationService();
         return returnLink;
     }
 }

@@ -74,6 +74,6 @@ public class AddressesProcessor extends AbstractInstancesProcessor {
 
         this.instances.setInstances(dao.readAll());
         request.getSession().setAttribute("addresses", this.instances);
-        return "admin/addresses_table.jsp";
+        return "addresses_table.jsp";
     }
 }

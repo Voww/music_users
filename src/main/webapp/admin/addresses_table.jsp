@@ -10,7 +10,7 @@
 <title>Address table</title>
 </head>
 <body>
-<h1>Address table</h1>
+<h1 style="background-color: springgreen">Address table</h1>
 <a href="AdminWorks"><button>Backward</button></a><hr>
 last action = <%=request.getParameter("action") %>
 <% Addresses addresses = (Addresses)request.getSession().getAttribute("addresses"); %>

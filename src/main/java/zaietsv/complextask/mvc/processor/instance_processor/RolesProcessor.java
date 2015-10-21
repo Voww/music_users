@@ -32,17 +32,14 @@ public class RolesProcessor extends AbstractInstancesProcessor {
 
         switch (action) {
             case "insert":
-                System.out.println("case 'insert':");
                 String name = request.getParameter("name");
                 Role newRole = new Role(name);
                 dao.insert(newRole);
 
                 break;
             case "edit":
-                System.out.println("case 'edit':");
                 break;
             case "update":
-                System.out.println("case 'update':");
                 Long id = Long.parseLong(request.getParameter("id"));
                 name = request.getParameter("name");
                 Role updateRole = new Role(id, name);
@@ -71,6 +68,6 @@ public class RolesProcessor extends AbstractInstancesProcessor {
 
         this.instances.setInstances(dao.readAll());
         request.getSession().setAttribute("roles", this.instances);
-        return "admin/roles_table.jsp";
+        return "roles_table.jsp";
     }
 }

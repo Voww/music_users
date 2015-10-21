@@ -114,6 +114,6 @@ public class AddressUserProcessor extends AbstractInstanceDetailProcessor {
                 request.getSession().setAttribute("addressUser", instanceDetail);
             }
         }
-        return "admin/address_user_table.jsp";
+        return "address_user_table.jsp";
     }
 }

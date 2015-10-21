@@ -113,6 +113,6 @@ public class MusicUsersProcessor extends AbstractInstanceDetailsProcessor {
                 request.getSession().setAttribute("musicUsers", instanceDetails);
             }
         }
-        return "admin/music_users_table.jsp";
+        return "music_users_table.jsp";
     }
 }

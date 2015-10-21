@@ -1,6 +1,7 @@
 package zaietsv.complextask.mvc.servlet;
 
-import zaietsv.complextask.mvc.authorization.UserLoginService;
+import zaietsv.complextask.mvc.authorization.UserAuthorizationService;
+import zaietsv.complextask.mvc.entity.UserAddressRoleMusics;
 import zaietsv.complextask.mvc.entity.instance.User;
 
 import javax.servlet.RequestDispatcher;
@@ -36,7 +37,28 @@ public class AuthorizationServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		RequestDispatcher rd = null;
 
+		String action = request.getParameter("action");
+		action = action == null ? "" : action;
+		switch (action) {
+			case "logout":
+				UserAuthorizationService uls = new UserAuthorizationService(request);
+				if (uls.logout()) {
+					rd = request.getRequestDispatcher("GuestWorks");
+				} else {
+					rd = request.getRequestDispatcher("error.jsp");
+				}
+				break;
+			case "unregister":
+
+				break;
+			default:
+				rd = request.getRequestDispatcher("GuestWorks");
+				break;
+		}
+
+		rd.forward(request, response);
 	}
 
 	/**
@@ -55,41 +77,48 @@ public class AuthorizationServlet extends HttpServlet {
 				if (login != null && password != null) {
 					loggingUser.setLogin(login);
 					loggingUser.setPassword(password);
-					UserLoginService uls = new UserLoginService(request);
+					UserAuthorizationService uls = new UserAuthorizationService(request);
 					if (uls.login(loggingUser)) {
-						switch (uls.getLoggedUser().getRole().getName()) {
+						UserAddressRoleMusics uarm = uls.getLoggedUser();
+						String roleName;
+						if (uarm.getRole() == null) {
+							roleName = "guest";
+						} else {
+							roleName = uarm.getRole().getName();
+						}
+						switch (roleName) {
 							case "admin":
-								rd = request.getRequestDispatcher("admin.jsp");
+								rd = request.getRequestDispatcher("AdminWorks");
 								break;
 							case "mandator":
-								rd = request.getRequestDispatcher("mandator.jsp");
+								rd = request.getRequestDispatcher("MandatorWorks");
 								break;
 							case "user":
-								rd = request.getRequestDispatcher("user.jsp");
+								rd = request.getRequestDispatcher("UserWorks");
 								break;
 							default:
-								rd = request.getRequestDispatcher("index.jsp");
+								rd = request.getRequestDispatcher("access_denied.jsp");
 								break;
 						}
 					} else {
-						rd = request.getRequestDispatcher("error.jsp");
+						rd = request.getRequestDispatcher("GuestWorks");
 					}
+				} else {
+					rd = request.getRequestDispatcher("GuestWorks");
 				}
 				break;
 			case "logout":
-				UserLoginService uls = new UserLoginService(request);
+				UserAuthorizationService uls = new UserAuthorizationService(request);
 				if (uls.logout()) {
-					rd = request.getRequestDispatcher("index.jsp");
+					rd = request.getRequestDispatcher("GuestWorks");
 				} else {
 					rd = request.getRequestDispatcher("error.jsp");
 				}
 				break;
 			case "register":
 				break;
-			case "unregister":
-				break;
 			default:
-				rd = request.getRequestDispatcher("index.jsp");
+				rd = request.getRequestDispatcher("GuestWorks");
 				break;
 		}
 
