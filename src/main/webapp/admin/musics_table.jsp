@@ -36,7 +36,7 @@ last action = <%=request.getParameter("action") %>
             <input type="hidden" title="table" name="table" value="music">
             <input type="hidden"  title="id" name="id" value="<%=music.getId() %>"></td>
 		<td><label><input type="text" name="name" value="<%=music.getName() %>"></label></td>
-		<td><label><input type="text" name="rating" value="<%=music.getRating() %>"></label></td>
+		<td><label><input type="text" name="rating" readonly value="<%=music.getRating() %>"></label></td>
 		<td><input type="submit" title="update changes" name="action" value="update">
 		<input type="submit" title="revert changes" name="action" value="cancel"></td>
 </form>
@@ -58,7 +58,7 @@ last action = <%=request.getParameter("action") %>
 	<form action="AdminWorks" method="post" name="action">
 		<td><input type="hidden" title="table" name="table" value="music"></td>
 		<td><label>Name:<input type="text" name="name" value="name"></label></td>
-		<td><label>Rating:<input type="text" name="rating" value="0"></label></td>
+		<td><label>Rating:<input type="text" name="rating" readonly value="0"></label></td>
 		<td><input type="submit" title="insert a new item" name="action" value="insert"></td>
 	</form>
 	</tr>

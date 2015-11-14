@@ -11,7 +11,7 @@ CREATE TABLE music
 (
   id BIGINT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
   name VARCHAR(80),
-  rating INT
+  rating INT UNSIGNED NOT NULL DEFAULT 0
 );
 CREATE TABLE role
 (
@@ -54,3 +54,12 @@ ALTER TABLE user_music ADD FOREIGN KEY (user_id) REFERENCES user (id) ON UPDATE 
 ALTER TABLE user_music ADD FOREIGN KEY (music_id) REFERENCES music (id) ON UPDATE CASCADE;
 ALTER TABLE user_role ADD FOREIGN KEY (user_id) REFERENCES user (id) ON UPDATE CASCADE;
 ALTER TABLE user_role ADD FOREIGN KEY (role_id) REFERENCES role (id) ON UPDATE CASCADE;
+
+create trigger insert_rating after insert on user_music for each row
+  update music set rating = (select count(*) from user_music where music_id = id);
+
+create trigger update_rating after update on user_music for each row
+  update music set rating = (select count(*) from user_music where music_id = id);
+
+create trigger delete_rating after delete on user_music for each row
+  update music set rating = (select count(*) from user_music where music_id = id);

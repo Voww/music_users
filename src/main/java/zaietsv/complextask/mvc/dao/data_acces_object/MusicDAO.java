@@ -28,10 +28,9 @@ public class MusicDAO extends AbstractDAO<Music> {
 	@Override
 	public int insert(Music music) {
 		int rows;
-		String sql = "INSERT INTO music (name, rating) VALUES (?, ?)";
+		String sql = "INSERT INTO music (name) VALUE (?)";
 		try (PreparedStatement ps = connection.prepareStatement(sql)) {
 			ps.setString(1, music.getName());
-			ps.setInt(2, music.getRating());
 
 			rows = ps.executeUpdate();
 		} catch (SQLException ignored) {
@@ -63,10 +62,9 @@ public class MusicDAO extends AbstractDAO<Music> {
 
 	@Override
 	public long read(Music instance) {
-		String sql = "SELECT id FROM music WHERE name = ? AND rating = ?";
+		String sql = "SELECT id FROM music WHERE name = ?";
 		try (PreparedStatement ps = connection.prepareStatement(sql)) {
 			ps.setString(1, instance.getName());
-			ps.setInt(2, instance.getRating());
 			try (ResultSet rs = ps.executeQuery()) {
 				if (rs.next()) {
 					instance.setId(rs.getLong("id"));
@@ -82,12 +80,11 @@ public class MusicDAO extends AbstractDAO<Music> {
 
 	@Override
 	public int update(Music music) {
-		String sql = "UPDATE music SET `name` = ?, `rating` = ?  WHERE `id` = ?";
+		String sql = "UPDATE music SET `name` = ?  WHERE `id` = ?";
 		int rows;
 		try (PreparedStatement ps = connection.prepareStatement(sql)) {
 			ps.setString(1, music.getName());
 			ps.setInt(2, music.getRating());
-			ps.setLong(3, music.getId());
 
 			rows = ps.executeUpdate();
 		} catch (SQLException ignored) {
@@ -98,7 +95,7 @@ public class MusicDAO extends AbstractDAO<Music> {
 
 	@Override
 	public boolean delete(long id) {
-		String sql = " DELETE FROM `music` WHERE id = ? ";
+		String sql = " DELETE FROM `music` WHERE id = ?";
 		boolean res = false;
 		try (PreparedStatement ps = connection.prepareStatement(sql)) {
 			ps.setLong(1, id);
@@ -143,10 +140,9 @@ public class MusicDAO extends AbstractDAO<Music> {
 	@Override
 	public boolean exists(Music instance) {
 		boolean exists = false;
-		String sql = "SELECT COUNT(*) `count` FROM `music` WHERE name = ? AND rating = ?";
+		String sql = "SELECT COUNT(*) `count` FROM `music` WHERE name = ?";
 		try (PreparedStatement ps = connection.prepareStatement(sql)) {
 			ps.setString(1, instance.getName());
-			ps.setInt(2, instance.getRating());
 			try (ResultSet rs = ps.executeQuery()) {
 				rs.next();
 				exists = rs.getInt("count") > 0;

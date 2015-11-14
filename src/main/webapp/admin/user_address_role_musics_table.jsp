@@ -251,7 +251,7 @@ last action = <%=action %>
 		<tr>
 			<td></td>
 			<td><label>Name:<input type="text" name="name" value="name"></label></td>
-			<td><label>Rating:<input type="text" name="rating" value="0"></label></td>
+			<td><label>Rating:<input type="text" readonly name="rating" value="0"></label></td>
 			<td><input type="submit" title="insert a new item" name="action" value="insert_music"></td>
 		</tr>
 		<tr>

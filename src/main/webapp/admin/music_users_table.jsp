@@ -39,7 +39,7 @@ last action = <%=request.getParameter("action") %>
 			<input type="hidden"  title="id" name="id" value="<%=musicUsers.getInstance().getId() %>">
 			<input type="hidden"  title="id" name="music_id" value="<%=musicUsers.getInstance().getId() %>"></td>
 		<td><input type="text" name="name" value="<%=musicUsers.getInstance().getName() %>" title="edit name"></td>
-		<td><input type="text" name="rating" value="<%=musicUsers.getInstance().getRating() %>" title="edit rating"></td>
+		<td><input type="te" name="rating" readonly value="<%=musicUsers.getInstance().getRating() %>" title="edit rating"></td>
 		<td><input type="submit" title="update changes" name="action" value="update">
 			<input type="submit" title="revert changes" name="action" value="cancel"></td>
 	</form>
