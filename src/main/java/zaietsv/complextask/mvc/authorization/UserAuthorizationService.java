@@ -65,11 +65,22 @@ public class UserAuthorizationService extends AbstractAuthorizationService {
 
     @Override
     public boolean checkAuthorized() {
-        boolean isAuthorized = true;
+        boolean isAuthorized = false;
         UserAddressRoleMusics uarm = (UserAddressRoleMusics) request.getSession().getAttribute("loggedUser");
-        if (uarm == null) {
-            isAuthorized = false;
+        if (uarm != null) {
+            isAuthorized = true;
         }
         return isAuthorized;
     }
+
+    @Override
+    public String getAuthorization() {
+        String authorization = "guest";
+        UserAddressRoleMusics uarm = (UserAddressRoleMusics) request.getSession().getAttribute("loggedUser");
+        if (uarm != null) {
+            authorization = uarm.getRole().getName();
+        }
+        return authorization;
+    }
+
 }

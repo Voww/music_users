@@ -11,7 +11,7 @@
 </head>
 <body>
 <h1 style="background-color: springgreen">Address table</h1>
-<a href="MandatorWorks"><button>Backward</button></a><hr>
+<a href="AdminWorks"><button>Backward</button></a><hr>
 <% Addresses addresses = (Addresses)request.getSession().getAttribute("addresses"); %>
 
 <table frame="border" border="1">
@@ -27,11 +27,11 @@
 	<td><%=address.getHouse() %></td>
 	<td><%=address.getFlat() %></td>
 	<td>
-		<a href="MandatorWorks?table=address_user&id=<%=address.getId()%>" title="details on the item"><button>details</button></a>
+		<a href="AdminWorks?table=address_user&id=<%=address.getId()%>" title="details on the item"><button>details</button></a>
 	</td>
   </tr>
 <%} %>
 </table>
-<hr><a href="MandatorWorks"><button>Backward</button></a>
+<hr><a href="AdminWorks"><button>Backward</button></a>
 </body>
 </html>

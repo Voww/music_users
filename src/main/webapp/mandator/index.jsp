@@ -11,9 +11,9 @@
 <h1 style="background-color: blueviolet">Mandator's page</h1>
 Special information for authorized mandators.<br>
 <jsp:include page="/Logout.html"></jsp:include><br>
-<a href="MandatorWorks?table=user"><button>User table</button></a>
-<a href="MandatorWorks?table=role"><button>Role table</button></a>
-<a href="MandatorWorks?table=address"><button>Address table</button></a>
-<a href="MandatorWorks?table=music"><button>Music table</button></a>
+<a href="AdminWorks?table=user"><button>User table</button></a>
+<a href="AdminWorks?table=role"><button>Role table</button></a>
+<a href="AdminWorks?table=address"><button>Address table</button></a>
+<a href="AdminWorks?table=music"><button>Music table</button></a>
 </body>
 </html>

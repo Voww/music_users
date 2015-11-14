@@ -15,7 +15,7 @@
 </head>
 <body>
 <h1>User to Address, Role, Musics table</h1>
-<a href="MandatorWorks?table=user"><button>Backward</button></a><hr>
+<a href="AdminWorks?table=user"><button>Backward</button></a><hr>
 <%String action = request.getParameter("action"); action = action == null ? "" : action;%>
 last action = <%=action %>
 <% UserAddressRoleMusics uarm = (UserAddressRoleMusics)request.getSession().getAttribute("userAddressRoleMusics"); %>
@@ -56,7 +56,7 @@ last action = <%=action %>
 		<td><%=address.getHouse() %></td>
 		<td><%=address.getFlat() %></td>
 		<td>
-			<a href="MandatorWorks?table=address_user&id=<%=address.getId()%>" title="details on the item"><button>details</button></a>
+			<a href="AdminWorks?table=address_user&id=<%=address.getId()%>" title="details on the item"><button>details</button></a>
 		</td>
 	<%} %>
 </tr>
@@ -72,7 +72,7 @@ last action = <%=action %>
 		<td><%=role.getId() %></td>
 		<td><%=role.getName() %></td>
 		<td>
-			<a href="MandatorWorks?table=role_users&action=details&id=<%=role.getId()%>" title="details on the item"><button>details</button></a>
+			<a href="AdminWorks?table=role_users&action=details&id=<%=role.getId()%>" title="details on the item"><button>details</button></a>
 		</td>
 	</tr>
 	<%} %>
@@ -91,12 +91,12 @@ last action = <%=action %>
 	<td><%=music.getName() %></td>
 	<td><%=music.getRating() %></td>
 	<td>
-		<a href="MandatorWorks?table=music_users&action=details&id=<%=music.getId()%>" title="details on the item"><button>details</button></a>
+		<a href="AdminWorks?table=music_users&action=details&id=<%=music.getId()%>" title="details on the item"><button>details</button></a>
 	</td>
 	<%} %>
 	</tr>
 	<%} %>
 </table>
-<hr><a href="MandatorWorks?table=user"><button>Backward</button></a>
+<hr><a href="AdminWorks?table=user"><button>Backward</button></a>
 </body>
 </html>

@@ -11,7 +11,7 @@
 </head>
 <body>
 <h1>Role To Users table</h1>
-<a href="MandatorWorks?table=role"><button>Backward</button></a><hr>
+<a href="AdminWorks?table=role"><button>Backward</button></a><hr>
 last action = <%=request.getParameter("action") %>
 <h2>Role</h2>
 <% RoleUsers roleUsers = (RoleUsers)request.getSession().getAttribute("roleUsers"); %>
@@ -41,12 +41,12 @@ last action = <%=request.getParameter("action") %>
 			<td><%=user.getEmail() %></td>
 			<td><%=user.getReg_date() %></td>
 			<td>
-				<a href="MandatorWorks?table=user_address_role_musics&action=details&id=<%=user.getId()%>" title="details on the item"><button>details</button></a>
+				<a href="AdminWorks?table=user_address_role_musics&action=details&id=<%=user.getId()%>" title="details on the item"><button>details</button></a>
 			</td>
 		<%} %>
 	<%} %>
 	</tr>
 </table>
-<hr><a href="MandatorWorks?table=role"><button>Backward</button></a>
+<hr><a href="AdminWorks?table=role"><button>Backward</button></a>
 </body>
 </html>

@@ -10,7 +10,7 @@
 </head>
 <body>
 <h1>Address To User table</h1>
-<a href="MandatorWorks?table=address"><button>Backward</button></a><hr>
+<a href="AdminWorks?table=address"><button>Backward</button></a><hr>
 last action = <%=request.getParameter("action") %>
 <h2>Address</h2>
 <% AddressUser addressUser = (AddressUser)request.getSession().getAttribute("addressUser"); %>
@@ -48,10 +48,10 @@ last action = <%=request.getParameter("action") %>
 		<td><%=addressUser.getDetail().getEmail() %></td>
 		<td><%=addressUser.getDetail().getReg_date() %></td>
 		<td>
-			<a href="MandatorWorks?table=user_address_role_musics&action=details&id=<%=addressUser.getDetail().getId()%>" title="details on the item"><button>details</button></a>
+			<a href="AdminWorks?table=user_address_role_musics&action=details&id=<%=addressUser.getDetail().getId()%>" title="details on the item"><button>details</button></a>
 		</td>
 	</tr><%} %>
 </table>
-<hr><a href="MandatorWorks?table=address"><button>Backward</button></a>
+<hr><a href="AdminWorks?table=address"><button>Backward</button></a>
 </body>
 </html>

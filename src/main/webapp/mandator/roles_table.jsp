@@ -11,7 +11,7 @@
 </head>
 <body>
 <h1 style="background-color: blueviolet">Role table</h1>
-<a href="MandatorWorks"><button>Backward</button></a><hr>
+<a href="AdminWorks"><button>Backward</button></a><hr>
 <% Roles roles = (Roles)request.getSession().getAttribute("roles"); %>
 
 <table frame="border" border="1">
@@ -23,11 +23,11 @@
     <td><%=role.getId() %></td>
 	<td><%=role.getName() %></td>
 	<td>
-		<a href="MandatorWorks?table=role_users&action=details&id=<%=role.getId()%>" title="details on the item"><button>details</button></a>
+		<a href="AdminWorks?table=role_users&action=details&id=<%=role.getId()%>" title="details on the item"><button>details</button></a>
 	</td>
   </tr>
 <%} %>
 </table>
-<hr><a href="MandatorWorks"><button>Backward</button></a>
+<hr><a href="AdminWorks"><button>Backward</button></a>
 </body>
 </html>

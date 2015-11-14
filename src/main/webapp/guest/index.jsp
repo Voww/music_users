@@ -11,6 +11,6 @@
 <h1 style="background-color: greenyellow">Guest's page</h1>
 Common information for non-authorized users.<br>
 You can perform an authorization at <a href="/music_users/login.jsp">login page</a><br>
-<a href="GuestWorks?table=music"><button>Music table</button></a>
+<a href="AdminWorks?table=music"><button>Music table</button></a>
 </body>
 </html>

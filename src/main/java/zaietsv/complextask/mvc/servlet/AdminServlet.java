@@ -31,15 +31,10 @@ public class AdminServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		UserAuthorizationService uas = new UserAuthorizationService(request);
-		String viewName;
-		if (uas.checkAuthorized()) {
-			ProcessorFactory factory = new ProcessorFactory();
-			Processor processor = factory.getProcessor(request, response);
-
-			viewName = "admin/" + processor.process();
-		} else {
-			viewName = "GuestWorks";
-		}
+		String authorization = uas.getAuthorization();
+		ProcessorFactory factory = new ProcessorFactory();
+		Processor processor = factory.getProcessor(request, response);
+		String viewName = authorization + "/" + processor.process();
 		RequestDispatcher rd = request.getRequestDispatcher(viewName);
 		rd.forward(request, response);
 	}
@@ -47,16 +42,12 @@ public class AdminServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		UserAuthorizationService uas = new UserAuthorizationService(request);
-		String viewName;
-		if (uas.checkAuthorized()) {
-			ProcessorFactory factory = new ProcessorFactory();
-			Processor processor = factory.getProcessor(request, response);
-			viewName = "admin/" + processor.process();
-		} else {
-			viewName = "GuestWorks";
-		}
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		UserAuthorizationService uas = new UserAuthorizationService(request);
+		uas = new UserAuthorizationService(request);
+		String authorization = uas.getAuthorization();
+		ProcessorFactory factory = new ProcessorFactory();
+		Processor processor = factory.getProcessor(request, response);
+		String viewName = authorization + "/" + processor.process();
 		RequestDispatcher rd = request.getRequestDispatcher(viewName);
 		rd.forward(request, response);
 	}

@@ -11,7 +11,7 @@
 </head>
 <body>
 <h1 style="background-color: blue">Music table</h1>
-<a href="GuestWorks"><button>Backward</button></a><hr>
+<a href="AdminWorks"><button>Backward</button></a><hr>
 <% Musics musics = (Musics)request.getSession().getAttribute("musics"); %>
 
 <table frame="border" border="1">
@@ -26,6 +26,6 @@
   		</tr>
 	<%} %>
 </table>
-<hr><a href="GuestWorks"><button>Backward</button></a>
+<hr><a href="AdminWorks"><button>Backward</button></a>
 </body>
 </html>

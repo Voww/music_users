@@ -11,7 +11,7 @@
 </head>
 <body>
 <h1 style="background-color: blue">Music table</h1>
-<a href="MandatorWorks"><button>Backward</button></a><hr>
+<a href="AdminWorks"><button>Backward</button></a><hr>
 last action = <%=request.getParameter("action") %>
 <% Musics musics = (Musics)request.getSession().getAttribute("musics"); %>
 
@@ -25,11 +25,11 @@ last action = <%=request.getParameter("action") %>
 	<td><%=music.getName() %></td>
 	<td><%=music.getRating() %></td>
 	<td>
-		<a href="MandatorWorks?table=music_users&action=details&id=<%=music.getId()%>" title="details on the item"><button>details</button></a>
+		<a href="AdminWorks?table=music_users&action=details&id=<%=music.getId()%>" title="details on the item"><button>details</button></a>
 	</td>
   </tr>
 <%} %>
 </table>
-<hr><a href="MandatorWorks"><button>Backward</button></a>
+<hr><a href="AdminWorks"><button>Backward</button></a>
 </body>
 </html>

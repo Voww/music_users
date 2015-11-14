@@ -6,4 +6,6 @@ package zaietsv.complextask.mvc.authorization;
 public interface SecurityService {
 
     boolean checkAuthorized();
+
+    String getAuthorization();
 }

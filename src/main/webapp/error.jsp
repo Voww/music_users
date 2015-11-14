@@ -9,6 +9,6 @@
 <body>
 <h1 style="background-color: red">Error page</h1>
 Something goes wrong.<br>
-You can visit <a href="GuestWorks">guest page</a>
+You can visit <a href="AdminWorks">guest page</a>
 </body>
 </html>
