@@ -1,5 +1,6 @@
 package zaietsv.complextask.mvc.processor;
 
+import zaietsv.complextask.mvc.authorization.UserAuthorizationService;
 import zaietsv.complextask.mvc.connect.MusicUserConnector;
 import zaietsv.complextask.mvc.dao.UserAddressRoleMusicsDAO;
 import zaietsv.complextask.mvc.dao.data_acces_object.AddressDAO;
@@ -274,6 +275,11 @@ public class UserAddressRoleMusicsProcessor extends AbstractProcessor {
                 request.getSession().removeAttribute("userAddressRoleMusics");
             } else {
                 request.getSession().setAttribute("userAddressRoleMusics", uarm);
+                UserAuthorizationService uas = new UserAuthorizationService(request);
+                UserAddressRoleMusics loggedUser = uas.getLoggedUser();
+                if (loggedUser != null && loggedUser.getUser().getId() == uarm.getUser().getId()) {
+                    request.getSession().setAttribute("loggedUser", uarm);
+                }
             }
         }
     } catch (ConnectionException e) {

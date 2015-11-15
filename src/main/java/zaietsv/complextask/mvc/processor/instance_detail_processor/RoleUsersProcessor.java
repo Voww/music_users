@@ -50,10 +50,8 @@ public class RoleUsersProcessor extends AbstractInstanceDetailsProcessor {
                 }
                 break;
             case "edit":
-                System.out.println("case 'edit':");
                 break;
             case "update":
-                System.out.println("case 'update':");
                 Role updateRole = null;
                 String str_role_id = request.getParameter("role_id");
                 if (str_role_id != null) {
@@ -71,20 +69,18 @@ public class RoleUsersProcessor extends AbstractInstanceDetailsProcessor {
 
                     updateUsers.getInstances().add(new User(user_id, login, password, email));
                 }
-                System.out.println(daods.update(new RoleUsers(updateRole, updateUsers)));
+                daods.update(new RoleUsers(updateRole, updateUsers));
                 break;
             case "unlink":
-                System.out.println("case unlink:");
                 str_id = request.getParameter("id");
                 str_user_id = request.getParameter("user_id");
                 if (str_id != null && str_user_id != null) {
                     daods.unlink(Long.parseLong(str_id), Long.parseLong(str_user_id));
                 } else if (str_id != null) {
-                    System.out.println(daods.unlink(Long.parseLong(str_id)));
+                    daods.unlink(Long.parseLong(str_id));
                 }
                 break;
             case "delete":
-                System.out.println("case delete:");
                 str_id = request.getParameter("id");
                 Long id = 0L;
                 if (str_id != null) {
@@ -98,13 +94,11 @@ public class RoleUsersProcessor extends AbstractInstanceDetailsProcessor {
                 daods.delete(id, user_id);
                 break;
             default:
-                System.out.println("default:");
                 break;
         }
         String str_id = request.getParameter("id");
         if (str_id != null) {
             instanceDetails = daods.read(Long.parseLong(str_id));
-            System.out.println("instanceDetails=" + instanceDetails);
             if (instanceDetails == null) {
                 request.getSession().removeAttribute("roleUsers");
             } else {

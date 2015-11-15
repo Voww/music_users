@@ -22,11 +22,9 @@ public class MusicsProcessor extends AbstractInstancesProcessor {
     public String process() {
         String action = request.getParameter("action");
         action = action == null ? "" : action;
-        System.out.println(this.getClass().getName() + " > action = " + action);
 
         switch (action) {
             case "insert":
-                System.out.println("case 'insert':");
                 String name = request.getParameter("name");
                 int rating = Integer.parseInt(request.getParameter("rating"));
                 Music newMusic = new Music(name, rating);
@@ -34,29 +32,23 @@ public class MusicsProcessor extends AbstractInstancesProcessor {
 
                 break;
             case "edit":
-                System.out.println("case 'edit':");
                 break;
             case "update":
-                System.out.println("case 'update':");
                 Long id = Long.parseLong(request.getParameter("id"));
                 name = request.getParameter("name");
                 rating = Integer.parseInt(request.getParameter("rating"));
                 Music updateMusic = new Music(id, name, rating);
-                System.out.println(updateMusic);
-                System.out.println(dao.update(updateMusic));
+                dao.update(updateMusic);
                 break;
             case "delete":
-                System.out.println("case delete:");
                 id = Long.parseLong(request.getParameter("id"));
-                System.out.println(dao.delete(id));
+                dao.delete(id);
                 break;
             case "details":
-                System.out.println("case details:");
                 //id = Long.parseLong(request.getParameter("id"));
-                //System.out.println(dao.delete(id));
+                //dao.delete(id);
                 break;
             default:
-                System.out.println("default:");
                 break;
         }
 

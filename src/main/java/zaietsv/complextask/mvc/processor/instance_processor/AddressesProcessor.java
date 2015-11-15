@@ -50,12 +50,11 @@ public class AddressesProcessor extends AbstractInstancesProcessor {
                 house = Integer.parseInt(request.getParameter("house"));
                 flat = Integer.parseInt(request.getParameter("flat"));
                 Address updateAddress = new Address(id, postcode, city, street, house, flat);
-                System.out.println("id=" + id);
-                System.out.println(dao.update(updateAddress));
+                dao.update(updateAddress);
                 break;
             case "delete":
                 id = Long.parseLong(request.getParameter("id"));
-                System.out.println(dao.delete(id));
+                dao.delete(id);
                 break;
             case "details":
                 InstanceDetailProcessor idp = null;

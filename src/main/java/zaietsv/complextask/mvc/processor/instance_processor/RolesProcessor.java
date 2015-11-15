@@ -28,7 +28,6 @@ public class RolesProcessor extends AbstractInstancesProcessor {
     public String process() {
         String action = request.getParameter("action");
         action = action == null ? "" : action;
-        System.out.println(this.getClass().getName() + " > action = " + action);
 
         switch (action) {
             case "insert":
@@ -43,16 +42,13 @@ public class RolesProcessor extends AbstractInstancesProcessor {
                 Long id = Long.parseLong(request.getParameter("id"));
                 name = request.getParameter("name");
                 Role updateRole = new Role(id, name);
-                System.out.println(updateRole);
-                System.out.println(dao.update(updateRole));
+                dao.update(updateRole);
                 break;
             case "delete":
-                System.out.println("case delete:");
                 id = Long.parseLong(request.getParameter("id"));
-                System.out.println(dao.delete(id));
+                dao.delete(id);
                 break;
             case "details":
-                System.out.println("case details:");
                 InstanceDetailsProcessor idp = null;
                 try {
                     idp = new RoleUsersProcessor(request, response);
@@ -62,7 +58,6 @@ public class RolesProcessor extends AbstractInstancesProcessor {
                 idp.process();
                 break;
             default:
-                System.out.println("default:");
                 break;
         }
 

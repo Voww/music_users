@@ -26,7 +26,6 @@ public class AddressUserProcessor extends AbstractInstanceDetailProcessor {
     public String process() {
         String action = request.getParameter("action");
         action = action == null ? "" : action;
-        System.out.println(this.getClass().getName() + " > action = " + action);
 
         switch (action) {
             case "insert":
@@ -36,7 +35,6 @@ public class AddressUserProcessor extends AbstractInstanceDetailProcessor {
                 String password = request.getParameter("password");
                 String email = request.getParameter("email");
                 User newUser = new User(login, password, email);
-                System.out.println("newUser=" + newUser);
                 if (str_id == null) {
                     int postcode = Integer.parseInt(request.getParameter("postcode"));
                     String city = request.getParameter("city");
@@ -44,7 +42,6 @@ public class AddressUserProcessor extends AbstractInstanceDetailProcessor {
                     int house = Integer.parseInt(request.getParameter("house"));
                     int flat = Integer.parseInt(request.getParameter("flat"));
                     Address newAddress = new Address(postcode, city, street, house, flat);
-                    System.out.println("newAddress=" + newAddress);
                     AddressUser addressUser = new AddressUser(newAddress, newUser);
                     daod.insert(addressUser);
                     daod.read(addressUser);
@@ -77,17 +74,15 @@ public class AddressUserProcessor extends AbstractInstanceDetailProcessor {
                     email = request.getParameter("email");
                     updateUser = new User(user_id, login, password, email);
                 }
-                System.out.println(daod.update(new AddressUser(updateAddress, updateUser)));
+                daod.update(new AddressUser(updateAddress, updateUser));
                 break;
             case "unlink":
-                System.out.println("case unlink:");
                 str_id = request.getParameter("id");
                 if (str_id != null) {
-                    System.out.println(daod.unlink(Long.parseLong(str_id)));
+                    daod.unlink(Long.parseLong(str_id));
                 }
                 break;
             case "delete":
-                System.out.println("case delete:");
                 str_id = request.getParameter("id");
                 Long id = 0L;
                 if (str_id != null) {
@@ -101,13 +96,11 @@ public class AddressUserProcessor extends AbstractInstanceDetailProcessor {
                 daod.delete(id, user_id);
                 break;
             default:
-                System.out.println("default:");
                 break;
         }
         String str_id = request.getParameter("id");
         if (str_id != null) {
             instanceDetail = daod.read(Long.parseLong(str_id));
-            System.out.println("instanceDetail=" + instanceDetail);
             if (instanceDetail == null) {
                 request.getSession().removeAttribute("addressUser");
             } else {

@@ -82,8 +82,6 @@ public class UserDAO extends AbstractDAO<User> {
 			ps.setString(2, instance.getPassword());
 			ps.setString(3, instance.getEmail());
 
-			System.out.println("ps=" + ps);
-
 			try (ResultSet rs = ps.executeQuery()) {
 				if (rs.next()) {
 					instance.setId(rs.getLong("id"));

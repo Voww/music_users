@@ -34,7 +34,6 @@ public class RoleUsersDAODs extends AbstractDAODs<RoleUsers> {
 	 */
 	@Override
 	public int insert(RoleUsers roleUsers) {
-		System.out.println(roleUsers);
 
 		RoleDAO rdao = new RoleDAO(connection);
 		rdao.insert(roleUsers.getInstance());
@@ -53,13 +52,10 @@ public class RoleUsersDAODs extends AbstractDAODs<RoleUsers> {
 				ps.setLong(1, roleUsers.getInstance().getId());
 				ps.setLong(2, user.getId());
 				rows = ps.executeUpdate();
-				System.out.println("success");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
-		System.out.println(roleUsers);
 		return rows;
 	}
 

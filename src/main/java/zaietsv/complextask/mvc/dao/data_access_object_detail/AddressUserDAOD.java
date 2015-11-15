@@ -30,7 +30,6 @@ public class AddressUserDAOD extends AbstractDAOD<AddressUser> {
 	 */
 	@Override
 	public int insert(AddressUser addressUser) {
-		System.out.println(addressUser);
 
 		AddressDAO adao = new AddressDAO(connection);
 		adao.insert(addressUser.getInstance());
@@ -40,8 +39,6 @@ public class AddressUserDAOD extends AbstractDAOD<AddressUser> {
 		udao.insert(addressUser.getDetail());
 		udao.read(addressUser.getDetail());
 
-		System.out.println(addressUser);
-
 		int rows = 0;
 		String sql = "INSERT INTO user_address (address_id, user_id)  VALUES (?, ?)";
 		try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -49,7 +46,6 @@ public class AddressUserDAOD extends AbstractDAOD<AddressUser> {
 			ps.setLong(1, addressUser.getInstance().getId());
 			ps.setLong(2, addressUser.getDetail().getId());
 			rows = ps.executeUpdate();
-			System.out.println("success");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -118,7 +114,6 @@ public class AddressUserDAOD extends AbstractDAOD<AddressUser> {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		System.out.println("addressUser=" + addressUser);
 		return addressUser;
 	}
 
@@ -154,7 +149,6 @@ public class AddressUserDAOD extends AbstractDAOD<AddressUser> {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		System.out.println("addressUser=" + addressUser);
 		return addressUser.getInstance().getId();
 	}
 	
