@@ -8,7 +8,7 @@
 </head>
 <body>
 <h1 style="background-color: yellow">Access denied page</h1>
-Your account was blocked by administrator.<br>
+Your have not permission to view authorized pages.<br>
 You can visit <a href="AdminWorks">guest page</a>
 </body>
 </html>

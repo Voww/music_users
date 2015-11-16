@@ -7,7 +7,17 @@
 <title>Music Users login page</title>
 </head>
 <body>
-<h1>Music Users login page</h1>
+
+<div>
+    <div style="float: left; width: 95%">
+        <h1 style="background-color: lightgrey">Music Users login page</h1>
+    </div>
+    <div style="float: left; width: 5%;">
+        <h1></h1>
+        <a href="guest/index.jsp">Guest</a><br>
+        <jsp:include page="/Languages.jsp"></jsp:include>
+    </div>
+</div>
     <form action="AuthorizationService?action=login" name="pleaseLogin" method="post">
     <table frame="box">
         <thead>

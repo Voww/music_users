@@ -8,7 +8,18 @@
 <title>Guest's page</title>
 </head>
 <body>
-<h1 style="background-color: greenyellow">Guest's page</h1>
+
+<div>
+    <div style="float: left; width: 95%">
+        <h1 style="background-color: greenyellow">Guest's page</h1>
+    </div>
+    <div style="float: left; width: 5%;">
+        <h1></h1>
+        <a href="/music_users/login.jsp">Log in</a><br>
+        <jsp:include page="/Languages.jsp"></jsp:include>
+    </div>
+</div>
+<div style="width: 100%; clear: both"><hr></div>
 Common information for non-authorized users.<br>
 You can perform an authorization at <a href="/music_users/login.jsp">login page</a><br>
 <a href="AdminWorks?table=music"><button>Music table</button></a>

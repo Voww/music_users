@@ -1,8 +1,6 @@
 <%@page import="zaietsv.complextask.mvc.entity.UserAddressRoleMusics"%>
 <%@ page import="zaietsv.complextask.mvc.entity.instance.*" %>
-<%@ page import="zaietsv.complextask.mvc.entity.instance_detail.MusicUsers" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="java.util.Arrays" %>
 <%@ page import="java.util.Collections" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>

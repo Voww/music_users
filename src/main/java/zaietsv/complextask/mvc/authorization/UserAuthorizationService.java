@@ -27,7 +27,7 @@ public class UserAuthorizationService extends AbstractAuthorizationService {
         Boolean success = false;
         if (udao.readByLoginAndPassword(user) > 0) {
             UserAddressRoleMusics uarm = uarmDAO.read(user.getId());
-            if (uarm != null) {
+            if (uarm != null && uarm.getRole() != null) {
                 HttpSession session = request.getSession();
                 session.setAttribute("loggedUser", uarm);
                 success = true;
@@ -77,7 +77,7 @@ public class UserAuthorizationService extends AbstractAuthorizationService {
     public String getAuthorization() {
         String authorization = "guest";
         UserAddressRoleMusics uarm = (UserAddressRoleMusics) request.getSession().getAttribute("loggedUser");
-        if (uarm != null) {
+        if (uarm != null && uarm.getRole() != null) {
             authorization = uarm.getRole().getName();
         }
         return authorization;
