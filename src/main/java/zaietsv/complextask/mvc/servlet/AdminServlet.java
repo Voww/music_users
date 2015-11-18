@@ -36,6 +36,8 @@ public class AdminServlet extends HttpServlet {
 		Processor processor = factory.getProcessor(request, response);
 		String viewName = authorization + "/" + processor.process();
 		RequestDispatcher rd = request.getRequestDispatcher(viewName);
+		RequestDispatcher rdLoc =request.getRequestDispatcher("/LocalizationWorks");
+		rdLoc.include(request, response);
 		rd.forward(request, response);
 	}
 
