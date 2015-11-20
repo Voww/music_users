@@ -1,5 +1,7 @@
 <%@page import="zaietsv.complextask.mvc.entity.UserAddressRoleMusics"%>
 <%@ page import="zaietsv.complextask.mvc.entity.instance.*" %>
+<%@ page import="zaietsv.complextask.mvc.localization.Localization" %>
+<%@ page import="zaietsv.complextask.mvc.localization.MusicUsersLocalization" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.Collections" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -9,11 +11,12 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate">
-<title>Music To Users table</title>
+	<% Localization l = MusicUsersLocalization.getInstance(request); %>
+<title><%=l.tr("musicUsersTable")%></title>
 </head>
 <body>
-<h1 style="background-color: darkred">User to Address, Role, Musics table</h1>
-<a href="AdminWorks"><button>Backward</button></a><hr>
+<h1 style="background-color: darkred"><%=l.tr("userAddressRoleMusicsTable")%></h1>
+<a href="AdminWorks"><button><%=l.tr("backwardButton")%></button></a><hr>
 <%String action = request.getParameter("action"); action = action == null ? "" : action;%>
 <% UserAddressRoleMusics uarm = (UserAddressRoleMusics)request.getSession().getAttribute("loggedUser"); %>
 <% User user = uarm.getUser(); %>
@@ -21,9 +24,9 @@
 <% Role role = uarm.getRole(); %>
 <% Musics musics = uarm.getMusics(); %>
 
-<h2>User</h2>
+<h2><%=l.tr("userHeader")%></h2>
 <table frame="border" border="1">
-	<tr bgcolor="magenta"><th>Id</th><th>Login</th><th>Password</th><th>Email</th><th>Registration date</th><th>Action</th></tr>
+	<tr bgcolor="magenta"><th><%=l.tr("idHeader")%></th><th><%=l.tr("loginHeader")%></th><th><%=l.tr("passwordHeader")%></th><th><%=l.tr("emailHeader")%></th><th><%=l.tr("regDateHeader")%></th><th><%=l.tr("actionHeader")%></th></tr>
 	<%String id = request.getParameter("id");%>
 	<%if (user == null) { %>
 	<tr>
@@ -62,16 +65,16 @@
 		<td><%=user.getEmail() %></td>
 		<td><%=user.getReg_date() %></td>
 		<td>
-			<a href="AdminWorks?table=user_address_role_musics&action=edit&id=<%=user.getId()%>" title="edit the item"><button>edit</button></a>
-			<a href="AdminWorks?table=user_address_role_musics&action=delete&id=<%=user.getId()%>" title="delete the user and it's parameters"><button>delete</button></a>
+			<a href="AdminWorks?table=user_address_role_musics&action=edit&id=<%=user.getId()%>" title="edit the item"><button><%=l.tr("editButton")%></button></a>
+			<a href="AdminWorks?table=user_address_role_musics&action=delete&id=<%=user.getId()%>" title="delete the user and it's parameters"><button><%=l.tr("deleteButton")%></button></a>
 		</td>
 		<%} %>
 	</tr>
 </table>
 
-<h2>Address</h2>
+<h2><%=l.tr("addressHeader")%></h2>
 <table frame="border" border="1">
-	<tr bgcolor="magenta"><th>Id</th><th>Postcode</th><th>City</th><th>Street</th><th>House</th><th>Flat</th><th>Action</th></tr>
+	<tr bgcolor="magenta"><th><%=l.tr("idHeader")%></th><th><%=l.tr("postcodeHeader")%></th><th><%=l.tr("cityHeader")%></th><th><%=l.tr("streetHeader")%></th><th><%=l.tr("houseHeader")%></th><th><%=l.tr("flatHeader")%></th><th><%=l.tr("actionHeader")%></th></tr>
 	<%String address_id = request.getParameter("address_id");%>
 
 	<%if (address == null) { %>
@@ -112,26 +115,26 @@
 	<td><%=address.getHouse() %></td>
 	<td><%=address.getFlat() %></td>
 	<td>
-		<a href="AdminWorks?table=user_address_role_musics&action=edit&id=<%=user.getId()%>&address_id=<%=address.getId()%>" title="edit the item"><button>edit</button></a>
-		<a href="AdminWorks?table=user_address_role_musics&action=delete_address&id=<%=user.getId()%>&address_id=<%=address.getId()%>" title="delete the address"><button>delete</button></a>
+		<a href="AdminWorks?table=user_address_role_musics&action=edit&id=<%=user.getId()%>&address_id=<%=address.getId()%>" title="edit the item"><button><%=l.tr("editButton")%></button></a>
+		<a href="AdminWorks?table=user_address_role_musics&action=delete_address&id=<%=user.getId()%>&address_id=<%=address.getId()%>" title="delete the address"><button><%=l.tr("deleteButton")%></button></a>
 	</td>
 	<%} %>
 </tr>
 </table>
 
-<h2>Role</h2>
+<h2><%=l.tr("roleHeader")%></h2>
 <table frame="border" border="1">
-	<tr bgcolor="magenta"><th>Id</th><th>Name</th></tr>
+	<tr bgcolor="magenta"><th><%=l.tr("idHeader")%></th><th><%=l.tr("nameHeader")%></th></tr>
 	<%if (role.getId() % 2 == 0) {%><tr bgcolor="yellow"><%} else {%><tr bgcolor="cyan"><%} %>
 		<td><%=role.getId() %></td>
 		<td><%=role.getName() %></td>
 	</tr>
 </table>
 
-<h2>Musics</h2>
+<h2><%=l.tr("musicsHeader")%></h2>
 
 <table frame="border" border="1">
-	<tr bgcolor="magenta"><th>Id</th><th>Name</th><th>Rating</th><th>Action</th></tr>
+	<tr bgcolor="magenta"><th><%=l.tr("idHeader")%></th><th><%=l.tr("nameHeader")%></th><th><%=l.tr("ratingHeader")%></th><th><%=l.tr("actionHeader")%></th></tr>
 	<%String music_id = request.getParameter("music_id");%>
 	<%if (musics != null) { %>
 	<%for (Music music : musics.getInstances()) {%>
@@ -154,7 +157,7 @@
 	<td><%=music.getName() %></td>
 	<td><%=music.getRating() %></td>
 	<td>
-		<a href="AdminWorks?table=user_address_role_musics&action=unlink_music&id=<%=user.getId()%>&music_id=<%=music.getId()%>" title="unlink the music from the user (without deleting)"><button>unlink</button></a>
+		<a href="AdminWorks?table=user_address_role_musics&action=unlink_music&id=<%=user.getId()%>&music_id=<%=music.getId()%>" title="unlink the music from the user (without deleting)"><button><%=l.tr("unlinkButton")%></button></a>
 	</td>
 	<%} %>
 	<%} %>
@@ -176,7 +179,7 @@
 	<input type="hidden"  title="id" name="id" value="<%=user.getId()%>">
 	<table frame="border" border="1">
 		<tr bgcolor="magenta">
-			<th>Id</th><th>Name</th><th>Rating</th><th>Action</th>
+			<th><%=l.tr("idHeader")%></th><th><%=l.tr("nameHeader")%></th><th><%=l.tr("ratingHeader")%></th><th><%=l.tr("actionHeader")%></th>
 		</tr>
 		<%for (Music selector : listedMusics.getInstances()) {%>
 		<%if (selector.getId() % 2 == 0) {%><tr bgcolor="yellow"><%} else {%><tr bgcolor="cyan"><%} %>
@@ -206,6 +209,6 @@
 </form>
 <% } %>
 
-<hr><a href="AdminWorks"><button>Backward</button></a>
+<hr><a href="AdminWorks"><button><%=l.tr("backwardButton")%></button></a>
 </body>
 </html>

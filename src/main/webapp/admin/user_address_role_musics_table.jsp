@@ -1,8 +1,8 @@
 <%@page import="zaietsv.complextask.mvc.entity.UserAddressRoleMusics"%>
 <%@ page import="zaietsv.complextask.mvc.entity.instance.*" %>
-<%@ page import="zaietsv.complextask.mvc.entity.instance_detail.MusicUsers" %>
+<%@ page import="zaietsv.complextask.mvc.localization.Localization" %>
+<%@ page import="zaietsv.complextask.mvc.localization.MusicUsersLocalization" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="java.util.Arrays" %>
 <%@ page import="java.util.Collections" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -11,11 +11,12 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate">
-<title>Music To Users table</title>
+	<% Localization l = MusicUsersLocalization.getInstance(request); %>
+<title><%=l.tr("userAddressRoleMusicsTable")%></title>
 </head>
 <body>
-<h1>User to Address, Role, Musics table</h1>
-<a href="AdminWorks?table=user"><button>Backward</button></a><hr>
+<h1><%=l.tr("userAddressRoleMusicsTable")%></h1>
+<a href="AdminWorks?table=user"><button><%=l.tr("backwardButton")%></button></a><hr>
 <%String action = request.getParameter("action"); action = action == null ? "" : action;%>
 last action = <%=action %>
 <% UserAddressRoleMusics uarm = (UserAddressRoleMusics)request.getSession().getAttribute("userAddressRoleMusics"); %>
@@ -25,9 +26,14 @@ last action = <%=action %>
 <% Role role = uarm.getRole(); %>
 <% Musics musics = uarm.getMusics(); %>
 
-<h2>User</h2>
+<h2><%=l.tr("userHeader")%></h2>
 <table frame="border" border="1">
-	<tr bgcolor="magenta"><th>Id</th><th>Login</th><th>Password</th><th>Email</th><th>Registration date</th><th>Action</th></tr>
+	<tr bgcolor="magenta">
+		<th><%=l.tr("idHeader")%></th>
+		<th><%=l.tr("loginHeader")%></th>
+		<th><%=l.tr("passwordHeader")%></th>
+		<th><%=l.tr("emailHeader")%></th><th><%=l.tr("regDateHeader")%></th>
+		<th><%=l.tr("actionHeader")%></th></tr>
 	<%String user_id = request.getParameter("user_id");%>
 	<%if (user == null) { %>
 	<tr>
@@ -68,18 +74,18 @@ last action = <%=action %>
 		<td><%=user.getReg_date() %></td>
 		<td>
 
-			<a href="AdminWorks?table=user_address_role_musics&action=edit&id=<%=user.getId()%>" title="edit the item"><button>edit</button></a>
-			<a href="AdminWorks?table=user_address_role_musics&action=unlink&id=<%=user.getId()%>" title="unlink the user from all of the parameters (without deleting)"><button>unlink</button></a>
-			<a href="AdminWorks?table=user_address_role_musics&action=delete&id=<%=user.getId()%>" title="delete the user and it's parameters"><button>delete</button></a>
+			<a href="AdminWorks?table=user_address_role_musics&action=edit&id=<%=user.getId()%>" title="edit the item"><button><%=l.tr("editButton")%></button></a>
+			<a href="AdminWorks?table=user_address_role_musics&action=unlink&id=<%=user.getId()%>" title="unlink the user from all of the parameters (without deleting)"><button><%=l.tr("unlinkButton")%></button></a>
+			<a href="AdminWorks?table=user_address_role_musics&action=delete&id=<%=user.getId()%>" title="delete the user and it's parameters"><button><%=l.tr("deleteButton")%></button></a>
 
 		</td>
 		<%} %>
 	</tr>
 </table>
 
-<h2>Address</h2>
+<h2><%=l.tr("addressHeader")%></h2>
 <table frame="border" border="1">
-	<tr bgcolor="magenta"><th>Id</th><th>Postcode</th><th>City</th><th>Street</th><th>House</th><th>Flat</th><th>Action</th></tr>
+	<tr bgcolor="magenta"><th><%=l.tr("idHeader")%></th><th><%=l.tr("postcodeHeader")%></th><th><%=l.tr("cityHeader")%></th><th><%=l.tr("streetHeader")%></th><th><%=l.tr("houseHeader")%></th><th><%=l.tr("flatHeader")%></th><th><%=l.tr("actionHeader")%></th></tr>
 	<%String address_id = request.getParameter("address_id");%>
 
 	<%if (address == null) { %>
@@ -120,18 +126,18 @@ last action = <%=action %>
 	<td><%=address.getHouse() %></td>
 	<td><%=address.getFlat() %></td>
 	<td>
-		<a href="AdminWorks?table=address_user&id=<%=address.getId()%>" title="details on the item"><button>details</button></a>
-		<a href="AdminWorks?table=user_address_role_musics&action=edit&id=<%=user.getId()%>&address_id=<%=address.getId()%>" title="edit the item"><button>edit</button></a>
-		<a href="AdminWorks?table=user_address_role_musics&action=unlink_address&id=<%=user.getId()%>&address_id=<%=address.getId()%>" title="unlink the address from the user (without deleting)"><button>unlink</button></a>
-		<a href="AdminWorks?table=user_address_role_musics&action=delete_address&id=<%=user.getId()%>&address_id=<%=address.getId()%>" title="delete the address"><button>delete</button></a>
+		<a href="AdminWorks?table=address_user&id=<%=address.getId()%>" title="details on the item"><button><%=l.tr("detailsButton")%></button></a>
+		<a href="AdminWorks?table=user_address_role_musics&action=edit&id=<%=user.getId()%>&address_id=<%=address.getId()%>" title="edit the item"><button><%=l.tr("editButton")%></button></a>
+		<a href="AdminWorks?table=user_address_role_musics&action=unlink_address&id=<%=user.getId()%>&address_id=<%=address.getId()%>" title="unlink the address from the user (without deleting)"><button><%=l.tr("unlinkButton")%></button></a>
+		<a href="AdminWorks?table=user_address_role_musics&action=delete_address&id=<%=user.getId()%>&address_id=<%=address.getId()%>" title="delete the address"><button><%=l.tr("deleteButton")%></button></a>
 	</td>
 	<%} %>
 </tr>
 </table>
 
-<h2>Role</h2>
+<h2><%=l.tr("roleHeader")%></h2>
 <table frame="border" border="1">
-	<tr bgcolor="magenta"><th>Id</th><th>Name</th><th>Action</th></tr>
+	<tr bgcolor="magenta"><th><%=l.tr("idHeader")%></th><th><%=l.tr("nameHeader")%></th><th><%=l.tr("actionHeader")%></th></tr>
 	<%if (role == null) { %>
 
 	<% } else { %>
@@ -139,8 +145,8 @@ last action = <%=action %>
 		<td><%=role.getId() %></td>
 		<td><%=role.getName() %></td>
 		<td>
-			<a href="AdminWorks?table=role_users&action=details&id=<%=role.getId()%>" title="details on the item"><button>details</button></a>
-			<a href="AdminWorks?table=user_address_role_musics&action=unlink_role&id=<%=user.getId()%>&role_id=<%=role.getId()%>" title="unlink the role from the user (without deleting)"><button>unlink</button></a>
+			<a href="AdminWorks?table=role_users&action=details&id=<%=role.getId()%>" title="details on the item"><button><%=l.tr("detailsButton")%></button></a>
+			<a href="AdminWorks?table=user_address_role_musics&action=unlink_role&id=<%=user.getId()%>&role_id=<%=role.getId()%>" title="unlink the role from the user (without deleting)"><button><%=l.tr("unlinkButton")%></button></a>
 		</td>
 	</tr>
 	<%} %>
@@ -159,7 +165,7 @@ last action = <%=action %>
 	<input type="hidden"  title="id" name="id" value="<%=id %>">
 <table frame="border" border="1">
 	<tr bgcolor="magenta">
-		<th>Id</th><th>Name</th><th>Action</th>
+		<th><%=l.tr("idHeader")%></th><th><%=l.tr("nameHeader")%></th><th><%=l.tr("actionHeader")%></th>
 	</tr>
 	<%for (Role selector : roles.getInstances()) {%>
 	<%if (selector.getId() % 2 == 0) {%><tr bgcolor="yellow"><%} else {%><tr bgcolor="cyan"><%} %>
@@ -186,10 +192,10 @@ last action = <%=action %>
 </form>
 <% } %>
 
-<h2>Musics</h2>
+<h2><%=l.tr("musicsHeader")%></h2>
 
 <table frame="border" border="1">
-	<tr bgcolor="magenta"><th>Id</th><th>Name</th><th>Rating</th><th>Action</th></tr>
+	<tr bgcolor="magenta"><th><%=l.tr("idHeader")%></th><th><%=l.tr("nameHeader")%></th><th><%=l.tr("ratingHeader")%></th><th><%=l.tr("actionHeader")%></th></tr>
 	<%String music_id = request.getParameter("music_id");%>
 	<%if (musics != null) { %>
 	<%for (Music music : musics.getInstances()) {%>
@@ -212,8 +218,8 @@ last action = <%=action %>
 	<td><%=music.getName() %></td>
 	<td><%=music.getRating() %></td>
 	<td>
-		<a href="AdminWorks?table=music_users&action=details&id=<%=music.getId()%>" title="details on the item"><button>details</button></a>
-		<a href="AdminWorks?table=user_address_role_musics&action=unlink_music&id=<%=user.getId()%>&music_id=<%=music.getId()%>" title="unlink the music from the user (without deleting)"><button>unlink</button></a>
+		<a href="AdminWorks?table=music_users&action=details&id=<%=music.getId()%>" title="details on the item"><button><%=l.tr("detailsButton")%></button></a>
+		<a href="AdminWorks?table=user_address_role_musics&action=unlink_music&id=<%=user.getId()%>&music_id=<%=music.getId()%>" title="unlink the music from the user (without deleting)"><button><%=l.tr("unlinkButton")%></button></a>
 	</td>
 	<%} %>
 	<%} %>
@@ -235,7 +241,7 @@ last action = <%=action %>
 	<input type="hidden"  title="id" name="id" value="<%=id %>">
 	<table frame="border" border="1">
 		<tr bgcolor="magenta">
-			<th>Id</th><th>Name</th><th>Rating</th><th>Action</th>
+			<th><%=l.tr("idHeader")%></th><th><%=l.tr("nameHeader")%></th><th><%=l.tr("ratingHeader")%></th><th><%=l.tr("actionHeader")%></th>
 		</tr>
 		<%for (Music selector : listedMusics.getInstances()) {%>
 		<%if (selector.getId() % 2 == 0) {%><tr bgcolor="yellow"><%} else {%><tr bgcolor="cyan"><%} %>
@@ -265,6 +271,6 @@ last action = <%=action %>
 </form>
 <% } %>
 
-<hr><a href="AdminWorks?table=user"><button>Backward</button></a>
+<hr><a href="AdminWorks?table=user"><button><%=l.tr("backwardButton")%></button></a>
 </body>
 </html>

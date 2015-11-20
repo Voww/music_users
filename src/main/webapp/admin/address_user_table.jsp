@@ -1,4 +1,6 @@
 <%@page import="zaietsv.complextask.mvc.entity.instance_detail.AddressUser"%>
+<%@ page import="zaietsv.complextask.mvc.localization.Localization" %>
+<%@ page import="zaietsv.complextask.mvc.localization.MusicUsersLocalization" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -6,17 +8,18 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" >
 	<meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate">
-<title>Address To User table</title>
+	<% Localization l = MusicUsersLocalization.getInstance(request); %>
+<title><%=l.tr("addressUserTable")%></title>
 </head>
 <body>
-<h1>Address To User table</h1>
-<a href="AdminWorks?table=address"><button>Backward</button></a><hr>
+<h1><%=l.tr("addressUserTable")%></h1>
+<a href="AdminWorks?table=address"><button><%=l.tr("backwardButton")%></button></a><hr>
 last action = <%=request.getParameter("action") %>
-<h2>Address</h2>
+<h2><%=l.tr("addressHeader")%></h2>
 <% AddressUser addressUser = (AddressUser)request.getSession().getAttribute("addressUser"); %>
 
 <table frame="border" border="1">
-	<tr bgcolor="magenta"><th>Id</th><th>Postcode</th><th>City</th><th>Street</th><th>House</th><th>Flat</th><th>Action</th></tr>
+	<tr bgcolor="magenta"><th><%=l.tr("idHeader")%></th><th><%=l.tr("postcodeHeader")%></th><th><%=l.tr("cityHeader")%></th><th><%=l.tr("streetHeader")%></th><th><%=l.tr("houseHeader")%></th><th><%=l.tr("flatHeader")%></th><th><%=l.tr("actionHeader")%></th></tr>
 	<%String action = request.getParameter("action"); action = action == null ? "" : action;%>
 	<%String address_id = request.getParameter("address_id");%>
 	<%String user_id = request.getParameter("user_id");%>
@@ -58,23 +61,23 @@ last action = <%=request.getParameter("action") %>
 	<td><%=addressUser.getInstance().getHouse() %></td>
 	<td><%=addressUser.getInstance().getFlat() %></td>
 	<td>
-		<a href="AdminWorks?table=address_user&action=edit&id=<%=addressUser.getInstance().getId()%>&address_id=<%=addressUser.getInstance().getId()%>" title="edit the item"><button>edit</button></a>
-		<a href="AdminWorks?table=address_user&action=unlink&id=<%=addressUser.getInstance().getId()%>" title="unlink the address from the user (without deleting)"><button>unlink</button></a>
-		<a href="AdminWorks?table=address_user&action=delete&id=<%=addressUser.getInstance().getId()%>" title="delete the address"><button>delete</button></a>
+		<a href="AdminWorks?table=address_user&action=edit&id=<%=addressUser.getInstance().getId()%>&address_id=<%=addressUser.getInstance().getId()%>" title="edit the item"><button><%=l.tr("editButton")%></button></a>
+		<a href="AdminWorks?table=address_user&action=unlink&id=<%=addressUser.getInstance().getId()%>" title="unlink the address from the user (without deleting)"><button><%=l.tr("unlinkButton")%></button></a>
+		<a href="AdminWorks?table=address_user&action=delete&id=<%=addressUser.getInstance().getId()%>" title="delete the address"><button><%=l.tr("deleteButton")%></button></a>
 	</td>
 	<%} %>
 </tr>
 </table>
 
-<h2>User</h2>
+<h2><%=l.tr("userHeader")%></h2>
 <table frame="border" border="1">
 	<tr bgcolor="magenta">
-		<th>Id</th>
-		<th>Login</th>
-		<th>Password</th>
-		<th>Email</th>
-		<th>Registration date</th>
-		<th>Action</th>
+		<th><%=l.tr("idHeader")%></th>
+		<th><%=l.tr("loginHeader")%></th>
+		<th><%=l.tr("passwordHeader")%></th>
+		<th><%=l.tr("emailHeader")%></th>
+		<th><%=l.tr("regDateHeader")%></th>
+		<th><%=l.tr("actionHeader")%></th>
 	</tr>
 
 	<%if (addressUser.getDetail() == null) { %>
@@ -115,13 +118,13 @@ last action = <%=request.getParameter("action") %>
 	<td><%=addressUser.getDetail().getEmail() %></td>
 	<td><%=addressUser.getDetail().getReg_date() %></td>
 	<td>
-		<a href="AdminWorks?table=user_address_role_musics&action=details&id=<%=addressUser.getDetail().getId()%>" title="details on the item"><button>details</button></a>
-		<a href="AdminWorks?table=address_user&action=edit&id=<%=addressUser.getInstance().getId()%>&user_id=<%=addressUser.getDetail().getId()%>" title="edit the item"><button>edit</button></a>
-		<a href="AdminWorks?table=address_user&action=unlink&id=<%=addressUser.getInstance().getId()%>" title="unlink the user from the address (without deleting)"><button>unlink</button></a>
+		<a href="AdminWorks?table=user_address_role_musics&action=details&id=<%=addressUser.getDetail().getId()%>" title="details on the item"><button><%=l.tr("detailsButton")%></button></a>
+		<a href="AdminWorks?table=address_user&action=edit&id=<%=addressUser.getInstance().getId()%>&user_id=<%=addressUser.getDetail().getId()%>" title="edit the item"><button><%=l.tr("editButton")%></button></a>
+		<a href="AdminWorks?table=address_user&action=unlink&id=<%=addressUser.getInstance().getId()%>" title="unlink the user from the address (without deleting)"><button><%=l.tr("unlinkButton")%></button></a>
 	</td>
 	<%} %>
 </tr>
 </table>
-<hr><a href="AdminWorks?table=address"><button>Backward</button></a>
+<hr><a href="AdminWorks?table=address"><button><%=l.tr("backwardButton")%></button></a>
 </body>
 </html>

@@ -10,19 +10,21 @@
 <title><%=l.tr("guestPage")%></title>
 </head>
 <body>
-<div>
-    <div style="float: left; width: 95%">
-        <h1 style="background-color: greenyellow"><%=l.tr("guestPage")%></h1>
+    <div>
+        <div style="float: left; width: 95%">
+            <h1 style="background-color: greenyellow"><%=l.tr("guestPage")%></h1>
+        </div>
+        <div style="float: left; width: 5%;">
+            <h1></h1>
+            <a href="/music_users/login.jsp"><%=l.tr("logIn")%></a><br>
+            <jsp:include page="/Languages.jsp"></jsp:include>
+        </div>
     </div>
-    <div style="float: left; width: 5%;">
-        <h1></h1>
-        <a href="/music_users/login.jsp"><%=l.tr("logIn")%></a><br>
-        <jsp:include page="/Languages.jsp"></jsp:include>
+    <div style="width: 100%; clear: both"><hr></div>
+    <div>
+        <%=l.tr("guestPageText")%><br>
+        <%=l.tr("loginPageRedirect")%><a href="/music_users/login.jsp"><%=l.tr("atLoginPage")%></a><br>
+        <a href="AdminWorks?table=music"><button><%=l.tr("musicTable")%></button></a>
     </div>
-</div>
-<div style="width: 100%; clear: both"><hr></div>
-<%=l.tr("guestPageText")%><br>
-<%=l.tr("loginPageRedirect")%><a href="/music_users/login.jsp"><%=l.tr("atLoginPage")%></a><br>
-<a href="AdminWorks?table=music"><button><%=l.tr("musicTable")%></button></a>
 </body>
 </html>

@@ -1,5 +1,7 @@
 <%@page import="zaietsv.complextask.mvc.entity.instance.User"%>
 <%@ page import="zaietsv.complextask.mvc.entity.instance_detail.RoleUsers" %>
+<%@ page import="zaietsv.complextask.mvc.localization.Localization" %>
+<%@ page import="zaietsv.complextask.mvc.localization.MusicUsersLocalization" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -7,17 +9,18 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate">
-<title>Role To Users table</title>
+	<% Localization l = MusicUsersLocalization.getInstance(request); %>
+<title><%=l.tr("roleUsersTable")%></title>
 </head>
 <body>
-<h1>Role To Users table</h1>
-<a href="AdminWorks?table=role"><button>Backward</button></a><hr>
+<h1><%=l.tr("roleUsersTable")%></h1>
+<a href="AdminWorks?table=role"><button><%=l.tr("backwardButton")%></button></a><hr>
 last action = <%=request.getParameter("action") %>
-<h2>Role</h2>
+<h2><%=l.tr("roleHeader")%></h2>
 <% RoleUsers roleUsers = (RoleUsers)request.getSession().getAttribute("roleUsers"); %>
 
 <table frame="border" border="1">
-	<tr bgcolor="magenta"><th>Id</th><th>Name</th><th>Action</th></tr>
+	<tr bgcolor="magenta"><th><%=l.tr("idHeader")%></th><th><%=l.tr("nameHeader")%></th><th><%=l.tr("actionHeader")%></th></tr>
 	<%String action = request.getParameter("action"); action = action == null ? "" : action;%>
 	<%String role_id = request.getParameter("role_id");%>
 	<%String user_id = request.getParameter("user_id");%>
@@ -47,9 +50,9 @@ last action = <%=request.getParameter("action") %>
 	<td><%=roleUsers.getInstance().getId() %></td>
 	<td><%=roleUsers.getInstance().getName() %></td>
 	<td>
-		<a href="AdminWorks?table=role_users&action=edit&id=<%=roleUsers.getInstance().getId()%>&role_id=<%=roleUsers.getInstance().getId()%>" title="edit the item"><button>edit</button></a>
-		<a href="AdminWorks?table=role_users&action=unlink&id=<%=roleUsers.getInstance().getId()%>" title="unlink the role from the user (without deleting)"><button>unlink</button></a>
-		<a href="AdminWorks?table=role_users&action=delete&id=<%=roleUsers.getInstance().getId()%>" title="delete the role"><button>delete</button></a>
+		<a href="AdminWorks?table=role_users&action=edit&id=<%=roleUsers.getInstance().getId()%>&role_id=<%=roleUsers.getInstance().getId()%>" title="edit the item"><button><%=l.tr("editButton")%></button></a>
+		<a href="AdminWorks?table=role_users&action=unlink&id=<%=roleUsers.getInstance().getId()%>" title="unlink the role from the user (without deleting)"><button><%=l.tr("unlinkButton")%></button></a>
+		<a href="AdminWorks?table=role_users&action=delete&id=<%=roleUsers.getInstance().getId()%>" title="delete the role"><button><%=l.tr("deleteButton")%></button></a>
 
 	</td>
 
@@ -57,15 +60,15 @@ last action = <%=request.getParameter("action") %>
 </tr>
 </table>
 
-<h2>Users</h2>
+<h2><%=l.tr("usersHeader")%></h2>
 <table frame="border" border="1">
 	<tr bgcolor="magenta">
-		<th>Id</th>
-		<th>Login</th>
-		<th>Password</th>
-		<th>Email</th>
-		<th>Registration date</th>
-		<th>Action</th>
+		<th><%=l.tr("idHeader")%></th>
+		<th><%=l.tr("loginHeader")%></th>
+		<th><%=l.tr("passwordHeader")%></th>
+		<th><%=l.tr("emailHeader")%></th>
+		<th><%=l.tr("regDateHeader")%></th>
+		<th><%=l.tr("actionHeader")%></th>
 	</tr>
 
 	<% for (User user : roleUsers.getDetails().getInstances()) {%>
@@ -94,9 +97,9 @@ last action = <%=request.getParameter("action") %>
 		<td><%=user.getEmail() %></td>
 		<td><%=user.getReg_date() %></td>
 		<td>
-			<a href="AdminWorks?table=user_address_role_musics&action=details&id=<%=user.getId()%>" title="details on the item"><button>details</button></a>
-			<a href="AdminWorks?table=role_users&action=edit&id=<%=roleUsers.getInstance().getId()%>&user_id=<%=user.getId()%>" title="edit the item"><button>edit</button></a>
-			<a href="AdminWorks?table=role_users&action=unlink&id=<%=roleUsers.getInstance().getId()%>&user_id=<%=user.getId()%>" title="unlink the user from the role (without deleting)"><button>unlink</button></a>
+			<a href="AdminWorks?table=user_address_role_musics&action=details&id=<%=user.getId()%>" title="details on the item"><button><%=l.tr("detailsButton")%></button></a>
+			<a href="AdminWorks?table=role_users&action=edit&id=<%=roleUsers.getInstance().getId()%>&user_id=<%=user.getId()%>" title="edit the item"><button><%=l.tr("editButton")%></button></a>
+			<a href="AdminWorks?table=role_users&action=unlink&id=<%=roleUsers.getInstance().getId()%>&user_id=<%=user.getId()%>" title="unlink the user from the role (without deleting)"><button><%=l.tr("unlinkButton")%></button></a>
 		</td>
 		<%} %>
 	<%} %>
@@ -114,6 +117,6 @@ last action = <%=request.getParameter("action") %>
 			</form></td>
 	</tr>
 </table>
-<hr><a href="AdminWorks?table=role"><button>Backward</button></a>
+<hr><a href="AdminWorks?table=role"><button><%=l.tr("backwardButton")%></button></a>
 </body>
 </html>
